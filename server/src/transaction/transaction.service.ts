@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
-// import { LedgerEntry } from '../ledger/entities/ledger-entry.entity';
+import { Repository } from 'typeorm';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { Transaction } from './entities/transaction.entity';
@@ -11,7 +10,6 @@ export class TransactionService {
   constructor(
     @InjectRepository(Transaction)
     private repository: Repository<Transaction>,
-    private dataSource: DataSource,
   ) {}
 
   create(createTransactionDto: CreateTransactionDto) {
