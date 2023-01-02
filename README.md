@@ -32,7 +32,6 @@ Some of the features of the application are:
 * View ledger and transaction history
 * View who created and last modified each transaction
 * View account balances
-* Creating logs of all transactions
 
 Some stretch goals are:
 
@@ -40,6 +39,7 @@ Some stretch goals are:
 * Ability to organize accounts into a tree structure and ability to see aggregate balances for each node in the tree
 * Managing multiple companies
 * Ability to import and export transactions as CSV files
+* Logging microservice
 
 ### Technology Stack
 

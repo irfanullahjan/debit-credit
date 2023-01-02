@@ -13,7 +13,7 @@ export class AccountService {
   ) {}
 
   create(createAccountDto: CreateAccountDto) {
-    return this.repository.save(createAccountDto);
+    return this.repository.save(this.repository.create(createAccountDto));
   }
 
   findAll() {
