@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { LedgerEntry } from '../ledger/entities/ledger-entry.entity';
+// import { LedgerEntry } from '../ledger/entities/ledger-entry.entity';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { Transaction } from './entities/transaction.entity';
@@ -15,28 +15,7 @@ export class TransactionService {
   ) {}
 
   create(createTransactionDto: CreateTransactionDto) {
-    return this.dataSource.manager.transaction(
-      async (transactionalEntityManager) => {
-        // save the new transaction and get the id
-        const transaction = await transactionalEntityManager.save(
-          this.repository.create(createTransactionDto),
-        );
-
-        // create the ledger entries
-        const ledgerEntries = createTransactionDto.ledgerEntries.map(
-          (ledgerEntry) =>
-            transactionalEntityManager.getRepository(LedgerEntry).create({
-              ...ledgerEntry,
-              transactionId: transaction.id,
-              accountId: ledgerEntry.accountId,
-            }),
-        );
-        // save the ledger entries
-        await transactionalEntityManager.save(LedgerEntry, ledgerEntries);
-
-        return { ...transaction, ledgerEntries };
-      },
-    );
+    return this.repository.save(this.repository.create(createTransactionDto));
   }
 
   findAll() {
@@ -44,7 +23,12 @@ export class TransactionService {
   }
 
   findOne(id: number) {
-    return this.repository.findOne({ where: { id } });
+    return this.repository.findOne({
+      where: { id },
+      relations: {
+        ledgerEntries: true,
+      },
+    });
   }
 
   update(id: number, updateTransactionDto: UpdateTransactionDto) {
