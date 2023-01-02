@@ -1,1 +1,9 @@
 @import "~bootstrap/scss/bootstrap";
+
+// Removing horizontal padding from Navbar
+nav.navbar {
+  > div.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

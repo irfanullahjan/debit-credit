@@ -1,5 +1,6 @@
 import "./globals.scss";
-import NextLink from "next/link";
+import { NavBar } from "../components/NavBar";
+import { Main } from "@/components/Main";
 
 export default function RootLayout({
   children,
@@ -14,12 +15,8 @@ export default function RootLayout({
       */}
       <head />
       <body>
-        <nav>
-          <NextLink href="/">Home</NextLink>
-          <NextLink href="/ledger">Ledger</NextLink>
-          <NextLink href="/accounts">Accounts</NextLink>
-        </nav>
-        {children}
+        <NavBar />
+        <Main>{children}</Main>
       </body>
     </html>
   );
