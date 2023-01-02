@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-export class BaseEntity {
+export class AuditBase {
   @PrimaryGeneratedColumn()
   id: number;
 
