@@ -1,5 +1,12 @@
+import { IsNotEmpty } from 'class-validator';
+
 export class CreateLedgerEntryDto {
-  description: string;
+  @IsNotEmpty()
   amount: number;
+
+  @IsNotEmpty()
   accountId: number;
+
+  @IsNotEmpty()
+  transactionId: number;
 }

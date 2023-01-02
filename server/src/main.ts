@@ -1,3 +1,4 @@
+import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
@@ -7,6 +8,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new TypeOrmExceptionFilter(httpAdapter));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      exceptionFactory: (errors) => new BadRequestException(errors),
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('API')

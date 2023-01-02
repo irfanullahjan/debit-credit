@@ -1,14 +1,26 @@
-import { AuditBase as AuditBase } from '@/src/common/audit-base.entity';
-import { Column, Entity } from 'typeorm';
+import { Account } from '@/src/account/entities/account.entity';
+import { AuditBase } from '@/src/common/audit-base.entity';
+import { Transaction } from '@/src/transaction/entities/transaction.entity';
+import { Column, Entity, ManyToOne } from 'typeorm';
 
 @Entity()
 export class LedgerEntry extends AuditBase {
-  @Column({ type: 'varchar', length: 255 })
-  description: string;
-
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   amount: number;
 
-  @Column({ type: 'int', nullable: false })
+  @ManyToOne(() => Account, (account) => account.ledgerEntries, {
+    nullable: false,
+  })
+  account: Account;
+
+  @Column({ type: 'int' })
   accountId: number;
+
+  @ManyToOne(() => Transaction, (transaction) => transaction.ledgerEntries, {
+    nullable: false,
+  })
+  transaction: Transaction;
+
+  @Column({ type: 'int' })
+  transactionId: number;
 }

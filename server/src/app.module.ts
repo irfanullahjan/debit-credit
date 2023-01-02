@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { AccountModule } from './account/account.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LedgerModule } from './ledger/ledger.module';
+import { TransactionModule } from './transaction/transaction.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { LedgerModule } from './ledger/ledger.module';
     }),
     AccountModule,
     LedgerModule,
+    TransactionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
