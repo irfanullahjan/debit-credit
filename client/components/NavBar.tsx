@@ -29,7 +29,7 @@ export function NavBar() {
         <Row>
           <Col>
             <Navbar dark color="dark" expand="md">
-              <NavbarBrand href="/" tag={Link}>reactstrap</NavbarBrand>
+              <NavbarBrand href="/" tag={Link}>DebitCredit</NavbarBrand>
               <NavbarToggler onClick={() => setIsOpen(!isOpen)} />
               <Collapse isOpen={isOpen} navbar>
                 <Nav className="me-auto" navbar>
