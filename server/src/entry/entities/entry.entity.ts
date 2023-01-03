@@ -4,11 +4,11 @@ import { Transaction } from '@/src/transaction/entities/transaction.entity';
 import { Column, Entity, ManyToOne } from 'typeorm';
 
 @Entity()
-export class LedgerEntry extends AuditBase {
+export class Entry extends AuditBase {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   amount: number;
 
-  @ManyToOne(() => Account, (account) => account.ledgerEntries, {
+  @ManyToOne(() => Account, (account) => account.entries, {
     nullable: false,
   })
   account: Account;
@@ -16,7 +16,7 @@ export class LedgerEntry extends AuditBase {
   @Column({ type: 'int' })
   accountId: number;
 
-  @ManyToOne(() => Transaction, (transaction) => transaction.ledgerEntries, {
+  @ManyToOne(() => Transaction, (transaction) => transaction.entries, {
     nullable: false,
   })
   transaction: Transaction;

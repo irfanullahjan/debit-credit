@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class CreateLedgerEntryDto {
+export class CreateEntryDto {
   @IsNotEmpty()
   amount: number;
 

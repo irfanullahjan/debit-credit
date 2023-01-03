@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AccountModule } from './account/account.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { LedgerModule } from './ledger/ledger.module';
+import { EntryModule } from './entry/entry.module';
 import { TransactionModule } from './transaction/transaction.module';
 
 @Module({
@@ -20,7 +20,7 @@ import { TransactionModule } from './transaction/transaction.module';
       autoLoadEntities: true,
     }),
     AccountModule,
-    LedgerModule,
+    EntryModule,
     TransactionModule,
   ],
   controllers: [AppController],

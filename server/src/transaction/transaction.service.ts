@@ -24,7 +24,7 @@ export class TransactionService {
     return this.repository.findOne({
       where: { id },
       relations: {
-        ledgerEntries: true,
+        entries: true,
       },
     });
   }
