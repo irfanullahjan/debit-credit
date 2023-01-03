@@ -7,6 +7,9 @@ export class Transaction extends AuditBase {
   @Column({ type: 'text' })
   description: string;
 
+  @Column({ type: 'text' })
+  documentRef: string;
+
   @OneToMany(() => Entry, (entry) => entry.transaction, {
     cascade: true,
   })

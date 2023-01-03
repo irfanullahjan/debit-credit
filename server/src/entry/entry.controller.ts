@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { EntryService } from './entry.service';
 import { CreateEntryDto } from './dto/create-entry.dto';
-import { UpdateEntryDto as UpdateEntryDto } from './dto/update-entry.dto';
+import { UpdateEntryDto } from './dto/update-entry.dto';
 
 @Controller('entry')
 export class EntryController {

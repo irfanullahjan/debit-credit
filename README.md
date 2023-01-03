@@ -9,6 +9,37 @@ Unlike the typical accouting apps, it will lack the ability to create invoices, 
 I am highly motivated to work on this project because I have the education and work experience both as an accountant and a sofware developer. This puts me in a unique position to be able to bring together my skills from both fields to create a system that is useful to accountants and bookkeepers.
 
 
+## Literature Review
+
+Before I can go ahead an discuss some similar projects, it is important to first introduce the basic concept of how accounting works.
+
+At the core of the accounting process is the double-entry bookkeeping system which has been around for hundreds of years. It is based on the fundamental accounting equation:
+
+Assets = Liabilities + Equity
+
+This is because all the assets that a business owns are financed either by owners (the equity) or the lenders (the liabilities). The accounting equation also means that any increase in assets must be financed by either an increase in liabilities or an increase in equity. Similarly, any decrease in assets must be financed by either a decrease in liabilities or a decrease in equity. It could also be the case that increase in one asset may be due to the decrease in other assets and same could be said about liabilities (e.g. debt refinancing) and equity (e.g. conversion of options into shares). This is the basis of the double-entry bookkeeping system.
+
+Traditionally accounting and bookkeeping has been done using pen and paper. However, with the advent of computers, there has been a shift towards using software to do the accounting. Accountants have been using both specialized accounting software and general purpose software like Microsoft Excel to do their accounting.
+
+ There are many software solutions available in the market today. Some of the most popular ones are Quickbooks, Xero, Wave, Freshbooks, and Zoho Books. These solutions are designed to be used by non-accountants and they have wizards to help create transactions. They also have features to create invoices, maintain customer and vendor records, and other features that are useful for non-accountants. However, these features are not useful for experienced accountants and bookkeepers. They are also not useful for highly critical accounting records. For such records, it is better to have a system that is raw and back to the basics. This is the type of system that this project will be creating.
+
+The purpose of this section is to review some of 
+
+### Existing Solutions
+
+#### Quickbooks
+
+#### Xero
+
+#### Wave
+
+#### Freshbooks
+
+#### Zoho Books
+
+#### Microsoft Excel
+
+
 ## Project Design
 
 ### Overview
