@@ -1,9 +1,9 @@
-import { AuditBase } from '@/src/common/audit-base.entity';
+import { BaseEntity } from '@/src/common/entities/base.entity';
 import { Entry } from '@/src/entry/entities/entry.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity()
-export class Transaction extends AuditBase {
+export class Transaction extends BaseEntity {
   @Column({ type: 'text' })
   description: string;
 

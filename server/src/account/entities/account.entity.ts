@@ -1,9 +1,9 @@
 import { Column, Entity, OneToMany } from 'typeorm';
-import { AuditBase } from '@/src/common/audit-base.entity';
+import { BaseEntity } from '@/src/common/entities/base.entity';
 import { Entry } from '@/src/entry/entities/entry.entity';
 
 @Entity()
-export class Account extends AuditBase {
+export class Account extends BaseEntity {
   @Column({ type: 'varchar', length: 255, nullable: false })
   name: string;
 

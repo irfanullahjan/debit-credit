@@ -1,18 +1,11 @@
 import {
-  BeforeInsert,
-  BeforeSoftRemove,
-  BeforeUpdate,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-export class AuditBase {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Meta {
   @CreateDateColumn()
   createdAt: Date;
 
@@ -30,20 +23,4 @@ export class AuditBase {
 
   @Column({ type: 'int', nullable: true })
   deletedByUserId?: number;
-
-  @BeforeInsert()
-  setCreatedByUserId() {
-    this.createdByUserId = 1;
-    this.updatedByUserId = 1;
-  }
-
-  @BeforeUpdate()
-  setUpdatedByUserId() {
-    this.updatedByUserId = 1;
-  }
-
-  @BeforeSoftRemove()
-  setDeletedByUserId() {
-    this.deletedByUserId = 1;
-  }
 }

@@ -1,10 +1,10 @@
 import { Account } from '@/src/account/entities/account.entity';
-import { AuditBase } from '@/src/common/audit-base.entity';
+import { BaseEntity } from '@/src/common/entities/base.entity';
 import { Transaction } from '@/src/transaction/entities/transaction.entity';
 import { Column, Entity, ManyToOne } from 'typeorm';
 
 @Entity()
-export class Entry extends AuditBase {
+export class Entry extends BaseEntity {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   amount: number;
 
