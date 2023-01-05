@@ -5,6 +5,7 @@ import { AccountModule } from './account/account.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EntryModule } from './entry/entry.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { TransactionModule } from './transaction/transaction.module';
       entities: [],
       synchronize: true,
       autoLoadEntities: true,
+      namingStrategy: new SnakeNamingStrategy(),
     }),
     AccountModule,
     EntryModule,

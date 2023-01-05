@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany, VirtualColumn } from 'typeorm';
 import { BaseEntity } from '@/src/common/entities/base.entity';
 import { Entry } from '@/src/entry/entities/entry.entity';
 
@@ -9,4 +9,10 @@ export class Account extends BaseEntity {
 
   @OneToMany(() => Entry, (entry) => entry.account)
   entries: Entry[];
+
+  @VirtualColumn({
+    query: (alias) =>
+      `SELECT SUM(entry.amount) FROM entry WHERE entry.account_id = ${alias}.id`,
+  })
+  balance: number;
 }
