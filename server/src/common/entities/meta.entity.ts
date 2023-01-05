@@ -15,11 +15,11 @@ export class Meta {
   @DeleteDateColumn()
   deletedAt?: Date;
 
-  @Column({ type: 'int', nullable: false })
-  updatedByUserId: number;
+  @Column({ type: 'int', update: false, nullable: false })
+  createdByUserId: number;
 
   @Column({ type: 'int', nullable: false })
-  createdByUserId: number;
+  updatedByUserId: number;
 
   @Column({ type: 'int', nullable: true })
   deletedByUserId?: number;

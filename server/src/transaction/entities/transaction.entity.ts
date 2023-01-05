@@ -4,6 +4,9 @@ import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity()
 export class Transaction extends BaseEntity {
+  @Column({ type: 'date' })
+  date: Date;
+
   @Column({ type: 'text' })
   description: string;
 
