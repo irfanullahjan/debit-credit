@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, VirtualColumn } from 'typeorm';
+import { AfterLoad, Column, Entity, OneToMany, VirtualColumn } from 'typeorm';
 import { BaseEntity } from '@/src/common/entities/base.entity';
 import { Entry } from '@/src/entry/entities/entry.entity';
 
@@ -15,4 +15,15 @@ export class Account extends BaseEntity {
       `SELECT SUM(entry.amount) FROM entry WHERE entry.account_id = ${alias}.id`,
   })
   balance: number;
+
+  balanceCredit: number;
+
+  balanceDebit: number;
+
+  @AfterLoad()
+  afterLoad() {
+    this.balance = this.balance ?? 0;
+    this.balanceDebit = this.balance > 0 ? this.balance : 0;
+    this.balanceCredit = this.balance < 0 ? this.balance * -1 : 0;
+  }
 }

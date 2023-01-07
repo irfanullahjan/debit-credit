@@ -5,7 +5,7 @@ export default function Layout(props: any) {
   return (
     <div>
       <h1>Transactions</h1>
-      <Link href="/transactions/new">Add Transaction</Link>
+      <Link href="/transactions/add">Add Transaction</Link>
       {children}
     </div>
   );
