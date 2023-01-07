@@ -10,8 +10,8 @@ export class Transaction extends BaseEntity {
   @Column({ type: 'text' })
   description: string;
 
-  @Column({ type: 'text' })
-  documentRef: string;
+  @Column({ type: 'text', nullable: true })
+  documentRef?: string;
 
   @OneToMany(() => Entry, (entry) => entry.transaction, {
     cascade: true,

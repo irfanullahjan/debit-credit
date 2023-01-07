@@ -6,7 +6,7 @@ import {
 } from 'class-validator';
 
 @ValidatorConstraint({ async: true })
-export class DebitCreditConstraint implements ValidatorConstraintInterface {
+export class IsBalancedConstraint implements ValidatorConstraintInterface {
   validate(value: any, args: any): boolean {
     const [property] = args.constraints;
     const sum = value.reduce((acc: number, cur: any) => acc + cur[property], 0);
@@ -14,18 +14,18 @@ export class DebitCreditConstraint implements ValidatorConstraintInterface {
   }
 }
 
-export function IsDebitCredit(
+export function IsBalanced(
   property: string,
   validationOptions?: ValidationOptions,
 ) {
   return function (object: object, propertyName: string) {
     registerDecorator({
-      name: 'debitCredit',
+      name: 'isBalanced',
       target: object.constructor,
       propertyName: propertyName,
       constraints: [property],
       options: validationOptions,
-      validator: DebitCreditConstraint,
+      validator: IsBalancedConstraint,
     });
   };
 }

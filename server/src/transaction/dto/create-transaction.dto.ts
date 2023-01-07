@@ -1,6 +1,7 @@
-import { IsDebitCredit } from '@/src/common/decorators/validation';
+import { IsBalanced } from '@/src/common/decorators/is-balanced';
 import { ArrayMinSize, IsNotEmpty, IsOptional } from 'class-validator';
 import { CreateTransactionEntryDto } from './create-transaction-entry.dto';
+
 export class CreateTransactionDto {
   @IsNotEmpty()
   description: string;
@@ -10,8 +11,8 @@ export class CreateTransactionDto {
 
   @ArrayMinSize(2)
   @IsNotEmpty()
-  @IsDebitCredit('amount', {
-    message: 'Sum of debit and credit amount must be equal',
+  @IsBalanced('amount', {
+    message: 'Sum of debit entries must be equal to sum of credit entries',
   })
   entries: CreateTransactionEntryDto[];
 }
