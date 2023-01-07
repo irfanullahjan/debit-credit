@@ -1,4 +1,5 @@
 import { Table } from "@/components/reactstrap";
+import Link from "next/link";
 
 async function getData() {
   const data = await fetch("http://localhost:3001/transaction");
@@ -16,6 +17,9 @@ export default async function TransactionsPage() {
               <td>{transaction.id}</td>
               <td>{transaction.date}</td>
               <td>{transaction.description}</td>
+              <td>
+                <Link href={`/transactions/${transaction.id}`}>View</Link>
+              </td>
             </tr>
           ))}
         </tbody>

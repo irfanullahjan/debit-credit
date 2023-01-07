@@ -20,6 +20,7 @@ export default async function AccountsPage() {
             <th>Name</th>
             <th style={{ textAlign: "right" }}>Debit</th>
             <th style={{ textAlign: "right" }}>Credit</th>
+            <th />
           </tr>
         </thead>
         <tbody>
@@ -32,6 +33,9 @@ export default async function AccountsPage() {
               </td>
               <td style={{ textAlign: "right" }}>
                 {account.balanceCredit.toFixed(2)}
+              </td>
+              <td>
+                <Link href={`/accounts/${account.id}`}>View</Link>
               </td>
             </tr>
           ))}
@@ -56,6 +60,7 @@ export default async function AccountsPage() {
                 )
                 .toFixed(2)}
             </th>
+            <th />
           </tr>
         </tfoot>
       </Table>
