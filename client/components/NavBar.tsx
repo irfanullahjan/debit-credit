@@ -20,7 +20,7 @@ export function NavBar() {
 
   const links = [
     { href: "/accounts", label: "Accounts" },
-    { href: "/ledger", label: "Ledger" },
+    { href: "/transactions", label: "Transactions" },
   ];
 
   return (

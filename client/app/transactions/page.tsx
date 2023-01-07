@@ -1,0 +1,25 @@
+import { Table } from "@/components/reactstrap";
+
+async function getData() {
+  const data = await fetch("http://localhost:3001/transaction");
+  return data.json();
+}
+
+export default async function TransactionsPage() {
+  const transactions = await getData();
+  return (
+    <div>
+      <Table>
+        <tbody>
+          {transactions.map?.((transaction: any) => (
+            <tr key={transaction.id}>
+              <td>{transaction.id}</td>
+              <td>{transaction.date}</td>
+              <td>{transaction.description}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </div>
+  );
+}

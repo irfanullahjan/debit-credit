@@ -1,4 +1,4 @@
-import { Button } from "@/components/Button";
+import { Table } from "@/components/reactstrap";
 
 async function getData() {
   const data = await fetch("http://localhost:3001/account");
@@ -10,14 +10,15 @@ export default async function AccountsPage() {
   return (
     <div>
       <h1>Accounts</h1>
-      <Button>dddd</Button>
-      {accounts.map((account: any) => (
-        <div key={account.id}>
-          {Object.entries(account).map(([key, value]) => (
-            <div key={key}>{`${key}: ${value}`}</div>
-          ))}
-        </div>
-      ))}
+      <Table>
+        {accounts.map((account: any) => (
+          <tr key={account.id}>
+            <td>{account.id}</td>
+            <td>{account.name}</td>
+            <td>{account.balance}</td>
+          </tr>
+        ))}
+      </Table>
     </div>
   );
 }

@@ -9,7 +9,10 @@ import {
 export class IsBalancedConstraint implements ValidatorConstraintInterface {
   validate(value: any, args: any): boolean {
     const [property] = args.constraints;
-    const sum = value.reduce((acc: number, cur: any) => acc + cur[property], 0);
+    const sum = value.reduce(
+      (acc: number, cur: any) => acc + +cur[property],
+      0,
+    );
     return sum === 0;
   }
 }
