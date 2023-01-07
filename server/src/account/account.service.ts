@@ -17,11 +17,16 @@ export class AccountService {
   }
 
   findAll() {
-    return this.repository.find();
+    return this.repository.find({
+      order: { balance: 'DESC' },
+    });
   }
 
   findOne(id: number) {
-    return this.repository.findOneOrFail({ where: { id } });
+    return this.repository.findOneOrFail({
+      where: { id },
+      relations: ['entries', 'entries.transaction'],
+    });
   }
 
   update(id: number, updateAccountDto: UpdateAccountDto) {
