@@ -17,15 +17,15 @@ export class TransactionService {
   }
 
   findAll() {
-    return this.repository.find();
+    return this.repository.find({
+      order: { date: 'DESC' },
+    });
   }
 
   findOne(id: number) {
     return this.repository.findOne({
       where: { id },
-      relations: {
-        entries: true,
-      },
+      relations: ['entries', 'entries.account'],
     });
   }
 

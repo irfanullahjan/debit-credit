@@ -11,8 +11,6 @@ export default async function AccountsPage() {
 
   return (
     <div>
-      <h1>Accounts</h1>
-      <Link href="/accounts/add">Add Account</Link>
       <Table>
         <thead>
           <tr>

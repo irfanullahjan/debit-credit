@@ -17,7 +17,9 @@ export class EntryService {
   }
 
   findAll() {
-    return this.repository.find();
+    return this.repository.find({
+      order: { date: 'DESC' },
+    });
   }
 
   findOne(id: number) {
