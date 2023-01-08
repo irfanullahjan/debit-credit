@@ -1,34 +1,18 @@
-"use client";
-
 import { Table } from "@/components/reactstrap";
-import { fetcherJson } from "@/utils/fetcherJson";
+import { Realtime } from "@/components/Realtime";
 import Link from "next/link";
-import { useEffect } from "react";
-import { io } from "socket.io-client";
-import useSWR from "swr";
 
-export default function AccountsPage() {
-  const { data: accounts, isValidating, mutate } = useSWR(
-    "http://localhost:3001/account",
-    fetcherJson
-  );
+async function getData() {
+  const data = await fetch("http://localhost:3001/account");
+  return data.json();
+}
 
-  useEffect(() => {
-    const socket = io("http://localhost:3001");
-    socket.on("transaction", () => {
-      mutate();
-    });
-    return () => {
-      socket.off("transaction");
-    };
-  }, [mutate]);
-
-  if (!accounts) {
-    return <div>Loading...</div>;
-  }
+export default async function AccountsPage() {
+  const accounts = await getData();
 
   return (
     <div>
+      <Realtime />
       <Table>
         <thead>
           <tr>
@@ -40,7 +24,7 @@ export default function AccountsPage() {
           </tr>
         </thead>
         <tbody>
-          {accounts?.map((account: any) => (
+          {accounts.map((account: any) => (
             <tr key={account.id}>
               <td>{account.id}</td>
               <td>{account.name}</td>

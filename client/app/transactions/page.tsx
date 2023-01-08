@@ -1,4 +1,5 @@
 import { Table } from "@/components/reactstrap";
+import { Realtime } from "@/components/Realtime";
 import Link from "next/link";
 
 async function getData() {
@@ -10,6 +11,7 @@ export default async function TransactionsPage() {
   const transactions = await getData();
   return (
     <div>
+      <Realtime />
       <Table>
         <tbody>
           {transactions.map?.((transaction: any) => (
