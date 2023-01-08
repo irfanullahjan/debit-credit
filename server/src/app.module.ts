@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EntryModule } from './entry/entry.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
     AccountModule,
     EntryModule,
     TransactionModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

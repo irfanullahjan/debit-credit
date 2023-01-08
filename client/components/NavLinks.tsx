@@ -17,7 +17,7 @@ export function NavLinks(props: NavLinksProps) {
     <React.Fragment>
       {links.map(({ href, label }) => (
         <NavItem key={href}>
-          <NavLink href={href} tag={Link} active={pathname === href}>
+          <NavLink href={href} tag={Link} active={pathname?.indexOf(href) === 0}>
             {label}
           </NavLink>
         </NavItem>
