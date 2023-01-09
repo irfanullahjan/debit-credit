@@ -11,7 +11,6 @@ export default async function TransactionsPage() {
   const transactions = await getData();
   return (
     <div>
-      <Realtime />
       <Table>
         <tbody>
           {transactions.map?.((transaction: any) => (

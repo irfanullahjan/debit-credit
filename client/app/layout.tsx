@@ -1,6 +1,7 @@
 import "./globals.scss";
 import { NavBar } from "../components/NavBar";
 import { Main } from "@/components/Main";
+import { Realtime } from "@/components/Realtime";
 
 export default function RootLayout({
   children,
@@ -16,6 +17,7 @@ export default function RootLayout({
       <head />
       <body>
         <NavBar />
+        <Realtime />
         <Main>{children}</Main>
       </body>
     </html>

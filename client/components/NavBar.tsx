@@ -28,14 +28,13 @@ export function NavBar() {
       <Container>
         <Row>
           <Col>
-            <Navbar dark color="dark" expand="md">
+            <Navbar dark color="dark" expand="sm">
               <NavbarBrand href="/" tag={Link}>DebitCredit</NavbarBrand>
               <NavbarToggler onClick={() => setIsOpen(!isOpen)} />
               <Collapse isOpen={isOpen} navbar>
                 <Nav className="me-auto" navbar>
                   <NavLinks links={links} />
                 </Nav>
-                <NavbarText>Simple Text</NavbarText>
               </Collapse>
             </Navbar>
           </Col>

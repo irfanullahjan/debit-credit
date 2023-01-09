@@ -12,7 +12,6 @@ export default async function AccountsPage() {
 
   return (
     <div>
-      <Realtime />
       <Table>
         <thead>
           <tr>
