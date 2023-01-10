@@ -7,6 +7,7 @@ import { EntryModule } from './entry/entry.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { EventsModule } from './events/events.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { EventsModule } from './events/events.module';
     EntryModule,
     TransactionModule,
     EventsModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
