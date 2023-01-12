@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AccountModule } from './account/account.module';
@@ -8,6 +8,7 @@ import { TransactionModule } from './transaction/transaction.module';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { EventsModule } from './events/events.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -28,8 +29,15 @@ import { UserModule } from './user/user.module';
     TransactionModule,
     EventsModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: 'APP_INTERCEPTOR',
+      useClass: ClassSerializerInterceptor,
+    },
+  ],
 })
 export class AppModule {}
