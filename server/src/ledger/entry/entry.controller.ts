@@ -11,9 +11,9 @@ import {
 import { EntryService } from './entry.service';
 import { CreateEntryDto } from './dto/create-entry.dto';
 import { UpdateEntryDto } from './dto/update-entry.dto';
-import { JwtAuthGuard } from '../auth/auth.jwt-auth.guard';
+import { JwtAuthGuard } from '../../auth/auth.jwt-auth.guard';
 
-@Controller('entry')
+@Controller()
 @UseGuards(JwtAuthGuard)
 export class EntryController {
   constructor(private readonly entryService: EntryService) {}

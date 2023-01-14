@@ -1,6 +1,6 @@
-import { Account } from '@/src/account/entities/account.entity';
+import { Account } from '@/src/ledger/account/entities/account.entity';
 import { BaseEntity } from '@/src/common/entities/base.entity';
-import { Transaction } from '@/src/transaction/entities/transaction.entity';
+import { Transaction } from '@/src/ledger/transaction/entities/transaction.entity';
 import { AfterLoad, Column, Entity, ManyToOne, VirtualColumn } from 'typeorm';
 
 @Entity()

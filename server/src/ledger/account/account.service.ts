@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { EVENTS } from '../common/constants';
-import { EventsService } from '../events/events.service';
+import { EVENTS } from '../../common/constants';
+import { EventsService } from '../../events/events.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { Account } from './entities/account.entity';
