@@ -23,13 +23,16 @@ export class AuthService {
     return null;
   }
 
-  async login(loginDto: LoginRequestDto) {
+  /**
+   * Returns a JWT token on successful login
+   * @param loginDto email and password
+   * @returns JWT token
+   */
+  async loginJwt(loginDto: LoginRequestDto): Promise<string> {
     const user = await this.validateUser(loginDto.email, loginDto.password);
     if (user) {
       const payload: JwtPayload = { email: user.email, sub: user.id };
-      return new LoginJwtDto({
-        accessToken: this.jwtService.sign(payload),
-      });
+      return this.jwtService.sign(payload);
     }
     throw new UnauthorizedException('Invalid credentials');
   }

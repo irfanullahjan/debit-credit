@@ -6,7 +6,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { EventsModule } from './events/events.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { ApiModule } from './ledger/api.module';
+import { LedgerModule } from './ledger/api.module';
 
 @Module({
   imports: [
@@ -22,7 +22,7 @@ import { ApiModule } from './ledger/api.module';
       autoLoadEntities: true,
       namingStrategy: new SnakeNamingStrategy(),
     }),
-    ApiModule,
+    LedgerModule,
     EventsModule,
     UserModule,
     AuthModule,

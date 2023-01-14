@@ -3,10 +3,12 @@ import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { TypeOrmExceptionFilter } from './common/typeorm-exception.filter';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const { httpAdapter } = app.get(HttpAdapterHost);
+  app.use(cookieParser());
   app.useGlobalFilters(new TypeOrmExceptionFilter(httpAdapter));
   app.useGlobalPipes(
     new ValidationPipe({
@@ -22,9 +24,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('spec', app, document);
 
-  app.enableCors({
-    origin: 'http://localhost:3000',
-  });
+  // Not needed anymore, because we use the proxy through client/next.config.js
+  // app.enableCors({
+  //   origin: 'http://localhost:3000',
+  // });
 
   await app.listen(3001);
 }

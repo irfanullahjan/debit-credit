@@ -30,4 +30,4 @@ import { TransactionModule } from './transaction/transaction.module';
     ]),
   ],
 })
-export class ApiModule {}
+export class LedgerModule {}

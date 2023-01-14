@@ -3,3 +3,5 @@ export const EVENTS = {
   ACCOUNT: 'account',
   ENTRY: 'entry',
 };
+
+export const JWT_COOKIE_NAME = 'jwt';
