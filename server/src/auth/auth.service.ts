@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginRequestDto } from './dto/login-request.dto';
 import { LoginJwtDto } from './dto/login-jwt.dto';
 import { User } from '../user/entities/user.entity';
+import { JwtPayload } from './auth.types';
 
 @Injectable()
 export class AuthService {
@@ -25,7 +26,7 @@ export class AuthService {
   async login(loginDto: LoginRequestDto) {
     const user = await this.validateUser(loginDto.email, loginDto.password);
     if (user) {
-      const payload = { email: user.email, sub: user.id };
+      const payload: JwtPayload = { email: user.email, sub: user.id };
       return new LoginJwtDto({
         accessToken: this.jwtService.sign(payload),
       });

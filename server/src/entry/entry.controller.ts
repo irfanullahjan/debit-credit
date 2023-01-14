@@ -6,12 +6,15 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { EntryService } from './entry.service';
 import { CreateEntryDto } from './dto/create-entry.dto';
 import { UpdateEntryDto } from './dto/update-entry.dto';
+import { JwtAuthGuard } from '../auth/auth.jwt-auth.guard';
 
 @Controller('entry')
+@UseGuards(JwtAuthGuard)
 export class EntryController {
   constructor(private readonly entryService: EntryService) {}
 
