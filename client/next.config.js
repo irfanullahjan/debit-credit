@@ -1,5 +1,3 @@
-import { API_REWRITE_PREFIX, API_SERVER_BASE_PATH } from "./common/constants";
-
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
@@ -8,8 +6,8 @@ const nextConfig = {
   },
   rewrites: async () => [
     {
-      source: `${API_REWRITE_PREFIX}:path*`,
-      destination: `${API_SERVER_BASE_PATH}:path*`,
+      source: "/api/:path*",
+      destination: "http://localhost:3001/:path*",
     },
   ],
 };
