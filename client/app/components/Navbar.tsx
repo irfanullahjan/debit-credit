@@ -5,7 +5,7 @@ import {
   Navbar as ReactstrapNavbar,
   NavbarBrand,
   Row,
-} from "@/components/reactstrap";
+} from "@/app/components/reactstrap";
 import { NavbarCollapse } from "./NavbarCollapse";
 import { LinkType } from "./NavLinks";
 

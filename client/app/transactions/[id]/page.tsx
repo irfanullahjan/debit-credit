@@ -1,5 +1,5 @@
 import { BASE_URL_BACKEND } from "@/common/constants";
-import { Table } from "@/components/reactstrap";
+import { Table } from "@/app/components/reactstrap";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import Link from "next/link";
 

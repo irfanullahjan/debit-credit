@@ -1,7 +1,7 @@
 "use client";
 
 import { BASE_URL_BACKEND } from "@/common/constants";
-import { FormikInput } from "@/components/FormikInput";
+import { FormikInput } from "@/app/components/FormikInput";
 import { FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 
