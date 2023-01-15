@@ -1,5 +1,6 @@
 "use client";
 
+import { BASE_URL_BACKEND } from "@/app/common/constants";
 import { FormikInput } from "@/components/FormikInput";
 import { FormikProvider, useFormik } from "formik";
 
@@ -9,7 +10,7 @@ export default function AccountAddPage() {
       name: "",
     },
     onSubmit: (values) => {
-      fetch("http://localhost:3001/account", {
+      fetch(`${BASE_URL_BACKEND}/ledger/account`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

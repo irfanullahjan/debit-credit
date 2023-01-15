@@ -1,5 +1,5 @@
 import "./globals.scss";
-import { NavBar } from "../components/NavBar";
+import { Navbar } from "../components/Navbar";
 import { Main } from "@/components/Main";
 import { Realtime } from "@/components/Realtime";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
@@ -18,7 +18,7 @@ export default async function RootLayout({
       */}
       <head />
       <body>
-        <NavBar user={user} />
+        <Navbar user={user} />
         <Realtime />
         <Main>{children}</Main>
       </body>

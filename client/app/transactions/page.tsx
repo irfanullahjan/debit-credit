@@ -1,14 +1,10 @@
 import { Table } from "@/components/reactstrap";
-import { Realtime } from "@/components/Realtime";
+import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import Link from "next/link";
-
-async function getData() {
-  const data = await fetch("http://localhost:3001/transaction");
-  return data.json();
-}
+import { BASE_URL_BACKEND } from "../common/constants";
 
 export default async function TransactionsPage() {
-  const transactions = await getData();
+  const transactions = await fetchWithAuth(`${BASE_URL_BACKEND}/ledger/transaction`);
   return (
     <div>
       <Table>

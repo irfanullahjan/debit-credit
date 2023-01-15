@@ -17,6 +17,7 @@ export class AccountService {
 
   create(createAccountDto: CreateAccountDto) {
     this.eventsService.server.emit(EVENTS.TRANSACTION, 'create');
+    console.log('createAccountDto', createAccountDto);
     return this.repository.save(this.repository.create(createAccountDto));
   }
 

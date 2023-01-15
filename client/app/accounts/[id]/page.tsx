@@ -1,10 +1,11 @@
+import { BASE_URL_BACKEND } from "@/app/common/constants";
 import { Table } from "@/components/reactstrap";
+import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import Link from "next/link";
 
 export default async function Account({ params }: { params: { id: string } }) {
   const { id } = params;
-  const data = await fetch(`http://localhost:3001/account/${id}`);
-  const account = await data.json();
+  const account = await fetchWithAuth(`${BASE_URL_BACKEND}/ledger/account/${id}`);
   return (
     <div>
       <h1>{account.name}</h1>

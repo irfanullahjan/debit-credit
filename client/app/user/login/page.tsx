@@ -1,5 +1,6 @@
 "use client";
 
+import { BASE_URL_BACKEND } from "@/app/common/constants";
 import { FormikInput } from "@/components/FormikInput";
 import { FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
@@ -12,7 +13,7 @@ export default function LoginPage() {
       password: "",
     },
     onSubmit: async (values) => {
-      fetch(`/api/auth/login`, {
+      fetch(`${BASE_URL_BACKEND}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

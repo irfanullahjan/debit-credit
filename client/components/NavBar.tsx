@@ -2,14 +2,14 @@ import Link from "next/link";
 import {
   Col,
   Container,
-  Navbar,
+  Navbar as ReactstrapNavbar,
   NavbarBrand,
   Row,
 } from "@/components/reactstrap";
 import { NavbarCollapse } from "./NavbarCollapse";
 import { LinkType } from "./NavLinks";
 
-export function NavBar({ user }: { user: object }) {
+export function Navbar({ user }: { user: object }) {
   const links: LinkType[] = [
     { href: "/accounts", label: "Accounts" },
     { href: "/transactions", label: "Transactions" },
@@ -20,12 +20,12 @@ export function NavBar({ user }: { user: object }) {
       <Container>
         <Row>
           <Col>
-            <Navbar dark color="dark" expand="sm">
+            <ReactstrapNavbar dark color="dark" expand="sm">
               <NavbarBrand href="/" tag={Link}>
                 DebitCredit
               </NavbarBrand>
               <NavbarCollapse links={links} user={user} />
-            </Navbar>
+            </ReactstrapNavbar>
           </Col>
         </Row>
       </Container>

@@ -1,16 +1,13 @@
 "use client";
 
+import { BASE_URL_BACKEND } from "@/app/common/constants";
 import { FormikInput } from "@/components/FormikInput";
-import { fetcherJson } from "@/utils/fetcherJson";
 import { FieldArray, FormikProvider, useFormik } from "formik";
 import { Col, Row } from "reactstrap";
 import useSWR from "swr";
 
 export default function AddTransactionPage() {
-  const { data: accounts } = useSWR(
-    "http://localhost:3001/account",
-    fetcherJson
-  );
+  const { data: accounts } = useSWR(`${BASE_URL_BACKEND}/ledger/account`);
   console.log(accounts);
   const formik = useFormik({
     initialValues: {
