@@ -2,20 +2,14 @@ import "./globals.scss";
 import { NavBar } from "../components/NavBar";
 import { Main } from "@/components/Main";
 import { Realtime } from "@/components/Realtime";
-import { headers } from "next/headers";
+import { fetchWithAuth } from "@/utils/fetchWithAuth";
 
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const cookie = headers().get("cookie") ?? undefined;
-  const user = await fetch("http://localhost:3001/auth/current-user", {
-    headers: {
-      cookie,
-    } as any,
-  }).then((res) => res.json());
-  console.log(user);
+  const user = await fetchWithAuth("http://localhost:3001/auth/current-user");
   return (
     <html lang="en">
       {/*
@@ -24,8 +18,7 @@ export default async function RootLayout({
       */}
       <head />
       <body>
-        <p>{user.email}</p>
-        <NavBar />
+        <NavBar user={user} />
         <Realtime />
         <Main>{children}</Main>
       </body>

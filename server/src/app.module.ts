@@ -1,4 +1,9 @@
-import { ClassSerializerInterceptor, Module } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -7,6 +12,7 @@ import { EventsModule } from './events/events.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { LedgerModule } from './ledger/api.module';
+import { LoggingMiddleware } from './common/loggin.middleware';
 
 @Module({
   imports: [
@@ -34,6 +40,11 @@ import { LedgerModule } from './ledger/api.module';
       provide: 'APP_INTERCEPTOR',
       useClass: ClassSerializerInterceptor,
     },
+    LoggingMiddleware,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggingMiddleware).forRoutes('*');
+  }
+}
