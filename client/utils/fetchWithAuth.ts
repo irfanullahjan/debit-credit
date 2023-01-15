@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { fetchJson } from "./fetchJson";
 
 export function fetchWithAuth(input: RequestInfo | URL, init?: RequestInit) {
   const headers = new Headers(init?.headers);
@@ -7,10 +8,5 @@ export function fetchWithAuth(input: RequestInfo | URL, init?: RequestInit) {
   if (jwt) {
     headers.set("Authorization", `Bearer ${jwt}`);
   }
-  return fetch(input, { ...init, headers }).then((res) => {
-    if (!res.ok) {
-      console.error(`Error fetching ${input}: ${res.status} ${res.statusText}`);
-    }
-    return res.json();
-  });
+  return fetchJson(input, { ...init, headers });
 }

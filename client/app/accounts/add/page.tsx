@@ -1,6 +1,6 @@
 "use client";
 
-import { BASE_URL_BACKEND } from "@/app/common/constants";
+import { BASE_URL_BACKEND } from "@/common/constants";
 import { FormikInput } from "@/components/FormikInput";
 import { FormikProvider, useFormik } from "formik";
 

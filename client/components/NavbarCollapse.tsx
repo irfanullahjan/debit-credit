@@ -1,6 +1,6 @@
 "use client";
 
-import { BASE_URL_BACKEND } from "@/app/common/constants";
+import { BASE_URL_BACKEND } from "@/common/constants";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Collapse, Nav, NavbarText, NavbarToggler, NavLink } from "reactstrap";
@@ -46,7 +46,7 @@ export function NavbarCollapse({
           <NavLinks
             links={[
               { href: "/user/login", label: "Login" },
-              { href: "/auth/signup", label: "Signup" },
+              { href: "/user/signup", label: "Signup" },
             ]}
           />
         </Nav>

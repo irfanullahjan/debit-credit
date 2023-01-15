@@ -1,7 +1,7 @@
 import { Table } from "@/components/reactstrap";
 import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import Link from "next/link";
-import { BASE_URL_BACKEND } from "../common/constants";
+import { BASE_URL_BACKEND } from "../../common/constants";
 
 export default async function AccountsPage() {
   const accounts = await fetchWithAuth(`${BASE_URL_BACKEND}/ledger/account`);

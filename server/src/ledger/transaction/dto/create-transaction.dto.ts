@@ -4,6 +4,9 @@ import { CreateTransactionEntryDto } from './create-transaction-entry.dto';
 
 export class CreateTransactionDto {
   @IsNotEmpty()
+  date: Date;
+
+  @IsNotEmpty()
   description: string;
 
   @IsOptional()

@@ -1,4 +1,6 @@
+import { BASE_URL_BACKEND } from "@/common/constants";
 import { Table } from "@/components/reactstrap";
+import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import Link from "next/link";
 
 export default async function Transaction({
@@ -7,8 +9,7 @@ export default async function Transaction({
   params: { id: string };
 }) {
   const { id } = params;
-  const data = await fetch(`http://localhost:3001/transaction/${id}`);
-  const transaction = await data.json();
+  const transaction = await fetchWithAuth(`${BASE_URL_BACKEND}/ledger/transaction/${id}`);
   return (
     <div>
       <h1>
@@ -25,7 +26,7 @@ export default async function Transaction({
           </tr>
         </thead>
         <tbody>
-          {transaction.entries.map((entry: any) => (
+          {transaction.entries?.map((entry: any) => (
             <tr key={entry.id}>
               <td>{entry.id}</td>
               <td>{entry.date}</td>
