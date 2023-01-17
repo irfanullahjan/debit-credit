@@ -1,6 +1,7 @@
 "use client";
 
-import { BASE_URL_BACKEND } from "@/common/constants";
+import { BASE_URL } from "@/common/constants";
+import { fetchClientSide } from "@/utils/fetchClientSide";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Collapse, Nav, NavbarText, NavbarToggler, NavLink } from "reactstrap";
@@ -29,7 +30,7 @@ export function NavbarCollapse({
           <Nav className="me-auto" navbar>
             <NavLink
               onClick={() =>
-                fetch(`${BASE_URL_BACKEND}/auth/logout`, {
+                fetchClientSide("/auth/logout", {
                   method: "POST",
                 }).then(() => {
                   router.push("/");

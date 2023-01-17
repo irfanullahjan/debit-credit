@@ -2,14 +2,14 @@ import "./globals.scss";
 import { Navbar } from "./components/Navbar";
 import { Main } from "@/app/components/Main";
 import { Realtime } from "@/app/components/Realtime";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import { fetchServerSide } from "@/utils/fetchServerSide";
 
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const user = await fetchWithAuth("http://localhost:3001/auth/current-user");
+  const user = await fetchServerSide("/auth/current-user");
   return (
     <html lang="en">
       {/*

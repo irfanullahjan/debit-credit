@@ -1,6 +1,6 @@
-import { BASE_URL_BACKEND } from "@/common/constants";
+import { BASE_URL } from "@/common/constants";
 import { Table } from "@/app/components/reactstrap";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
+import { fetchServerSide } from "@/utils/fetchServerSide";
 import Link from "next/link";
 
 export default async function Transaction({
@@ -9,7 +9,7 @@ export default async function Transaction({
   params: { id: string };
 }) {
   const { id } = params;
-  const transaction = await fetchWithAuth(`${BASE_URL_BACKEND}/ledger/transaction/${id}`);
+  const transaction = await fetchServerSide(`/ledger/transaction/${id}`);
   return (
     <div>
       <h1>

@@ -1,9 +1,10 @@
 "use client";
 
-import { BASE_URL_BACKEND } from "@/common/constants";
+import { BASE_URL } from "@/common/constants";
 import { FormikInput } from "@/app/components/FormikInput";
 import { FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
+import { fetchClientSide } from "@/utils/fetchClientSide";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -13,14 +14,19 @@ export default function LoginPage() {
       password: "",
     },
     onSubmit: async (values) => {
-      fetch(`${BASE_URL_BACKEND}/auth/login`, {
+      fetchClientSide("/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
       })
-        .then((res) => res.ok && router.refresh())
+        .then((res) => {
+          if (res.ok) {
+            router.refresh();
+            router.push("/");
+          }
+        })
         .catch((err) => {
           console.error(err);
         });

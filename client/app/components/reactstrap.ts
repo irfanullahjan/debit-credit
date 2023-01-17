@@ -9,5 +9,6 @@ export {
   NavbarBrand,
   NavbarToggler,
   Row,
+  Spinner,
   Table,
 } from "reactstrap";

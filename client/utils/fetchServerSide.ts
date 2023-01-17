@@ -1,10 +1,13 @@
+import { BASE_URL } from "@/common/constants";
 import { cookies } from "next/headers";
 import { fetchJson } from "./fetchJson";
 
-export function fetchWithAuth(input: RequestInfo | URL, init?: RequestInit) {
+export function fetchServerSide(input: RequestInfo | URL, init?: RequestInit) {
+  if (typeof input === "string" && !input.startsWith("http")) {
+    input = new URL(`/api${input}`, BASE_URL);
+  }
   const headers = new Headers(init?.headers);
   const jwt = cookies().get("jwt")?.value;
-  console.log("jwt", jwt);
   if (jwt) {
     headers.set("Authorization", `Bearer ${jwt}`);
   }
