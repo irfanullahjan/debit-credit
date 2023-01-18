@@ -1,9 +1,3 @@
-import {Spinner} from '@/app/components/reactstrap';
+import { Loading } from "@/app/components/Loading";
 
-export default function Loading() {
-  return (
-    <div className="loading">
-      <Spinner />
-    </div>
-  );
-}
+export default Loading;

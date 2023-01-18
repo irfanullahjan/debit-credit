@@ -7,8 +7,7 @@ export default async function Account({ params }: { params: { id: number } }) {
   const { id } = params;
   const account = await fetchServerSide(`/ledger/account/${id}`);
   return (
-    <div>
-      <h1>{account.name}</h1>
+    <div className="border border-dark p-2">
       <Table>
         <thead>
           <tr>

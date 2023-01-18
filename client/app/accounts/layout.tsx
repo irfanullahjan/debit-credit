@@ -1,12 +1,24 @@
+import { fetchServerSide } from "@/utils/fetchServerSide";
 import Link from "next/link";
+import { Table } from "@/app/components/reactstrap";
+import { AccountsTable } from "./AccountsTable";
 
-export default function Layout(props: any) {
+export default async function Layout(props: any) {
   const { children } = props;
+  const accounts = await fetchServerSide("/ledger/account");
   return (
     <div>
       <h1>Accounts</h1>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(0, 1fr))",
+        }}
+      >
+        <AccountsTable accounts={accounts} />
+        {children}
+      </div>
       <Link href="/accounts/add">Add Account</Link>
-      {children}
     </div>
   );
 }
