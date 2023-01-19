@@ -1,12 +1,24 @@
 "use client";
 
-import { BASE_URL } from "@/common/constants";
 import { FormikInput } from "@/app/components/FormikInput";
 import { FormikErrors, FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { fetchClientSide } from "@/utils/fetchClientSide";
+import { useSubmit } from "@/hooks/useSubmit";
+import { Button, Spinner } from "reactstrap";
 
 export default function LoginPage() {
+  const { submit, submitting, feedback } = useSubmit(fetchClientSide, {
+    201: {
+      message: "Account created successfully, redirecting to login page...",
+      intent: "success",
+    },
+    400: {
+      message: "Invalid request",
+      intent: "warning",
+    },
+  });
+
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -16,17 +28,15 @@ export default function LoginPage() {
       password2: "",
     },
     onSubmit: async (values) => {
-      fetchClientSide("/user", {
+      submit("/userh", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
       })
-        .then((res) => res.ok && router.refresh())
-        .catch((err) => {
-          console.error(err);
-        });
+        .then((res) => res.status === 201 && router.push("/user/login"))
+        .catch((err) => console.error(err));
     },
     validate: (values) => {
       const errors: FormikErrors<typeof values> = {};
@@ -54,7 +64,12 @@ export default function LoginPage() {
           <FormikInput name="email" label="Email" />
           <FormikInput name="password" label="Password" />
           <FormikInput name="password2" label="Confirm Password" />
-          <button type="submit">Submit</button>
+          {feedback && (
+            <p className={`text-${feedback.intent}`}>{feedback.message}</p>
+          )}
+          <Button type="submit" disabled={submitting}>
+            Submit <Spinner size="sm" color="light" hidden={!submitting} />
+          </Button>
         </form>
       </FormikProvider>
     </div>
