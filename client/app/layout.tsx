@@ -3,6 +3,9 @@ import { Navbar } from "./components/Navbar";
 import { Main } from "@/app/components/Main";
 import { Realtime } from "@/app/components/Realtime";
 import { fetchServerSide } from "@/utils/fetchServerSide";
+import { useAlertsStore } from "@/common/stores/alerts.store";
+import { Alert } from "@/app/components/reactstrap";
+import { Alerts } from "./components/Alerts";
 
 export default async function RootLayout({
   children,
@@ -19,6 +22,7 @@ export default async function RootLayout({
       <head />
       <body>
         <Navbar user={user} />
+        <Alerts />
         <Realtime />
         <Main>{children}</Main>
       </body>

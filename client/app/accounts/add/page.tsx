@@ -1,6 +1,5 @@
 "use client";
 
-import { BASE_URL } from "@/common/constants";
 import { FormikInput } from "@/app/components/FormikInput";
 import { FormikProvider, useFormik } from "formik";
 import { fetchClientSide } from "@/utils/fetchClientSide";

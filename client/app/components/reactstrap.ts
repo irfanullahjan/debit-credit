@@ -1,6 +1,7 @@
 "use client";
 
 export {
+  Alert,
   Col,
   Collapse,
   Container,

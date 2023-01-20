@@ -1,7 +1,15 @@
 import { useState } from "react";
+import { useAlertsStore } from "../stores/alerts.store";
+
+export enum Intent {
+  PRIMARY = "primary",
+  SUCCESS = "success",
+  WARNING = "warning",
+  DANGER = "danger",
+}
 
 type Feedback = {
-  intent: "success" | "warning" | "danger" | "info";
+  intent: Intent;
   message: string;
 };
 
@@ -9,20 +17,20 @@ type FeedbackMap = Record<number, Feedback>;
 
 export function useSubmit(fetcher?: typeof fetch, feedbackMap?: FeedbackMap) {
   const [submitting, setSubmitting] = useState(false);
-  const [feedback, setFeedback] = useState<Feedback>();
+  const addAlert = useAlertsStore((state) => state.addAlert);
 
   const submit = async (input: RequestInfo | URL, init?: RequestInit) => {
     setSubmitting(true);
     const res = await (fetcher ?? fetch)(input, init);
     if (!res.ok) {
-      setFeedback(
+      addAlert(
         feedbackMap?.[res.status] ?? {
-          intent: "danger",
+          intent: Intent.DANGER,
           message: res.statusText,
         }
       );
-    } else {
-      setFeedback(feedbackMap?.[res.status]);
+    } else if (feedbackMap?.[res.status]) {
+      addAlert(feedbackMap[res.status]);
     }
     setSubmitting(false);
     return res;
@@ -31,6 +39,5 @@ export function useSubmit(fetcher?: typeof fetch, feedbackMap?: FeedbackMap) {
   return {
     submit,
     submitting,
-    feedback,
   };
 }
