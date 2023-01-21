@@ -1,36 +1,19 @@
 import { useState } from "react";
-import { useAlertsStore } from "../stores/alerts.store";
-
-export enum Intent {
-  PRIMARY = "primary",
-  SUCCESS = "success",
-  WARNING = "warning",
-  DANGER = "danger",
-}
+import { Intent, useAlertsStore } from "../stores/alerts.store";
 
 type Feedback = {
   intent: Intent;
   message: string;
 };
 
-export enum FeedbackBasis {
-  STATUS = "status",
-  OUTCOME = "outcome",
-}
-
-enum Outcome {
-  SUCCESS = "success",
-  REJECTION = "rejection",
-}
-
 type FeedbackInput =
   | {
-      basedOn: FeedbackBasis.STATUS;
+      basedOn: "status";
       map: Record<number, Feedback>;
     }
   | {
-      basedOn: FeedbackBasis.OUTCOME;
-      map: Partial<Record<Outcome, Feedback>>;
+      basedOn: "outcome";
+      map: Partial<Record<"success" | "rejection", Feedback>>;
     };
 
 export function useFetch({
@@ -48,15 +31,15 @@ export function useFetch({
     const res = await (fetcher ?? fetch)(input, init);
     let alert: Feedback | undefined;
     switch (feedback?.basedOn) {
-      case FeedbackBasis.OUTCOME:
-        alert = feedback.map[res.ok ? Outcome.SUCCESS : Outcome.REJECTION];
+      case "outcome":
+        alert = feedback.map[res.ok ? "success" : "rejection"];
         break;
-      case FeedbackBasis.STATUS:
+      case "status":
         alert = feedback.map[res.status];
         break;
     }
     if (!res.ok && !alert) {
-      alert = { intent: Intent.DANGER, message: res.statusText };
+      alert = { intent: "danger", message: res.statusText };
     }
     if (alert) {
       addAlert(alert);

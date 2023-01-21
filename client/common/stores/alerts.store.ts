@@ -1,12 +1,6 @@
 import { create } from "zustand";
 
-export enum Intent {
-  PRIMARY = "primary",
-  SUCCESS = "success",
-  WARNING = "warning",
-  DANGER = "danger",
-}
-
+export type Intent = "primary" | "success" | "warning" | "danger";
 export interface IAlert {
   id: string;
   intent: Intent;

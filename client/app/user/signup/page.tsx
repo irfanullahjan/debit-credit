@@ -4,18 +4,18 @@ import { FormikInput } from "@/app/components/FormikInput";
 import { FormikErrors, FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { fetchClientSide } from "@/utils/fetchClientSide";
-import { FeedbackBasis, Intent, useFetch } from "@/common/hooks/useFetch";
+import { useFetch } from "@/common/hooks/useFetch";
 import { Button, Spinner } from "reactstrap";
 
 export default function LoginPage() {
   const [submit, submitting] = useFetch({
     fetcher: fetchClientSide,
     feedback: {
-      basedOn: FeedbackBasis.STATUS,
+      basedOn: "status",
       map: {
         201: {
           message: "Sign up successful",
-          intent: Intent.SUCCESS,
+          intent: "success"
         },
       },
     },
