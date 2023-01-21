@@ -28,7 +28,7 @@ export default function LoginPage() {
       password2: "",
     },
     onSubmit: async (values) => {
-      submit("/userh", {
+      submit("/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,22 +38,22 @@ export default function LoginPage() {
         .then((res) => res.status === 201 && router.push("/user/login"))
         .catch((err) => console.error(err));
     },
-    validate: (values) => {
-      const errors: FormikErrors<typeof values> = {};
-      if (!values.name) {
-        errors.name = "Required";
-      }
-      if (!values.email) {
-        errors.email = "Required";
-      }
-      if (!values.password) {
-        errors.password = "Required";
-      }
-      if (values.password !== values.password2) {
-        errors.password2 = "Passwords must match";
-      }
-      return errors;
-    },
+    // validate: (values) => {
+    //   const errors: FormikErrors<typeof values> = {};
+    //   if (!values.name) {
+    //     errors.name = "Required";
+    //   }
+    //   if (!values.email) {
+    //     errors.email = "Required";
+    //   }
+    //   if (!values.password) {
+    //     errors.password = "Required";
+    //   }
+    //   if (values.password !== values.password2) {
+    //     errors.password2 = "Passwords must match";
+    //   }
+    //   return errors;
+    // },
   });
   return (
     <div>

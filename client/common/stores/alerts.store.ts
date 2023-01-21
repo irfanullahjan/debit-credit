@@ -8,7 +8,7 @@ export enum Intent {
 }
 
 export interface IAlert {
-  id: number;
+  id: string;
   intent: Intent;
   message: string;
 }
@@ -16,15 +16,18 @@ export interface IAlert {
 interface IAlertsStore {
   alerts: IAlert[];
   addAlert: (alert: Omit<IAlert, "id">) => void;
-  removeAlert: (alert: number) => void;
+  removeAlert: (id: IAlert["id"]) => void;
 }
 
 export const useAlertsStore = create<IAlertsStore>((set) => ({
   alerts: [],
   addAlert: (alert) =>
-    set((state) => ({
-      alerts: [...state.alerts, { ...alert, id: Date.now() }],
-    })),
+    set(({ alerts }) => {
+      const id = alerts.length > 0 ? +alerts[alerts.length - 1].id + 1 : 1;
+      return {
+        alerts: [...alerts, { ...alert, id: id.toString() }],
+      };
+    }),
   removeAlert: (id) =>
     set((state) => ({
       alerts: state.alerts.filter((a) => a.id !== id),
