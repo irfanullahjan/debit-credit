@@ -13,31 +13,57 @@ type Feedback = {
   message: string;
 };
 
-type FeedbackMap = Record<number, Feedback>;
+export enum FeedbackBasis {
+  STATUS = "status",
+  OUTCOME = "outcome",
+}
 
-export function useFetch(fetcher?: typeof fetch, feedbackMap?: FeedbackMap) {
+enum Outcome {
+  SUCCESS = "success",
+  REJECTION = "rejection",
+}
+
+type FeedbackInput =
+  | {
+      basedOn: FeedbackBasis.STATUS;
+      map: Record<number, Feedback>;
+    }
+  | {
+      basedOn: FeedbackBasis.OUTCOME;
+      map: Partial<Record<Outcome, Feedback>>;
+    };
+
+export function useFetch({
+  fetcher,
+  feedback,
+}: { fetcher?: typeof fetch; feedback?: FeedbackInput } = {}) {
   const [loading, setLoading] = useState(false);
   const addAlert = useAlertsStore((state) => state.addAlert);
 
-  const fetchWithAlerts = async (
+  const statefulFetch = async (
     input: RequestInfo | URL,
     init?: RequestInit
   ) => {
     setLoading(true);
     const res = await (fetcher ?? fetch)(input, init);
-    if (!res.ok) {
-      addAlert(
-        feedbackMap?.[res.status] ?? {
-          intent: Intent.DANGER,
-          message: res.statusText,
-        }
-      );
-    } else if (feedbackMap?.[res.status]) {
-      addAlert(feedbackMap[res.status]);
+    let alert: Feedback | undefined;
+    switch (feedback?.basedOn) {
+      case FeedbackBasis.OUTCOME:
+        alert = feedback.map[res.ok ? Outcome.SUCCESS : Outcome.REJECTION];
+        break;
+      case FeedbackBasis.STATUS:
+        alert = feedback.map[res.status];
+        break;
+    }
+    if (!res.ok && !alert) {
+      alert = { intent: Intent.DANGER, message: res.statusText };
+    }
+    if (alert) {
+      addAlert(alert);
     }
     setLoading(false);
     return res;
   };
 
-  return [fetchWithAlerts, loading] as const;
+  return [statefulFetch, loading] as const;
 }

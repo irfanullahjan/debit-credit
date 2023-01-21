@@ -1,6 +1,6 @@
 "use client";
 
-import { useFetch } from "@/common/hooks/useFetch";
+import { FeedbackBasis, useFetch } from "@/common/hooks/useFetch";
 import { Intent } from "@/common/stores/alerts.store";
 import { fetchClientSide } from "@/utils/fetchClientSide";
 import { useRouter } from "next/navigation";
@@ -18,10 +18,16 @@ export function NavbarCollapse({
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
-  const [ submit ] = useFetch(fetchClientSide, {
-    201: {
-      message: "Logout successful",
-      intent: Intent.SUCCESS,
+  const [submit] = useFetch({
+    fetcher: fetchClientSide,
+    feedback: {
+      basedOn: FeedbackBasis.OUTCOME,
+      map: {
+        success: {
+          message: "Logout successful",
+          intent: Intent.SUCCESS,
+        },
+      },
     },
   });
   return (
