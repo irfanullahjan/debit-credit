@@ -1,12 +1,24 @@
 "use client";
 
-import { BASE_URL } from "@/common/constants";
 import { FormikInput } from "@/app/components/FormikInput";
 import { FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { fetchClientSide } from "@/utils/fetchClientSide";
+import { Button, Spinner } from "reactstrap";
+import { useFetch } from "@/common/hooks/useFetch";
+import { Intent } from "@/common/stores/alerts.store";
 
 export default function LoginPage() {
+  const [submit, submitting] = useFetch(fetchClientSide, {
+    200: {
+      message: "Login successful",
+      intent: Intent.SUCCESS,
+    },
+    400: {
+      message: "Invalid request",
+      intent: Intent.DANGER,
+    },
+  });
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -14,7 +26,7 @@ export default function LoginPage() {
       password: "",
     },
     onSubmit: async (values) => {
-      fetchClientSide("/auth/login", {
+      submit("/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,11 +46,14 @@ export default function LoginPage() {
   });
   return (
     <div>
+      <h1>Login</h1>
       <FormikProvider value={formik}>
         <form onSubmit={formik.handleSubmit}>
           <FormikInput name="email" label="Email" />
           <FormikInput name="password" label="Password" />
-          <button type="submit">Submit</button>
+          <Button type="submit" disabled={submitting}>
+            Submit <Spinner size="sm" color="light" hidden={!submitting} />
+          </Button>
         </form>
       </FormikProvider>
     </div>

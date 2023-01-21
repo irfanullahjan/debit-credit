@@ -4,11 +4,11 @@ import { FormikInput } from "@/app/components/FormikInput";
 import { FormikErrors, FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { fetchClientSide } from "@/utils/fetchClientSide";
-import { Intent, useSubmit } from "@/common/hooks/useSubmit";
+import { Intent, useFetch } from "@/common/hooks/useFetch";
 import { Button, Spinner } from "reactstrap";
 
 export default function LoginPage() {
-  const { submit, submitting } = useSubmit(fetchClientSide, {
+  const [submit, submitting] = useFetch(fetchClientSide, {
     201: {
       message: "Account created successfully, redirecting to login page...",
       intent: Intent.SUCCESS,

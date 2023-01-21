@@ -5,7 +5,7 @@ import { Alert as RsAlert } from "@/app/components/reactstrap";
 import styles from "./Alerts.module.scss";
 import { AlertProps } from "reactstrap";
 import { useEffect } from "react";
-import { ALERT_TIMEOUT } from "@/common/constants";
+import { TIMEOUT_ALERT } from "@/common/constants";
 
 export function Alerts() {
   const { alerts, removeAlert } = useAlertsStore((store) => ({
@@ -33,7 +33,7 @@ function Alert(props: AlertProps & { id: string }) {
   const removeAlert = useAlertsStore((store) => store.removeAlert);
 
   useEffect(() => {
-    const timeout = setTimeout(() => removeAlert(props.id), ALERT_TIMEOUT);
+    const timeout = setTimeout(() => removeAlert(props.id), TIMEOUT_ALERT);
     return () => clearTimeout(timeout);
   }, [props.id, removeAlert]);
 

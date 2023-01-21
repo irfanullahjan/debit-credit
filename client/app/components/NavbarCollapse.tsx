@@ -1,6 +1,7 @@
 "use client";
 
-import { BASE_URL } from "@/common/constants";
+import { useFetch } from "@/common/hooks/useFetch";
+import { Intent } from "@/common/stores/alerts.store";
 import { fetchClientSide } from "@/utils/fetchClientSide";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -16,6 +17,13 @@ export function NavbarCollapse({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+
+  const [ submit ] = useFetch(fetchClientSide, {
+    201: {
+      message: "Logout successful",
+      intent: Intent.SUCCESS,
+    },
+  });
   return (
     <>
       <NavbarToggler onClick={() => setIsOpen(!isOpen)} />
@@ -30,7 +38,7 @@ export function NavbarCollapse({
           <Nav className="me-auto" navbar>
             <NavLink
               onClick={() =>
-                fetchClientSide("/auth/logout", {
+                submit("/auth/logout", {
                   method: "POST",
                 }).then(() => {
                   router.push("/");

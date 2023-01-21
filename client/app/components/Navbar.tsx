@@ -10,10 +10,12 @@ import { NavbarCollapse } from "./NavbarCollapse";
 import { LinkType } from "./NavLinks";
 
 export function Navbar({ user }: { user: object }) {
-  const links: LinkType[] = [
-    { href: "/accounts", label: "Accounts" },
-    { href: "/transactions", label: "Transactions" },
-  ];
+  const links: LinkType[] = user
+    ? [
+        { href: "/accounts", label: "Accounts" },
+        { href: "/transactions", label: "Transactions" },
+      ]
+    : [];
 
   return (
     <div className="bg-dark">
