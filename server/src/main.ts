@@ -4,10 +4,12 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { TypeOrmExceptionFilter } from './common/typeorm-exception.filter';
 import * as cookieParser from 'cookie-parser';
+import { DelayMiddleware } from './common/middlewares/delay.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const { httpAdapter } = app.get(HttpAdapterHost);
+  app.use(new DelayMiddleware().use);
   app.use(cookieParser());
   app.useGlobalFilters(new TypeOrmExceptionFilter(httpAdapter));
   app.useGlobalPipes(

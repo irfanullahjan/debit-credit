@@ -1,3 +1,4 @@
+import { fetchClientSide } from "@/utils/fetchClientSide";
 import { useState } from "react";
 import { Intent, useAlertsStore } from "../stores/alerts.store";
 
@@ -17,7 +18,7 @@ type FeedbackInput =
     };
 
 export function useFetch({
-  fetcher,
+  fetcher = fetchClientSide,
   feedback,
 }: { fetcher?: typeof fetch; feedback?: FeedbackInput } = {}) {
   const [loading, setLoading] = useState(false);
@@ -28,24 +29,31 @@ export function useFetch({
     init?: RequestInit
   ) => {
     setLoading(true);
-    const res = await (fetcher ?? fetch)(input, init);
-    let alert: Feedback | undefined;
-    switch (feedback?.basedOn) {
-      case "outcome":
-        alert = feedback.map[res.ok ? "success" : "rejection"];
-        break;
-      case "status":
-        alert = feedback.map[res.status];
-        break;
-    }
-    if (!res.ok && !alert) {
-      alert = { intent: "danger", message: res.statusText };
-    }
-    if (alert) {
-      addAlert(alert);
-    }
-    setLoading(false);
-    return res;
+    return fetcher(input, init)
+      .then((res) => {
+        let alert: Feedback | undefined;
+        switch (feedback?.basedOn) {
+          case "outcome":
+            alert = feedback.map[res.ok ? "success" : "rejection"];
+            break;
+          case "status":
+            alert = feedback.map[res.status];
+            break;
+        }
+        if (!res.ok && !alert) {
+          alert = { intent: "danger", message: res.statusText };
+        }
+        if (alert) {
+          addAlert(alert);
+        }
+        setLoading(false);
+        return res;
+      })
+      .catch((err) => {
+        addAlert({ intent: "danger", message: err.message });
+        setLoading(false);
+        throw err;
+      });
   };
 
   return [statefulFetch, loading] as const;

@@ -3,13 +3,11 @@
 import { FormikInput } from "@/app/components/FormikInput";
 import { FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
-import { fetchClientSide } from "@/utils/fetchClientSide";
 import { Button, Spinner } from "reactstrap";
 import { useFetch } from "@/common/hooks/useFetch";
 
 export default function LoginPage() {
   const [submit, submitting] = useFetch({
-    fetcher: fetchClientSide,
     feedback: {
       basedOn: "status",
       map: {
@@ -45,6 +43,7 @@ export default function LoginPage() {
         });
     },
   });
+
   return (
     <div>
       <h1>Login</h1>

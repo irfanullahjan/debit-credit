@@ -12,7 +12,7 @@ import { EventsModule } from './events/events.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { LedgerModule } from './ledger/api.module';
-import { LoggingMiddleware } from './common/loggin.middleware';
+import { LoggingMiddleware } from './common/middlewares/logging.middleware';
 
 @Module({
   imports: [

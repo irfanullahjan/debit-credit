@@ -1,6 +1,5 @@
 import { fetchServerSide } from "@/utils/fetchServerSide";
 import Link from "next/link";
-import { Table } from "@/app/components/reactstrap";
 import { AccountsTable } from "./AccountsTable";
 
 export default async function Layout(props: any) {
