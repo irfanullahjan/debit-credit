@@ -1,10 +1,10 @@
 "use client";
 
-import { FormikInput } from "@/app/components/FormikInput";
 import { FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { Button, Spinner } from "reactstrap";
-import { useFetch } from "@/common/hooks/useFetch";
+import { useFetch } from "../../../hooks/useFetch";
+import { FormikInput } from "../../components/FormikInput";
 
 export default function LoginPage() {
   const [submit, submitting] = useFetch({
@@ -13,7 +13,7 @@ export default function LoginPage() {
       map: {
         200: {
           message: "Login successful",
-          intent: "success"
+          intent: "success",
         },
       },
     },

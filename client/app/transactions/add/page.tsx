@@ -1,4 +1,4 @@
-import { fetchServerSide } from "@/utils/fetchServerSide";
+import { fetchServerSide } from "../../../utils/fetchServerSide";
 import { AddTransactionForm } from "./AddTransactionForm";
 
 export default async function AddTransactionPage() {

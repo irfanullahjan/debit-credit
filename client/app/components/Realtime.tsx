@@ -16,6 +16,6 @@ export function Realtime() {
       socket.off("transaction");
     };
   }, [refresh]);
-  
+
   return null;
 }

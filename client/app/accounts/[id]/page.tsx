@@ -1,13 +1,12 @@
-import { BASE_URL } from "@/common/constants";
-import { Table } from "@/app/components/reactstrap";
-import { fetchServerSide } from "@/utils/fetchServerSide";
 import Link from "next/link";
+import { fetchServerSide } from "../../../utils/fetchServerSide";
+import { Table } from "../../components/reactstrap";
 
 export default async function Account({ params }: { params: { id: number } }) {
   const { id } = params;
   const account = await fetchServerSide(`/ledger/account/${id}`);
   return (
-    <div className="border border-dark p-2">
+    <div className="rounded shadow">
       <Table>
         <thead>
           <tr>

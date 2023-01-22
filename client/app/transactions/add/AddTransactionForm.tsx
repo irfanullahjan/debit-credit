@@ -1,9 +1,9 @@
 "use client";
 
-import { FormikInput } from "@/app/components/FormikInput";
 import { FieldArray, FormikProvider, useFormik } from "formik";
 import { Button, Col, Row, Spinner } from "reactstrap";
-import { useFetch } from "@/common/hooks/useFetch";
+import { useFetch } from "../../../hooks/useFetch";
+import { FormikInput } from "../../components/FormikInput";
 
 export function AddTransactionForm({ accounts }: any) {
   const [submit, submitting] = useFetch({

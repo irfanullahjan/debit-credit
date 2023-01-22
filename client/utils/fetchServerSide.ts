@@ -1,5 +1,5 @@
-import { BASE_URL } from "@/common/constants";
 import { cookies } from "next/headers";
+import { BASE_URL } from "../constants";
 import { fetchJson } from "./fetchJson";
 
 export function fetchServerSide(input: RequestInfo | URL, init?: RequestInit) {

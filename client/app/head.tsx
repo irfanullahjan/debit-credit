@@ -6,5 +6,5 @@ export default function Head() {
       <meta name="description" content="A book keeping web application" />
       <link rel="icon" href="/favicon.ico" />
     </>
-  )
+  );
 }

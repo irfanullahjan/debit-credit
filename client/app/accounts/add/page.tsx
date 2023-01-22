@@ -1,10 +1,9 @@
 "use client";
 
-import { FormikInput } from "@/app/components/FormikInput";
 import { FormikProvider, useFormik } from "formik";
-import { useFetch } from "@/common/hooks/useFetch";
-import { Button } from "@/app/components/Button";
-import { Spinner } from "reactstrap";
+import { Button, Spinner } from "reactstrap";
+import { useFetch } from "../../../hooks/useFetch";
+import { FormikInput } from "../../components/FormikInput";
 
 export default function AccountAddPage() {
   const [submit, submitting] = useFetch({

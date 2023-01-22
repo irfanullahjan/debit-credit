@@ -1,6 +1,6 @@
-import { fetchClientSide } from "@/utils/fetchClientSide";
 import { useState } from "react";
 import { Intent, useAlertsStore } from "../stores/alerts.store";
+import { fetchClientSide } from "../utils/fetchClientSide";
 
 type Feedback = {
   intent: Intent;

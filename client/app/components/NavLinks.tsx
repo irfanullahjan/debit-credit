@@ -8,7 +8,7 @@ export type LinkType = {
   label: string;
 };
 
-export function NavLinks(props : { links: LinkType[] }) {
+export function NavLinks(props: { links: LinkType[] }) {
   const { links } = props;
   const pathname = usePathname();
   return (

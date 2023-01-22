@@ -1,11 +1,10 @@
-import "./globals.scss";
-import { Navbar } from "./components/Navbar";
-import { Main } from "@/app/components/Main";
-import { Realtime } from "@/app/components/Realtime";
-import { fetchServerSide } from "@/utils/fetchServerSide";
-import { useAlertsStore } from "@/common/stores/alerts.store";
-import { Alert } from "@/app/components/reactstrap";
+import { fetchServerSide } from "../utils/fetchServerSide";
 import { Alerts } from "./components/Alerts";
+import { Main } from "./components/Main";
+import { Navbar } from "./components/Navbar";
+import { Realtime } from "./components/Realtime";
+
+import "./globals.scss";
 
 export default async function RootLayout({
   children,

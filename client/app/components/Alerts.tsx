@@ -1,11 +1,10 @@
 "use client";
 
-import { useAlertsStore } from "@/common/stores/alerts.store";
-import { Alert as RsAlert } from "@/app/components/reactstrap";
-import styles from "./Alerts.module.scss";
-import { AlertProps } from "reactstrap";
 import { useEffect } from "react";
-import { TIMEOUT_ALERT } from "@/common/constants";
+import { Alert as RsAlert, AlertProps } from "reactstrap";
+import { TIMEOUT_ALERT } from "../../constants";
+import { useAlertsStore } from "../../stores/alerts.store";
+import styles from "./Alerts.module.scss";
 
 export function Alerts() {
   const { alerts, removeAlert } = useAlertsStore((store) => ({
@@ -17,8 +16,9 @@ export function Alerts() {
     <div className={styles.Alerts}>
       {alerts.map((alert) => (
         <Alert
-          id={alert.id}
           key={alert.id}
+          id={alert.id}
+          className={styles.Alert}
           color={alert.intent}
           toggle={() => removeAlert(alert.id)}
         >

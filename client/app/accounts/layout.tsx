@@ -1,5 +1,5 @@
-import { fetchServerSide } from "@/utils/fetchServerSide";
 import Link from "next/link";
+import { fetchServerSide } from "../../utils/fetchServerSide";
 import { AccountsTable } from "./AccountsTable";
 
 export default async function Layout(props: any) {

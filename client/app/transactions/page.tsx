@@ -1,7 +1,6 @@
-import { Table } from "@/app/components/reactstrap";
-import { fetchServerSide } from "@/utils/fetchServerSide";
 import Link from "next/link";
-import { BASE_URL } from "../../common/constants";
+import { fetchServerSide } from "../../utils/fetchServerSide";
+import { Table } from "../components/reactstrap";
 
 export default async function TransactionsPage() {
   const transactions = await fetchServerSide("/ledger/transaction");

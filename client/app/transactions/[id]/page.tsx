@@ -1,7 +1,6 @@
-import { BASE_URL } from "@/common/constants";
-import { Table } from "@/app/components/reactstrap";
-import { fetchServerSide } from "@/utils/fetchServerSide";
 import Link from "next/link";
+import { fetchServerSide } from "../../../utils/fetchServerSide";
+import { Table } from "../../components/reactstrap";
 
 export default async function Transaction({
   params,
