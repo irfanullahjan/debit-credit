@@ -12,7 +12,7 @@ import { EventsModule } from './events/events.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { LedgerModule } from './ledger/api.module';
-import { LoggingMiddleware } from './common/middlewares/logging.middleware';
+import { RequestLogger } from './common/middlewares/request-logger.middleware';
 
 @Module({
   imports: [
@@ -40,11 +40,11 @@ import { LoggingMiddleware } from './common/middlewares/logging.middleware';
       provide: 'APP_INTERCEPTOR',
       useClass: ClassSerializerInterceptor,
     },
-    LoggingMiddleware,
+    RequestLogger,
   ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggingMiddleware).forRoutes('*');
+    consumer.apply(RequestLogger).forRoutes('/');
   }
 }
