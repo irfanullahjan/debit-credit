@@ -1,7 +1,13 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { fetchServerSide } from "../../utils/fetchServerSide";
 
-export default function Layout(props: any) {
+export default async function Layout(props: any) {
   const { children } = props;
+  const user = await fetchServerSide("/auth/current-user");
+  if (!user?.userId) {
+    redirect("/user/login");
+  }
   return (
     <div>
       <h1>Transactions</h1>

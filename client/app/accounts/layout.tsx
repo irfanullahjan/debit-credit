@@ -1,9 +1,14 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { fetchServerSide } from "../../utils/fetchServerSide";
 import { AccountsTable } from "./AccountsTable";
 
 export default async function Layout(props: any) {
   const { children } = props;
+  const user = await fetchServerSide("/auth/current-user");
+  if (!user?.userId) {
+    redirect("/user/login");
+  }
   const accounts = await fetchServerSide("/ledger/account");
   return (
     <div>
