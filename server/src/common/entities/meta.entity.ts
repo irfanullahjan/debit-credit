@@ -20,13 +20,13 @@ export class Meta {
   @ManyToOne(() => User)
   createdByUser: User;
 
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'int', nullable: true })
   createdByUserId: number;
 
   @ManyToOne(() => User)
   updatedByUser: User;
 
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'int', nullable: true })
   updatedByUserId: number;
 
   @ManyToOne(() => User)

@@ -21,9 +21,8 @@ export class BaseEntity {
       this.meta = new Meta();
     }
     const req = RequestContext.currentContext.req;
-    const userId = req.user?.userId || 0;
-    this.meta.createdByUserId = userId;
-    this.meta.updatedByUserId = userId;
+    this.meta.createdByUserId = req.user?.userId;
+    this.meta.updatedByUserId = req.user?.userId;
   }
 
   @BeforeUpdate()
@@ -32,8 +31,7 @@ export class BaseEntity {
       this.meta = new Meta();
     }
     const req = RequestContext.currentContext.req;
-    const userId = req.user?.userId || 0;
-    this.meta.updatedByUserId = userId;
+    this.meta.updatedByUserId = req.user?.userId;
   }
 
   @BeforeSoftRemove()
@@ -42,7 +40,6 @@ export class BaseEntity {
       this.meta = new Meta();
     }
     const req = RequestContext.currentContext.req;
-    const userId = req.user?.userId || 0;
-    this.meta.deletedByUserId = userId;
+    this.meta.deletedByUserId = req.user?.userId;
   }
 }
