@@ -13,6 +13,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { LedgerModule } from './ledger/api.module';
 import { RequestLogger } from './common/middlewares/request-logger.middleware';
+import { RequestContextModule } from 'nestjs-request-context';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { RequestLogger } from './common/middlewares/request-logger.middleware';
     EventsModule,
     UserModule,
     AuthModule,
+    RequestContextModule,
   ],
   controllers: [AppController],
   providers: [

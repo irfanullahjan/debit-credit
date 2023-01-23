@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { EVENTS } from '../../common/constants';
@@ -17,8 +17,7 @@ export class AccountService {
 
   create(createAccountDto: CreateAccountDto) {
     this.eventsService.server.emit(EVENTS.TRANSACTION, 'create');
-    console.log('createAccountDto', createAccountDto);
-    return this.repository.save(this.repository.create(createAccountDto));
+    return this.repository.save(new Account(createAccountDto));
   }
 
   findAll() {
@@ -36,10 +35,17 @@ export class AccountService {
 
   update(id: number, updateAccountDto: UpdateAccountDto) {
     this.eventsService.server.emit(EVENTS.TRANSACTION, 'update');
-    return this.repository.update(id, updateAccountDto);
+    return this.repository.update(id, new Account(updateAccountDto));
   }
 
-  remove(id: number) {
-    return this.repository.delete(id);
+  async remove(id: number) {
+    const account = await this.findOne(id);
+    if (account) {
+      return this.repository.softRemove(account).then(() => {
+        this.eventsService.server.emit(EVENTS.TRANSACTION, 'remove');
+        return account;
+      });
+    }
+    throw new NotFoundException();
   }
 }

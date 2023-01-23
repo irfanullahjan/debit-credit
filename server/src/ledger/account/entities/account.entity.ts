@@ -4,6 +4,11 @@ import { Entry } from '@/src/ledger/entry/entities/entry.entity';
 
 @Entity()
 export class Account extends BaseEntity {
+  constructor(partial: Partial<Account>) {
+    super();
+    Object.assign(this, partial);
+  }
+
   @Column({ type: 'varchar', length: 255, nullable: false })
   name: string;
 
