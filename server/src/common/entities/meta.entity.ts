@@ -1,7 +1,9 @@
+import { User } from '@/src/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
+  ManyToOne,
   UpdateDateColumn,
 } from 'typeorm';
 
@@ -15,11 +17,20 @@ export class Meta {
   @DeleteDateColumn()
   deletedAt?: Date;
 
-  @Column({ type: 'int', update: false, nullable: false })
+  @ManyToOne(() => User)
+  createdByUser: User;
+
+  @Column({ type: 'int', nullable: false })
   createdByUserId: number;
+
+  @ManyToOne(() => User)
+  updatedByUser: User;
 
   @Column({ type: 'int', nullable: false })
   updatedByUserId: number;
+
+  @ManyToOne(() => User)
+  deletedByUser?: User;
 
   @Column({ type: 'int', nullable: true })
   deletedByUserId?: number;

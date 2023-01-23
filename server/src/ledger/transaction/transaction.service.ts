@@ -29,7 +29,7 @@ export class TransactionService {
   findOne(id: number) {
     return this.repository.findOne({
       where: { id },
-      relations: ['entries', 'entries.account'],
+      relations: ['entries', 'entries.account', 'meta.createdByUser'],
     });
   }
 
