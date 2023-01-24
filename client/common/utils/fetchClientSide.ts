@@ -1,4 +1,4 @@
-import { BASE_URL } from "../constants";
+import { BASE_URL } from "../../constants";
 
 export function fetchClientSide(input: RequestInfo | URL, init?: RequestInit) {
   if (typeof input === "string" && !input.startsWith("http")) {

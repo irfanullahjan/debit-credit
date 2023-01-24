@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { Alert as RsAlert, AlertProps } from "reactstrap";
 import { TIMEOUT_ALERT } from "../../constants";
-import { useAlertsStore } from "../../stores/alerts.store";
+import { useAlertsStore } from "../stores/alerts.store";
 import styles from "./Alerts.module.scss";
 
 export function Alerts() {

@@ -1,13 +1,13 @@
 import Link from "next/link";
+import { NavbarCollapse } from "./NavbarCollapse";
+import { LinkType } from "./NavLinks";
 import {
   Col,
   Container,
   Navbar as ReactstrapNavbar,
   NavbarBrand,
   Row,
-} from "../components/reactstrap";
-import { NavbarCollapse } from "./NavbarCollapse";
-import { LinkType } from "./NavLinks";
+} from "./reactstrap";
 
 export function Navbar({ user }: { user: object }) {
   const links: LinkType[] = user

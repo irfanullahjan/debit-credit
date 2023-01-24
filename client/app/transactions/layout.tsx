@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { fetchServerSide } from "../../utils/fetchServerSide";
+import { fetchServerSide } from "../../common/utils/fetchServerSide";
 
 export default async function Layout(props: any) {
   const { children } = props;

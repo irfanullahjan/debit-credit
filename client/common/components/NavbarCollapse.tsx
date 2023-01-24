@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Collapse, Nav, NavbarText, NavbarToggler, NavLink } from "reactstrap";
-import { useFetch } from "../../hooks/useFetch";
+import { useFetch } from "../hooks/useFetch";
 import { LinkType, NavLinks } from "./NavLinks";
 
 export function NavbarCollapse({

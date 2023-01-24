@@ -1,8 +1,8 @@
-import { fetchServerSide } from "../utils/fetchServerSide";
-import { Alerts } from "./components/Alerts";
-import { Main } from "./components/Main";
-import { Navbar } from "./components/Navbar";
-import { Realtime } from "./components/Realtime";
+import { Alerts } from "../common/components/Alerts";
+import { Main } from "../common/components/Main";
+import { Navbar } from "../common/components/Navbar";
+import { Realtime } from "../common/components/Realtime";
+import { fetchServerSide } from "../common/utils/fetchServerSide";
 
 import "./globals.scss";
 
