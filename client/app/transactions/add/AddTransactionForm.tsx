@@ -1,6 +1,7 @@
 "use client";
 
 import { FieldArray, FormikProvider, useFormik } from "formik";
+import { useEffect } from "react";
 import { Button, Col, Row, Spinner } from "reactstrap";
 import { FormikInput } from "../../../common/components/FormikInput";
 import { useFetch } from "../../../common/hooks/useFetch";
@@ -17,10 +18,13 @@ export function AddTransactionForm({ accounts }: any) {
       },
     },
   });
+
   const emptyEntry = {
-    accountId: "",
-    amount: "",
+    accountId: null,
+    amountDebit: null,
+    amountCredit: null,
   };
+
   const emptyTransaction = {
     date: "",
     description: "",
@@ -39,6 +43,20 @@ export function AddTransactionForm({ accounts }: any) {
     },
   });
 
+  useEffect(() => {
+    const entries = formik.values.entries;
+    const lastEntry = entries[entries.length - 1];
+    if (entries.length > 0 && Object.values(lastEntry).some((v) => v)) {
+      entries.push(emptyEntry);
+    } else {
+      let last = entries.length - 1;
+      while (last > 0 && !Object.values(entries[last]).some((v) => v)) {
+        last--;
+      }
+      entries.splice(last + 2);
+    }
+  }, [formik.values.entries]);
+
   return (
     <FormikProvider value={formik}>
       <form onSubmit={formik.handleSubmit}>
@@ -50,9 +68,9 @@ export function AddTransactionForm({ accounts }: any) {
               {formik.values.entries.map((entry, index) => (
                 <div key={index}>
                   <Row>
-                    <Col>
+                    <Col sm={6}>
                       <FormikInput
-                        label="Account"
+                        label={index === 0 ? "Account" : ""}
                         name={`entries.${index}.accountId`}
                         type="select"
                       >
@@ -64,23 +82,25 @@ export function AddTransactionForm({ accounts }: any) {
                         ))}
                       </FormikInput>
                     </Col>
-                    <Col>
+                    <Col sm={3}>
                       <FormikInput
-                        label="Amount"
-                        name={`entries.${index}.amount`}
+                        className="text-right"
+                        label={index === 0 ? "Debit" : ""}
+                        name={`entries.${index}.amountDebit`}
+                        type="number"
+                      />
+                    </Col>
+                    <Col sm={3}>
+                      <FormikInput
+                        className="text-right"
+                        label={index === 0 ? "Credit" : ""}
+                        name={`entries.${index}.amountCredit`}
                         type="number"
                       />
                     </Col>
                   </Row>
-                  {formik.values.entries.length > 2 && (
-                    <Button onClick={() => arrayHelpers.remove(index)}>
-                      Remove
-                    </Button>
-                  )}
                 </div>
               ))}
-              <br />
-              <Button onClick={() => arrayHelpers.push(emptyEntry)}>Add</Button>
             </div>
           )}
         </FieldArray>
