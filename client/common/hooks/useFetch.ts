@@ -32,6 +32,7 @@ export function useFetch({
     return fetcher(input, init)
       .then(async (res) => {
         let alert: Feedback | undefined;
+        const alerts: Feedback[] = [];
         switch (feedback?.basedOn) {
           case "outcome":
             alert = feedback.map[res.ok ? "success" : "rejection"];
@@ -40,18 +41,32 @@ export function useFetch({
             alert = feedback.map[res.status];
             break;
         }
-        if (!res.ok && !alert) {
-          alert = { intent: "danger", message: res.statusText };
+        if (alert) {
+          alerts.push(alert);
+        }
+        if (!res.ok) {
+          if (alerts.length === 0)
+            alerts.push({
+              intent: "danger",
+              message: `Request failed with status ${res.status} ${res.statusText}`,
+            });
           const body = await res.json();
           if (body.message) {
-            alert.message = body.message?.join
-              ? body.message.join(", ")
-              : body.message;
+            Array.isArray(body.message)
+              ? body.message.forEach((message: string) =>
+                  alerts.push({
+                    intent: "warning",
+                    message,
+                  })
+                )
+              : alerts.push({
+                  intent: "warning",
+                  message: body.message,
+                });
           }
         }
-        if (alert) {
-          addAlert(alert);
-        }
+        console.log(alerts);
+        alerts.forEach((alert) => addAlert(alert));
         setLoading(false);
         return res;
       })
