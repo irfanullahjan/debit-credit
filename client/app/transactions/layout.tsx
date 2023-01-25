@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Button } from "../../common/components/reactstrap";
 import { fetchServerSide } from "../../common/utils/fetchServerSide";
 
 export default async function Layout(props: any) {
@@ -11,7 +12,9 @@ export default async function Layout(props: any) {
   return (
     <div>
       <h1>Transactions</h1>
-      <Link href="/transactions/add">Add Transaction</Link>
+      <Link href="/transactions/add">
+        <Button>Add Transaction</Button>
+      </Link>
       {children}
     </div>
   );

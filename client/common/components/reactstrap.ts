@@ -2,6 +2,7 @@
 
 export {
   Alert,
+  Button,
   Col,
   Collapse,
   Container,

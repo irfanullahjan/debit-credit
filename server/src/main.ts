@@ -14,7 +14,7 @@ async function bootstrap() {
   app.useGlobalFilters(new TypeOrmExceptionFilter(httpAdapter));
   app.useGlobalPipes(
     new ValidationPipe({
-      exceptionFactory: (errors) => new BadRequestException(errors),
+      // exceptionFactory: (errors) => new BadRequestException(errors),
       whitelist: true,
     }),
   );

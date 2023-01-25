@@ -5,6 +5,11 @@ import { fetchServerSide } from "../../../common/utils/fetchServerSide";
 export default async function Account({ params }: { params: { id: number } }) {
   const { id } = params;
   const account = await fetchServerSide(`/ledger/account/${id}`);
+
+  if (id % 3 === 0) {
+    throw new Error("This is a test error");
+  }
+
   return (
     <div className="rounded shadow">
       <Table>

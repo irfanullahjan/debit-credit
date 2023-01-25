@@ -30,7 +30,7 @@ export function useFetch({
   ) => {
     setLoading(true);
     return fetcher(input, init)
-      .then((res) => {
+      .then(async (res) => {
         let alert: Feedback | undefined;
         switch (feedback?.basedOn) {
           case "outcome":
@@ -42,6 +42,12 @@ export function useFetch({
         }
         if (!res.ok && !alert) {
           alert = { intent: "danger", message: res.statusText };
+          const body = await res.json();
+          if (body.message) {
+            alert.message = body.message?.join
+              ? body.message.join(", ")
+              : body.message;
+          }
         }
         if (alert) {
           addAlert(alert);

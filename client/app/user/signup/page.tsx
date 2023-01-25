@@ -2,6 +2,7 @@
 
 import { FormikErrors, FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { Button, Spinner } from "reactstrap";
 import { FormikInput } from "../../../common/components/FormikInput";
 import { useFetch } from "../../../common/hooks/useFetch";
@@ -55,6 +56,13 @@ export default function LoginPage() {
     //   return errors;
     // },
   });
+
+  useEffect(() => {
+    if (formik.values.email.indexOf("@error.com") !== -1) {
+      throw new Error("Test error");
+    }
+  }, [formik.values.email]);
+
   return (
     <div>
       <h1>Sign Up</h1>

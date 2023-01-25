@@ -38,7 +38,15 @@ export function AddTransactionForm({ accounts }: any) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          ...values,
+          entries: values.entries
+            .filter((entry) => entry.accountId)
+            .map((entry) => ({
+              ...entry,
+              amount: entry.amountDebit || entry.amountCredit! * -1,
+            })),
+        }),
       });
     },
   });
