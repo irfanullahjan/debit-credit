@@ -1,30 +1,11 @@
 "use client"; // Error components must be Client components
 
-import { useEffect } from "react";
+import { BaseError } from "../common/components/BaseError";
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error;
-  reset: () => void;
-}) {
-  useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error);
-  }, [error]);
-
+export default function Error(props: { error: Error; reset: () => void }) {
   return (
-    <div style={{ backgroundColor: "lightred" }}>
-      <h2>Something went wrong! [/app/error.tsx]</h2>
-      <button
-        onClick={
-          // Attempt to recover by trying to re-render the segment
-          () => reset()
-        }
-      >
-        Try again
-      </button>
-    </div>
+    <BaseError {...props}>
+      <p>[/app/error.tsx]</p>
+    </BaseError>
   );
 }
