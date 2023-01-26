@@ -5,7 +5,7 @@ import { BaseError } from "../../common/components/BaseError";
 export default function Error(props: { error: Error; reset: () => void }) {
   return (
     <BaseError {...props}>
-      <p>[/app/traerror.tsx]</p>
+      <p>[/app/transactions/error.tsx]</p>
     </BaseError>
   );
 }

@@ -10,9 +10,9 @@ import { useFetch } from "../../../common/hooks/useFetch";
 export default function LoginPage() {
   const [submit, submitting] = useFetch({
     feedback: {
-      basedOn: "status",
+      basedOn: "outcome",
       map: {
-        201: {
+        success: {
           message: "Sign up successful",
           intent: "success",
         },
@@ -56,12 +56,6 @@ export default function LoginPage() {
     //   return errors;
     // },
   });
-
-  useEffect(() => {
-    if (formik.values.email.indexOf("@error.com") !== -1) {
-      throw new Error("Test error");
-    }
-  }, [formik.values.email]);
 
   return (
     <div>

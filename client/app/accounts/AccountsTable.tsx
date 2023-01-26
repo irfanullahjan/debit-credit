@@ -1,13 +1,15 @@
 "use client";
 
+import { sum } from "lodash";
 import { usePathname, useRouter } from "next/navigation";
 import { Table } from "reactstrap";
+import { decimalTwoPlaces } from "../../common/utils/numberUtils";
 
 export function AccountsTable({ accounts }: { accounts: any[] }) {
   const router = useRouter();
   const pathname = usePathname();
   return (
-    <Table>
+    <Table hover>
       <thead>
         <tr>
           <th>Id</th>
@@ -21,20 +23,19 @@ export function AccountsTable({ accounts }: { accounts: any[] }) {
           <tr
             key={account.id}
             onClick={() => router.push(`/accounts/${account.id}`)}
-            style={{ cursor: "pointer" }}
-            className={
-              pathname?.indexOf(`/accounts/${account.id}`) === 0
-                ? "bg-secondary text-white"
-                : ""
-            }
+            style={{
+              cursor: "pointer",
+              backgroundColor:
+                pathname === `/accounts/${account.id}` ? "#f5f5f5" : undefined,
+            }}
           >
             <td>{account.id}</td>
             <td>{account.name}</td>
             <td style={{ textAlign: "right" }}>
-              {account.balanceDebit.toFixed(2)}
+              {decimalTwoPlaces(account.balanceDebit)}
             </td>
             <td style={{ textAlign: "right" }}>
-              {account.balanceCredit.toFixed(2)}
+              {decimalTwoPlaces(account.balanceCredit)}
             </td>
           </tr>
         ))}
@@ -44,20 +45,10 @@ export function AccountsTable({ accounts }: { accounts: any[] }) {
           <th />
           <th>Total</th>
           <th style={{ textAlign: "right" }}>
-            {accounts
-              .reduce(
-                (sum: number, account: any) => sum + account.balanceDebit,
-                0
-              )
-              .toFixed(2)}
+            {decimalTwoPlaces(sum(accounts.map((a) => a.balanceDebit)))}
           </th>
           <th style={{ textAlign: "right" }}>
-            {accounts
-              .reduce(
-                (sum: number, account: any) => sum + account.balanceCredit,
-                0
-              )
-              .toFixed(2)}
+            {decimalTwoPlaces(sum(accounts.map((a) => a.balanceCredit)))}
           </th>
         </tr>
       </tfoot>

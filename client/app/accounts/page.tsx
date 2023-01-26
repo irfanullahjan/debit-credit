@@ -1,3 +1,3 @@
-export default async function AccountsPage() {
+export default function AccountsPage() {
   return null;
 }
