@@ -1,6 +1,6 @@
-import { RequestContext } from 'nestjs-request-context';
-import { decode } from 'jsonwebtoken';
 import { UnauthorizedException } from '@nestjs/common';
+import { decode } from 'jsonwebtoken';
+import { RequestContext } from 'nestjs-request-context';
 
 function getUserId(jwtPayload): number {
   if (jwtPayload) {

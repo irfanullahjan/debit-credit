@@ -1,7 +1,7 @@
-import { Account } from '@/src/company/account/entities/account.entity';
-import { BaseEntity } from '@/src/common/entities/base.entity';
-import { Transaction } from '@/src/company/transaction/entities/transaction.entity';
 import { AfterLoad, Column, Entity, ManyToOne, VirtualColumn } from 'typeorm';
+import { BaseEntity } from '../../../common/entities/base.entity';
+import { Account } from '../../../company/account/entities/account.entity';
+import { Transaction } from '../../../company/transaction/entities/transaction.entity';
 
 @Entity()
 export class Entry extends BaseEntity {

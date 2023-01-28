@@ -5,8 +5,8 @@ import {
   Column,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Meta } from './meta.entity';
 import { getJwtUserId } from '../getJwtUser';
+import { Meta } from './meta.entity';
 
 export class BaseEntity {
   @PrimaryGeneratedColumn()

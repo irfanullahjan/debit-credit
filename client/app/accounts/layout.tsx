@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Suspense } from "react";
 import { Button } from "../../common/components/reactstrap";
 import { fetchServerSide } from "../../common/utils/fetchServerSide";
 import { AccountsTable } from "./AccountsTable";

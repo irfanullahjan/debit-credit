@@ -1,6 +1,7 @@
-import { BaseEntity } from '@/src/common/entities/base.entity';
 import { Exclude } from 'class-transformer';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { BaseEntity } from '../../common/entities/base.entity';
+import { CompanyUser } from '../../company/entities/company-user.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -10,4 +11,7 @@ export class User extends BaseEntity {
   @Exclude()
   @Column({ type: 'text' })
   password: string;
+
+  @OneToMany(() => CompanyUser, (companyUser) => companyUser.user)
+  companyUsers: CompanyUser[];
 }

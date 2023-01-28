@@ -1,4 +1,3 @@
-import { User } from '@/src/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -6,6 +5,7 @@ import {
   ManyToOne,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from '../../user/entities/user.entity';
 
 export class Meta {
   @CreateDateColumn()

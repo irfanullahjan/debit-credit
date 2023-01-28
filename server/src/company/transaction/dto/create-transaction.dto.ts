@@ -1,5 +1,5 @@
-import { IsBalanced } from '@/src/common/decorators/is-balanced';
 import { ArrayMinSize, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsBalanced } from '../../../common/decorators/is-balanced';
 import { CreateTransactionEntryDto } from './create-transaction-entry.dto';
 
 export class CreateTransactionDto {

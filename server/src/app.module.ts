@@ -4,16 +4,16 @@ import {
   Module,
   NestModule,
 } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { RequestContextModule } from 'nestjs-request-context';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { AuthModule } from './auth/auth.module';
+import { RequestLogger } from './common/middlewares/request-logger.middleware';
+import { CompanyModule } from './company/company.module';
 import { EventsModule } from './events/events.module';
 import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
-import { CompanyModule } from './company/company.module';
-import { RequestLogger } from './common/middlewares/request-logger.middleware';
-import { RequestContextModule } from 'nestjs-request-context';
 
 @Module({
   imports: [

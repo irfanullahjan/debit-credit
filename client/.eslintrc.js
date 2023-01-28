@@ -16,5 +16,6 @@ module.exports = {
         warnOnUnassignedImports: true,
       },
     ],
+    "import/no-unassigned-import": "error",
   },
 };

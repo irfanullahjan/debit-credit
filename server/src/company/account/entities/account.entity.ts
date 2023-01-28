@@ -1,6 +1,6 @@
 import { AfterLoad, Column, Entity, OneToMany, VirtualColumn } from 'typeorm';
-import { BaseEntity } from '@/src/common/entities/base.entity';
-import { Entry } from '@/src/company/entry/entities/entry.entity';
+import { BaseEntity } from '../../../common/entities/base.entity';
+import { Entry } from '../../../company/entry/entities/entry.entity';
 
 @Entity()
 export class Account extends BaseEntity {
