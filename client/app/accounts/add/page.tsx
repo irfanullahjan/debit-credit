@@ -22,7 +22,7 @@ export default function AccountAddPage() {
       name: "",
     },
     onSubmit: (values) => {
-      submit("/ledger/account", {
+      submit("/company/account", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -11,7 +11,7 @@ import { TransactionModule } from './transaction/transaction.module';
     TransactionModule,
     RouterModule.register([
       {
-        path: 'ledger',
+        path: 'company',
         children: [
           {
             path: 'account',
@@ -30,4 +30,4 @@ import { TransactionModule } from './transaction/transaction.module';
     ]),
   ],
 })
-export class LedgerModule {}
+export class CompanyModule {}

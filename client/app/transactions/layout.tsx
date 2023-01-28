@@ -10,7 +10,7 @@ export default async function Layout(props: any) {
   if (!user?.userId) {
     redirect("/user/login");
   }
-  const transactions = await fetchServerSide("/ledger/transaction");
+  const transactions = await fetchServerSide("/company/transaction");
   return (
     <div>
       <h1>Transactions</h1>

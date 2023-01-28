@@ -11,7 +11,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { EventsModule } from './events/events.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { LedgerModule } from './ledger/api.module';
+import { CompanyModule } from './company/company.module';
 import { RequestLogger } from './common/middlewares/request-logger.middleware';
 import { RequestContextModule } from 'nestjs-request-context';
 
@@ -29,7 +29,7 @@ import { RequestContextModule } from 'nestjs-request-context';
       autoLoadEntities: true,
       namingStrategy: new SnakeNamingStrategy(),
     }),
-    LedgerModule,
+    CompanyModule,
     EventsModule,
     UserModule,
     AuthModule,

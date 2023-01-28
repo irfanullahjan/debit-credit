@@ -7,7 +7,7 @@ export default async function Transaction({
   params: { id: string };
 }) {
   const { id } = params;
-  const transaction = await fetchServerSide(`/ledger/transaction/${id}`);
+  const transaction = await fetchServerSide(`/company/transaction/${id}`);
   return (
     <div className="rounded shadow overflow-hidden">
       <TransactionTable transaction={transaction} />

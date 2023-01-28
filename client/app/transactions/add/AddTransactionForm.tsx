@@ -33,7 +33,7 @@ export function AddTransactionForm({ accounts }: any) {
   const formik = useFormik({
     initialValues: emptyTransaction,
     onSubmit: (values) => {
-      submit("/ledger/transaction", {
+      submit("/company/transaction", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
