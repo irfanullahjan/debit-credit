@@ -20,13 +20,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtPayload) {
+    // TODO: validate the payload
     return { userId: payload.sub, email: payload.email };
   }
 
-  // JwtFromRequestFunction
   static fromCookie(req: Request) {
     if (req && req.cookies) {
-      console.log('fromCookie', req.cookies[JWT_COOKIE_NAME]);
       return req.cookies[JWT_COOKIE_NAME];
     }
   }

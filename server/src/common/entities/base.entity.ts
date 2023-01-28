@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Meta } from './meta.entity';
-import { RequestContext } from 'nestjs-request-context';
+import { getJwtUserId } from '../getJwtUser';
 
 export class BaseEntity {
   @PrimaryGeneratedColumn()
@@ -20,9 +20,9 @@ export class BaseEntity {
     if (!this.meta) {
       this.meta = new Meta();
     }
-    const req = RequestContext.currentContext.req;
-    this.meta.createdByUserId = req.user?.userId;
-    this.meta.updatedByUserId = req.user?.userId;
+    const userId = getJwtUserId();
+    this.meta.createdByUserId = userId;
+    this.meta.updatedByUserId = userId;
   }
 
   @BeforeUpdate()
@@ -30,8 +30,7 @@ export class BaseEntity {
     if (!this.meta) {
       this.meta = new Meta();
     }
-    const req = RequestContext.currentContext.req;
-    this.meta.updatedByUserId = req.user?.userId;
+    this.meta.updatedByUserId = getJwtUserId();
   }
 
   @BeforeSoftRemove()
@@ -39,7 +38,6 @@ export class BaseEntity {
     if (!this.meta) {
       this.meta = new Meta();
     }
-    const req = RequestContext.currentContext.req;
-    this.meta.deletedByUserId = req.user?.userId;
+    this.meta.deletedByUserId = getJwtUserId();
   }
 }
