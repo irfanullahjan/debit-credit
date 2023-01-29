@@ -3,11 +3,7 @@ import { BaseEntity } from '../../../common/entities/base.entity';
 import { User } from '../../../user/entities/user.entity';
 import { Company } from '../../entities/company.entity';
 
-enum MemberRoles {
-  OWNER = 'owner',
-  MANAGER = 'manager',
-  JUNIOR = 'junior',
-}
+type MembershipRoles = 'owner' | 'manager' | 'junior';
 
 @Entity()
 export class Membership extends BaseEntity {
@@ -26,7 +22,7 @@ export class Membership extends BaseEntity {
   @Column({
     type: 'jsonb',
     nullable: false,
-    default: () => `'["${MemberRoles.JUNIOR}"]'`,
+    default: () => `'["owner"]'`,
   })
-  roles: MemberRoles[];
+  roles: MembershipRoles[];
 }

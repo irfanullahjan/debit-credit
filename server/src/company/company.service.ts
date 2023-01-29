@@ -1,11 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { getUserFromRequest } from 'src/common/jwt-utils';
+import { Repository } from 'typeorm';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
+import { Company } from './entities/company.entity';
 
 @Injectable()
 export class CompanyService {
+  constructor(
+    @InjectRepository(Company)
+    private readonly repository: Repository<Company>,
+  ) {}
+
   create(createCompanyDto: CreateCompanyDto) {
-    return 'This action adds a new company';
+    return this.repository.save(
+      new Company({
+        ...createCompanyDto,
+        memberships: [
+          {
+            userId: getUserFromRequest().sub,
+            roles: ['owner'],
+          },
+        ],
+      }),
+    );
   }
 
   findAll() {
@@ -13,7 +32,7 @@ export class CompanyService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} company`;
+    return this.repository.findOne({ where: { id } });
   }
 
   update(id: number, updateCompanyDto: UpdateCompanyDto) {

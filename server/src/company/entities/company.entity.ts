@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, DeepPartial, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../common/entities/base.entity';
 import { Account } from '../account/entities/account.entity';
 import { Entry } from '../entry/entities/entry.entity';
@@ -10,7 +10,9 @@ export class Company extends BaseEntity {
   @Column({ unique: true, nullable: false })
   name: string;
 
-  @OneToMany(() => Membership, (membership) => membership.company)
+  @OneToMany(() => Membership, (membership) => membership.company, {
+    cascade: ['insert'],
+  })
   memberships: Membership[];
 
   @OneToMany(() => Account, (account) => account.company)
@@ -21,4 +23,9 @@ export class Company extends BaseEntity {
 
   @OneToMany(() => Entry, (entry) => entry.company)
   entries: Entry[];
+
+  constructor(partial: DeepPartial<Company>) {
+    super();
+    Object.assign(this, partial);
+  }
 }

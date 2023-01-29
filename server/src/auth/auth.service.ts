@@ -1,7 +1,7 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { InjectDataSource } from '@nestjs/typeorm';
 import { compare } from 'bcrypt';
-import { MembershipService } from '../company/membership/membership.service';
 import { User } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
 import { JwtPayload } from './auth.types';
@@ -14,8 +14,6 @@ export class AuthService {
     private userService: UserService,
     @Inject(JwtService)
     private jwtService: JwtService,
-    @Inject(MembershipService)
-    private membershipService: MembershipService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<User> {
@@ -39,7 +37,11 @@ export class AuthService {
     const user = await this.validateUser(loginDto.email, loginDto.password);
     if (user) {
       // membership service is not injected in the constructor because of circular dependency
-      const memberships = await this.membershipService.findAllByUserId(user.id);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const memberships = await this.userService.findMembershipsByUserId(
+        user.id,
+      );
       const payload: JwtPayload = {
         email: user.email,
         sub: user.id,

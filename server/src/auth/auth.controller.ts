@@ -11,7 +11,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
 import { JWT_COOKIE_NAME } from '../common/constants';
-import { JwtAuthGuard } from './auth.jwt-auth.guard';
+import { JwtAuthGuard, Public } from './auth.jwt-auth.guard';
 import { AuthService } from './auth.service';
 import { LoginJwtDto } from './dto/login-jwt.dto';
 import { LoginRequestDto } from './dto/login-request.dto';
@@ -20,8 +20,9 @@ import { LoginRequestDto } from './dto/login-request.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @UseGuards(AuthGuard('local'))
   @Post('login')
+  @UseGuards(AuthGuard('local'))
+  @Public()
   async login(
     @Res({ passthrough: true }) res: Response,
     @Body() loginDto: LoginRequestDto,

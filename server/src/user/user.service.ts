@@ -18,6 +18,19 @@ export class UserService {
     return this.userRepository.save(this.userRepository.create(createUserDto));
   }
 
+  findMembershipsByUserId(id: number) {
+    return this.userRepository
+      .findOne({
+        where: {
+          id,
+        },
+        relations: {
+          memberships: true,
+        },
+      })
+      .then((user) => user.memberships);
+  }
+
   findAll() {
     return `This action returns all user`;
   }
