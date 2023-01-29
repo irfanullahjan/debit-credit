@@ -1,5 +1,6 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
+import { Company } from '../../../company/entities/company.entity';
 import { Entry } from '../../../company/entry/entities/entry.entity';
 
 @Entity()
@@ -17,4 +18,10 @@ export class Transaction extends BaseEntity {
     cascade: true,
   })
   entries: Entry[];
+
+  @ManyToOne(() => Company, (company) => company.accounts)
+  company: Company;
+
+  @Column()
+  companyId: number;
 }

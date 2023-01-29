@@ -8,13 +8,13 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { EntryService } from './entry.service';
+import { CompanyGuard } from '../company.guard';
 import { CreateEntryDto } from './dto/create-entry.dto';
 import { UpdateEntryDto } from './dto/update-entry.dto';
-import { JwtAuthGuard } from '../../auth/auth.jwt-auth.guard';
+import { EntryService } from './entry.service';
 
 @Controller()
-@UseGuards(JwtAuthGuard)
+@UseGuards(CompanyGuard)
 export class EntryController {
   constructor(private readonly entryService: EntryService) {}
 

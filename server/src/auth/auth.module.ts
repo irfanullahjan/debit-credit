@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { UserModule } from 'src/user/user.module';
+import { MembershipModule } from 'src/company/membership/membership.module';
+import { UserModule } from '../user/user.module';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './auth.jwt.strategy';
 import { LocalStrategy } from './auth.local.strategy';
@@ -15,6 +16,7 @@ import { AuthService } from './auth.service';
       secret: AuthModule.JWT_SECRET,
       signOptions: { expiresIn: '1d' },
     }),
+    MembershipModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy],

@@ -8,13 +8,13 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from '../../auth/auth.jwt-auth.guard';
+import { CompanyGuard } from '../company.guard';
 import { AccountService } from './account.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 
 @Controller()
-@UseGuards(JwtAuthGuard)
+@UseGuards(CompanyGuard)
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 

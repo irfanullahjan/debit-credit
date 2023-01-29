@@ -8,13 +8,13 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { TransactionService } from './transaction.service';
+import { CompanyGuard } from '../company.guard';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
-import { JwtAuthGuard } from '../../auth/auth.jwt-auth.guard';
+import { TransactionService } from './transaction.service';
 
 @Controller()
-@UseGuards(JwtAuthGuard)
+@UseGuards(CompanyGuard)
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 

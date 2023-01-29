@@ -1,5 +1,13 @@
-import { AfterLoad, Column, Entity, OneToMany, VirtualColumn } from 'typeorm';
+import {
+  AfterLoad,
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  VirtualColumn,
+} from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
+import { Company } from '../../../company/entities/company.entity';
 import { Entry } from '../../../company/entry/entities/entry.entity';
 
 @Entity()
@@ -35,4 +43,10 @@ export class Account extends BaseEntity {
       this.balanceCredit = -this.balance;
     }
   }
+
+  @ManyToOne(() => Company, (company) => company.accounts)
+  company: Company;
+
+  @Column()
+  companyId: number;
 }

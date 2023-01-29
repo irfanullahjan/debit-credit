@@ -1,10 +1,10 @@
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { AppModule } from './app.module';
-import { TypeOrmExceptionFilter } from './common/typeorm-exception.filter';
 import * as cookieParser from 'cookie-parser';
+import { AppModule } from './app.module';
 import { DelayMiddleware } from './common/middlewares/delay.middleware';
+import { TypeOrmExceptionFilter } from './common/typeorm-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

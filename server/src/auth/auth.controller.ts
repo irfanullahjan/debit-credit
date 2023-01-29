@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  NotFoundException,
   Post,
   Req,
   Res,
@@ -41,6 +42,10 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('current-user')
   async getCurrentUser(@Req() req) {
-    return req.user;
+    const user = await this.authService.getUserById(req.user.email);
+    if (user) {
+      return user;
+    }
+    throw new NotFoundException();
   }
 }

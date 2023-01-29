@@ -17,20 +17,20 @@ export class Meta {
   @DeleteDateColumn()
   deletedAt?: Date;
 
-  @ManyToOne(() => User)
-  createdByUser: User;
+  // @ManyToOne(() => User)
+  // createdByUser: User;
 
   @Column({ type: 'int', nullable: true })
   createdByUserId: number;
 
-  @ManyToOne(() => User)
-  updatedByUser: User;
+  // @ManyToOne(() => User)
+  // updatedByUser: User;
 
   @Column({ type: 'int', nullable: true })
   updatedByUserId: number;
 
-  @ManyToOne(() => User)
-  deletedByUser?: User;
+  // @ManyToOne(() => User)
+  // deletedByUser?: User;
 
   @Column({ type: 'int', nullable: true })
   deletedByUserId?: number;
