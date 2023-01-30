@@ -3,11 +3,13 @@
 import { sum } from "lodash";
 import { usePathname, useRouter } from "next/navigation";
 import { Table } from "reactstrap";
-import { decimalTwoPlaces } from "../../common/utils/numberUtils";
+import { decimalTwoPlaces } from "../../../../common/utils/numberUtils";
 
 export function AccountsTable({ accounts }: { accounts: any[] }) {
   const router = useRouter();
   const pathname = usePathname();
+  const getAccountPath = (account: any) =>
+    `/company/${account.companyId}/accounts/${account.id}`;
   return (
     <Table hover>
       <thead>
@@ -22,11 +24,11 @@ export function AccountsTable({ accounts }: { accounts: any[] }) {
         {accounts.map((account: any) => (
           <tr
             key={account.id}
-            onClick={() => router.push(`/accounts/${account.id}`)}
+            onClick={() => router.push(getAccountPath(account))}
             style={{
               cursor: "pointer",
               backgroundColor:
-                pathname === `/accounts/${account.id}` ? "#f5f5f5" : undefined,
+                pathname === getAccountPath(account) ? "#f5f5f5" : undefined,
             }}
           >
             <td>{account.id}</td>

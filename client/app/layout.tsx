@@ -4,6 +4,7 @@ import { Navbar } from "../common/components/Navbar";
 import { Realtime } from "../common/components/Realtime";
 import { fetchServerSide } from "../common/utils/fetchServerSide";
 
+// eslint-disable-next-line import/no-unassigned-import
 import "./globals.scss";
 
 export default async function RootLayout({

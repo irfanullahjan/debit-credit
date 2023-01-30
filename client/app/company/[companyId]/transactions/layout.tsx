@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Button } from "../../common/components/reactstrap";
-import { fetchServerSide } from "../../common/utils/fetchServerSide";
+import { Button } from "../../../../common/components/reactstrap";
+import { fetchServerSide } from "../../../../common/utils/fetchServerSide";
 import { TransactionsTable } from "./TransactionsTable";
 
 export default async function Layout(props: any) {
   const { children } = props;
   const user = await fetchServerSide("/auth/current-user");
-  if (!user?.userId) {
+  if (!user?.id) {
     redirect("/user/login");
   }
   const transactions = await fetchServerSide("/company/transaction");
