@@ -53,4 +53,10 @@ export class Entry extends BaseEntity {
 
   @Column()
   companyId: number;
+
+  constructor(partial: Partial<Entry>, companyId: number) {
+    super();
+    Object.assign(this, partial);
+    this.companyId = companyId;
+  }
 }

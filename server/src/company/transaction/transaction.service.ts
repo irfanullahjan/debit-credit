@@ -15,30 +15,46 @@ export class TransactionService {
     @Inject(EventsService) private eventsService: EventsService,
   ) {}
 
-  create(createTransactionDto: CreateTransactionDto) {
-    this.eventsService.server.emit(EVENTS.TRANSACTION, 'create');
-    return this.repository.save(this.repository.create(createTransactionDto));
+  create(companyId: number, createTransactionDto: CreateTransactionDto) {
+    return this.repository
+      .save(new Transaction(createTransactionDto, companyId))
+      .then((transaction) => {
+        this.eventsService.server.emit(EVENTS.TRANSACTION, 'create');
+        return transaction;
+      });
   }
 
-  findAll() {
+  findAll(companyId: number) {
     return this.repository.find({
+      where: { companyId },
       order: { date: 'DESC' },
     });
   }
 
-  findOne(id: number) {
+  findOne(companyId: number, id: number) {
     return this.repository.findOne({
-      where: { id },
+      where: { id, companyId },
       relations: ['entries', 'entries.account', 'meta.createdByUser'],
     });
   }
 
-  update(id: number, updateTransactionDto: UpdateTransactionDto) {
-    this.eventsService.server.emit(EVENTS.TRANSACTION, 'update');
-    return this.repository.update(id, updateTransactionDto);
+  update(
+    companyId: number,
+    id: number,
+    updateTransactionDto: UpdateTransactionDto,
+  ) {
+    return this.repository
+      .update(id, new Transaction(updateTransactionDto, companyId))
+      .then((transaction) => {
+        this.eventsService.server.emit(EVENTS.TRANSACTION, 'update');
+        return transaction;
+      });
   }
 
-  remove(id: number) {
-    return this.repository.softDelete(id);
+  remove(companyId: number, id: number) {
+    return this.repository.softDelete({ id, companyId }).then(() => {
+      this.eventsService.server.emit(EVENTS.TRANSACTION, 'remove');
+      return id;
+    });
   }
 }

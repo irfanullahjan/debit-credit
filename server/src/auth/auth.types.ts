@@ -1,5 +1,7 @@
+import { MembershipRole } from '../company/membership/entities/membership.entity';
+
 export type JwtPayload = {
   email: string;
   sub: number;
-  companiesRoles: Record<number, string[]>; // { companyId: [role1, role2] }
+  memberships: Record<number, MembershipRole>; // { companyId: role }
 };

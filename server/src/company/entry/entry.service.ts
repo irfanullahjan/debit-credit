@@ -12,25 +12,26 @@ export class EntryService {
     private repository: Repository<Entry>,
   ) {}
 
-  create(createEntryDto: CreateEntryDto) {
-    return this.repository.save(this.repository.create(createEntryDto));
+  create(companyId: number, createEntryDto: CreateEntryDto) {
+    return this.repository.save(new Entry(createEntryDto, companyId));
   }
 
-  findAll() {
+  findAll(companyId: number) {
     return this.repository.find({
+      where: { companyId },
       order: { date: 'DESC' },
     });
   }
 
-  findOne(id: number) {
+  findOne(companyId: number, id: number) {
     return `This action returns a #${id} entry`;
   }
 
-  update(id: number, updateEntryDto: UpdateEntryDto) {
-    return this.repository.update(id, updateEntryDto);
+  update(companyId: number, id: number, updateEntryDto: UpdateEntryDto) {
+    return this.repository.update(id, new Entry(updateEntryDto, companyId));
   }
 
-  remove(id: number) {
+  remove(companyId: number, id: number) {
     return `This action removes a #${id} entry`;
   }
 }

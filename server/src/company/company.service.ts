@@ -20,7 +20,7 @@ export class CompanyService {
         memberships: [
           {
             userId: getUserFromRequest().sub,
-            roles: ['owner'],
+            role: 'owner',
           },
         ],
       }),
@@ -28,7 +28,7 @@ export class CompanyService {
   }
 
   findAll() {
-    return `This action returns all company`;
+    return this.repository.find();
   }
 
   findOne(id: number) {

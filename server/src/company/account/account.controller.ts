@@ -19,27 +19,34 @@ export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
   @Post()
-  create(@Body() createAccountDto: CreateAccountDto) {
-    return this.accountService.create(createAccountDto);
+  create(
+    @Param('companyId') companyId: string,
+    @Body() createAccountDto: CreateAccountDto,
+  ) {
+    return this.accountService.create(+companyId, createAccountDto);
   }
 
   @Get()
-  findAll() {
-    return this.accountService.findAll();
+  findAll(@Param('companyId') companyId: string) {
+    return this.accountService.findAll(+companyId);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.accountService.findOne(id);
+  findOne(@Param('companyId') companyId: string, @Param('id') id: string) {
+    return this.accountService.findOne(+companyId, +id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto) {
-    return this.accountService.update(+id, updateAccountDto);
+  update(
+    @Param('companyId') companyId: string,
+    @Param('id') id: string,
+    @Body() updateAccountDto: UpdateAccountDto,
+  ) {
+    return this.accountService.update(+companyId, +id, updateAccountDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.accountService.remove(+id);
+  remove(@Param('companyId') companyId: string, @Param('id') id: string) {
+    return this.accountService.remove(+companyId, +id);
   }
 }

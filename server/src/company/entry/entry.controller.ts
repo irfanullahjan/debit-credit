@@ -19,27 +19,34 @@ export class EntryController {
   constructor(private readonly entryService: EntryService) {}
 
   @Post()
-  create(@Body() createEntryDto: CreateEntryDto) {
-    return this.entryService.create(createEntryDto);
+  create(
+    @Param('companyId') companyId: string,
+    @Body() createEntryDto: CreateEntryDto,
+  ) {
+    return this.entryService.create(+companyId, createEntryDto);
   }
 
   @Get()
-  findAll() {
-    return this.entryService.findAll();
+  findAll(@Param('companyId') companyId: string) {
+    return this.entryService.findAll(+companyId);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.entryService.findOne(+id);
+  findOne(@Param('companyId') companyId: string, @Param('id') id: string) {
+    return this.entryService.findOne(+companyId, +id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEntryDto: UpdateEntryDto) {
-    return this.entryService.update(+id, updateEntryDto);
+  update(
+    @Param('companyId') companyId: string,
+    @Param('id') id: string,
+    @Body() updateEntryDto: UpdateEntryDto,
+  ) {
+    return this.entryService.update(+companyId, +id, updateEntryDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.entryService.remove(+id);
+  remove(@Param('companyId') companyId: string, @Param('id') id: string) {
+    return this.entryService.remove(+companyId, +id);
   }
 }

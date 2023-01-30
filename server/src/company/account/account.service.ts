@@ -15,31 +15,40 @@ export class AccountService {
     @Inject(EventsService) private eventsService: EventsService,
   ) {}
 
-  create(createAccountDto: CreateAccountDto) {
-    this.eventsService.server.emit(EVENTS.TRANSACTION, 'create');
-    return this.repository.save(new Account(createAccountDto));
+  create(companyId: number, createAccountDto: CreateAccountDto) {
+    return this.repository
+      .save(new Account(createAccountDto, companyId))
+      .then((account) => {
+        this.eventsService.server.emit(EVENTS.TRANSACTION, 'create');
+        return account;
+      });
   }
 
-  findAll() {
+  findAll(companyId: number) {
     return this.repository.find({
       order: { balance: 'DESC' },
+      where: { companyId },
     });
   }
 
-  findOne(id: number) {
+  findOne(companyId: number, id: number) {
     return this.repository.findOneOrFail({
-      where: { id },
+      where: { id, companyId },
       relations: ['entries', 'entries.transaction'],
     });
   }
 
-  update(id: number, updateAccountDto: UpdateAccountDto) {
-    this.eventsService.server.emit(EVENTS.TRANSACTION, 'update');
-    return this.repository.update(id, new Account(updateAccountDto));
+  update(companyId: number, id: number, updateAccountDto: UpdateAccountDto) {
+    return this.repository
+      .update({ id, companyId }, new Account(updateAccountDto, companyId))
+      .then((account) => {
+        this.eventsService.server.emit(EVENTS.TRANSACTION, 'update');
+        return account;
+      });
   }
 
-  async remove(id: number) {
-    const account = await this.findOne(id);
+  async remove(companyId: number, id: number) {
+    const account = await this.findOne(companyId, id);
     if (account) {
       return this.repository.softRemove(account).then(() => {
         this.eventsService.server.emit(EVENTS.TRANSACTION, 'remove');

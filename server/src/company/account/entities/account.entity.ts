@@ -12,11 +12,6 @@ import { Entry } from '../../../company/entry/entities/entry.entity';
 
 @Entity()
 export class Account extends BaseEntity {
-  constructor(partial: Partial<Account>) {
-    super();
-    Object.assign(this, partial);
-  }
-
   @Column({ type: 'varchar', length: 255, nullable: false })
   name: string;
 
@@ -49,4 +44,10 @@ export class Account extends BaseEntity {
 
   @Column()
   companyId: number;
+
+  constructor(partial: Partial<Account>, companyId: number) {
+    super();
+    Object.assign(this, partial);
+    this.companyId = companyId;
+  }
 }

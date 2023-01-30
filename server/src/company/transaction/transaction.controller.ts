@@ -19,30 +19,38 @@ export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
   @Post()
-  create(@Body() createTransactionDto: CreateTransactionDto) {
-    return this.transactionService.create(createTransactionDto);
+  create(
+    @Param('companyId') companyId: string,
+    @Body() createTransactionDto: CreateTransactionDto,
+  ) {
+    return this.transactionService.create(+companyId, createTransactionDto);
   }
 
   @Get()
-  findAll() {
-    return this.transactionService.findAll();
+  findAll(@Param('companyId') companyId: string) {
+    return this.transactionService.findAll(+companyId);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.transactionService.findOne(+id);
+  findOne(@Param('companyId') companyId: string, @Param('id') id: string) {
+    return this.transactionService.findOne(+companyId, +id);
   }
 
   @Patch(':id')
   update(
+    @Param('companyId') companyId: string,
     @Param('id') id: string,
     @Body() updateTransactionDto: UpdateTransactionDto,
   ) {
-    return this.transactionService.update(+id, updateTransactionDto);
+    return this.transactionService.update(
+      +companyId,
+      +id,
+      updateTransactionDto,
+    );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.transactionService.remove(+id);
+  remove(@Param('companyId') companyId: string, @Param('id') id: string) {
+    return this.transactionService.remove(+companyId, +id);
   }
 }

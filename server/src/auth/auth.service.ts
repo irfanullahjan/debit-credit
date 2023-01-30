@@ -45,8 +45,8 @@ export class AuthService {
       const payload: JwtPayload = {
         email: user.email,
         sub: user.id,
-        companiesRoles: memberships.reduce((acc, membership) => {
-          acc[membership.companyId] = membership.roles;
+        memberships: memberships.reduce((acc, membership) => {
+          acc[membership.companyId] = membership.role;
           return acc;
         }, {}),
       };

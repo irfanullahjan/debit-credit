@@ -12,7 +12,7 @@ export class CompanyGuard implements CanActivate {
     const user = getUserFromRequest(request);
     const companyId = request.params.companyId;
     if (user && companyId) {
-      return user.companiesRoles?.[companyId] !== undefined;
+      return user.memberships?.[companyId] ? true : false;
     }
     return false;
   }
