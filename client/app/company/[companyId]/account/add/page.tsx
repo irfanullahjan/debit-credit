@@ -5,7 +5,7 @@ import { Button, Spinner } from "reactstrap";
 import { FormikInput } from "../../../../../common/components/FormikInput";
 import { useFetch } from "../../../../../common/hooks/useFetch";
 
-export default function AccountAddPage() {
+export default function AccountAddPage({ params: { companyId } }: any) {
   const [submit, submitting] = useFetch({
     feedback: {
       basedOn: "status",
@@ -17,12 +17,13 @@ export default function AccountAddPage() {
       },
     },
   });
+
   const formik = useFormik({
     initialValues: {
       name: "",
     },
     onSubmit: (values) => {
-      submit("/company/account", {
+      submit(`/company/${companyId}/account`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -9,7 +9,7 @@ export function AccountsTable({ accounts }: { accounts: any[] }) {
   const router = useRouter();
   const pathname = usePathname();
   const getAccountPath = (account: any) =>
-    `/company/${account.companyId}/accounts/${account.id}`;
+    `/company/${account.companyId}/account/${account.id}`;
   return (
     <Table hover>
       <thead>

@@ -6,6 +6,8 @@ import { Table } from "reactstrap";
 export function TransactionsTable({ transactions }: { transactions: any[] }) {
   const router = useRouter();
   const pathname = usePathname();
+  const getTransactionPath = (transaction: any) =>
+    `/company/${transaction.companyId}/transaction/${transaction.id}`;
   return (
     <Table hover>
       <thead>
@@ -19,11 +21,11 @@ export function TransactionsTable({ transactions }: { transactions: any[] }) {
         {transactions.map?.((transaction: any) => (
           <tr
             key={transaction.id}
-            onClick={() => router.push(`/transactions/${transaction.id}`)}
+            onClick={() => router.push(getTransactionPath(transaction))}
             style={{
               cursor: "pointer",
               backgroundColor:
-                pathname === `/transactions/${transaction.id}`
+                pathname === getTransactionPath(transaction)
                   ? "#f5f5f5"
                   : undefined,
             }}

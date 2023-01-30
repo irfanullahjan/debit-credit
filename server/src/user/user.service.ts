@@ -40,6 +40,11 @@ export class UserService {
       where: {
         email,
       },
+      relations: {
+        memberships: {
+          company: true,
+        },
+      },
     });
   }
 

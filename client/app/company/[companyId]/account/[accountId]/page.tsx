@@ -2,12 +2,13 @@ import { fetchServerSide } from "../../../../../common/utils/fetchServerSide";
 import { AccountTable } from "./AccountTable";
 
 export default async function Account({
-  params,
+  params: { companyId, accountId },
 }: {
-  params: { companyId: number; id: number };
+  params: { companyId: number; accountId: number };
 }) {
-  const { companyId, id } = params;
-  const account = await fetchServerSide(`/company/${companyId}/account/${id}`);
+  const account = await fetchServerSide(
+    `/company/${companyId}/account/${accountId}`
+  );
   return (
     <div className="rounded shadow overflow-hidden">
       <AccountTable account={account} />

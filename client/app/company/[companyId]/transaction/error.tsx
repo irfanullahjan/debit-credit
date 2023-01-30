@@ -1,11 +1,11 @@
 "use client"; // Error components must be Client components
 
-import { BaseError } from "../../common/components/BaseError";
+import { BaseError } from "../../../../common/components/BaseError";
 
 export default function Error(props: { error: Error; reset: () => void }) {
   return (
     <BaseError {...props}>
-      <p>[/app/transactions/error.tsx]</p>
+      <p>[/app/company/transaction/error.tsx]</p>
     </BaseError>
   );
 }

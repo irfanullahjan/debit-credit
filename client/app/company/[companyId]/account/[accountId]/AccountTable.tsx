@@ -2,31 +2,35 @@
 
 import { useRouter } from "next/navigation";
 import { Table } from "reactstrap";
-import { decimalTwoPlaces } from "../../../common/utils/numberUtils";
+import { decimalTwoPlaces } from "../../../../../common/utils/numberUtils";
 
-export function TransactionTable({ transaction }: { transaction: any }) {
+export function AccountTable({ account }: { account: any }) {
   const router = useRouter();
   return (
     <Table hover>
       <thead className="bg-secondary text-white">
         <tr>
-          <th>Entry ID</th>
+          <th>Entry Id</th>
           <th>Date</th>
-          <th>Account</th>
+          <th>Description</th>
           <th style={{ textAlign: "right" }}>Debit</th>
           <th style={{ textAlign: "right" }}>Credit</th>
         </tr>
       </thead>
       <tbody>
-        {transaction.entries?.map((entry: any) => (
+        {account.entries.map((entry: any) => (
           <tr
             key={entry.id}
             style={{ cursor: "pointer" }}
-            onClick={() => router.push(`/accounts/${entry.accountId}`)}
+            onClick={() =>
+              router.push(
+                `/company/${entry.companyId}/transaction/${entry.transactionId}`
+              )
+            }
           >
             <td>{entry.id}</td>
             <td>{entry.date}</td>
-            <td>{entry.account.name}</td>
+            <td>{entry.transaction.description}</td>
             <td style={{ textAlign: "right" }}>
               {decimalTwoPlaces(entry.amountDebit)}
             </td>
@@ -36,6 +40,19 @@ export function TransactionTable({ transaction }: { transaction: any }) {
           </tr>
         ))}
       </tbody>
+      <tfoot>
+        <tr>
+          <th />
+          <th />
+          <th>Net balance</th>
+          <th style={{ textAlign: "right" }}>
+            {decimalTwoPlaces(account.balanceDebit)}
+          </th>
+          <th style={{ textAlign: "right" }}>
+            {decimalTwoPlaces(account.balanceCredit)}
+          </th>
+        </tr>
+      </tfoot>
     </Table>
   );
 }

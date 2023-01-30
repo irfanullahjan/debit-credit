@@ -2,19 +2,45 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Collapse, Nav, NavbarText, NavbarToggler, NavLink } from "reactstrap";
+import {
+  Collapse,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  Nav,
+  NavbarText,
+  NavbarToggler,
+  NavLink,
+} from "reactstrap";
 import { useFetch } from "../hooks/useFetch";
-import { LinkType, NavLinks } from "./NavLinks";
+import { useUserStore } from "../stores/user.store";
+import { NavLinks } from "./NavLinks";
 
-export function NavbarCollapse({
-  links,
-  user,
-}: {
-  links: LinkType[];
-  user: any;
-}) {
+export function NavbarCollapse({ user }: { user: any }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
   const router = useRouter();
+
+  const { selectedCompanyId, selectCompany } = useUserStore((state) => ({
+    selectedCompanyId: state.selectedCompanyId,
+    selectCompany: state.selectCompany,
+  }));
+
+  const links = selectedCompanyId
+    ? [
+        {
+          href: `/company/${selectedCompanyId}/account`,
+          label: "Accounts",
+        },
+        {
+          href: `/company/${selectedCompanyId}/transaction`,
+          label: "Transactions",
+        },
+      ]
+    : [];
 
   const [submit] = useFetch({
     feedback: {
@@ -63,6 +89,20 @@ export function NavbarCollapse({
           />
         </Nav>
       )}
+      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+        <DropdownToggle caret>Dropdown</DropdownToggle>
+        <DropdownMenu>
+          {user.memberships.map((membership: any, i: number) => (
+            <DropdownItem
+              key={i}
+              active={selectedCompanyId === membership.company.id}
+              onClick={() => selectCompany(membership.company.id)}
+            >
+              {membership.company.name}
+            </DropdownItem>
+          ))}
+        </DropdownMenu>
+      </Dropdown>
     </>
   );
 }

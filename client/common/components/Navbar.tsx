@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { NavbarCollapse } from "./NavbarCollapse";
-import { LinkType } from "./NavLinks";
 import {
   Col,
   Container,
@@ -10,13 +9,6 @@ import {
 } from "./reactstrap";
 
 export function Navbar({ user }: { user: object }) {
-  const links: LinkType[] = user
-    ? [
-        { href: "/accounts", label: "Accounts" },
-        { href: "/transactions", label: "Transactions" },
-      ]
-    : [];
-
   return (
     <div className="bg-dark">
       <Container>
@@ -26,7 +18,7 @@ export function Navbar({ user }: { user: object }) {
               <NavbarBrand href="/" tag={Link}>
                 DebitCredit
               </NavbarBrand>
-              <NavbarCollapse links={links} user={user} />
+              <NavbarCollapse user={user} />
             </ReactstrapNavbar>
           </Col>
         </Row>
