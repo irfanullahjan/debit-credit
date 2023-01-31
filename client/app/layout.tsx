@@ -7,11 +7,7 @@ import { fetchServerSide } from "../common/utils/fetchServerSide";
 // eslint-disable-next-line import/no-unassigned-import
 import "./globals.scss";
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function RootLayout({ children }: any) {
   const user = await fetchServerSide("/auth/current-user");
   return (
     <html lang="en">

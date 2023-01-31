@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSelectedLayoutSegments } from "next/navigation";
 import { useState } from "react";
 import {
   Collapse,
@@ -14,29 +14,25 @@ import {
   NavLink,
 } from "reactstrap";
 import { useFetch } from "../hooks/useFetch";
-import { useUserStore } from "../stores/user.store";
 import { NavLinks } from "./NavLinks";
 
-export function NavbarCollapse({ user }: { user: any }) {
+export function NavbarCollapse({ user }: any) {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const router = useRouter();
 
-  const { selectedCompanyId, selectCompany } = useUserStore((state) => ({
-    selectedCompanyId: state.selectedCompanyId,
-    selectCompany: state.selectCompany,
-  }));
+  const companyId = parseInt(useSelectedLayoutSegments()[1]);
 
-  const links = selectedCompanyId
+  const links = companyId
     ? [
         {
-          href: `/company/${selectedCompanyId}/account`,
+          href: `/company/${companyId}/account`,
           label: "Accounts",
         },
         {
-          href: `/company/${selectedCompanyId}/transaction`,
+          href: `/company/${companyId}/transaction`,
           label: "Transactions",
         },
       ]
@@ -92,11 +88,14 @@ export function NavbarCollapse({ user }: { user: any }) {
       <Dropdown isOpen={dropdownOpen} toggle={toggle}>
         <DropdownToggle caret>Dropdown</DropdownToggle>
         <DropdownMenu>
-          {user.memberships.map((membership: any, i: number) => (
+          <DropdownItem onClick={() => router.push("/company/add")}>
+            Create new
+          </DropdownItem>
+          {user?.memberships.map((membership: any, i: number) => (
             <DropdownItem
               key={i}
-              active={selectedCompanyId === membership.company.id}
-              onClick={() => selectCompany(membership.company.id)}
+              active={companyId === membership.company.id}
+              onClick={() => router.push(`/company/${membership.company.id}`)}
             >
               {membership.company.name}
             </DropdownItem>

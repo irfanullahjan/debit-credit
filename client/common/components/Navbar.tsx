@@ -8,7 +8,7 @@ import {
   Row,
 } from "./reactstrap";
 
-export function Navbar({ user }: { user: object }) {
+export function Navbar({ user }: any) {
   return (
     <div className="bg-dark">
       <Container>
