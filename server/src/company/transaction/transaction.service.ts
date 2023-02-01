@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { EVENTS } from '../../common/constants';
 import { EventsService } from '../../events/events.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
@@ -19,7 +18,10 @@ export class TransactionService {
     return this.repository
       .save(new Transaction(createTransactionDto, companyId))
       .then((transaction) => {
-        this.eventsService.server.emit(EVENTS.TRANSACTION, 'create');
+        this.eventsService.server.emit(
+          `company:${companyId}`,
+          `Transaction ${transaction.id} created`,
+        );
         return transaction;
       });
   }
@@ -46,14 +48,20 @@ export class TransactionService {
     return this.repository
       .update(id, new Transaction(updateTransactionDto, companyId))
       .then((transaction) => {
-        this.eventsService.server.emit(EVENTS.TRANSACTION, 'update');
+        this.eventsService.server.emit(
+          `company:${companyId}`,
+          `Transaction ${id} updated`,
+        );
         return transaction;
       });
   }
 
   remove(companyId: number, id: number) {
     return this.repository.softDelete({ id, companyId }).then(() => {
-      this.eventsService.server.emit(EVENTS.TRANSACTION, 'remove');
+      this.eventsService.server.emit(
+        `company:${companyId}`,
+        `Transaction ${id} deleted`,
+      );
       return id;
     });
   }

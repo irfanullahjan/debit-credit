@@ -1,7 +1,6 @@
 import { Alerts } from "../common/components/Alerts";
 import { Main } from "../common/components/Main";
 import { Navbar } from "../common/components/Navbar";
-import { Realtime } from "../common/components/Realtime";
 import { fetchServerSide } from "../common/utils/fetchServerSide";
 
 // eslint-disable-next-line import/no-unassigned-import
@@ -19,7 +18,6 @@ export default async function RootLayout({ children }: any) {
       <body>
         <Navbar user={user} />
         <Alerts />
-        <Realtime />
         <Main>{children}</Main>
       </body>
     </html>

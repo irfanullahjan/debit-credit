@@ -1,7 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { EVENTS } from '../../common/constants';
 import { EventsService } from '../../events/events.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
@@ -19,7 +18,10 @@ export class AccountService {
     return this.repository
       .save(new Account(createAccountDto, companyId))
       .then((account) => {
-        this.eventsService.server.emit(EVENTS.TRANSACTION, 'create');
+        this.eventsService.server.emit(
+          `company:${companyId}`,
+          `Account ${account.id} created`,
+        );
         return account;
       });
   }
@@ -42,7 +44,10 @@ export class AccountService {
     return this.repository
       .update({ id, companyId }, new Account(updateAccountDto, companyId))
       .then((account) => {
-        this.eventsService.server.emit(EVENTS.TRANSACTION, 'update');
+        this.eventsService.server.emit(
+          `company:${companyId}`,
+          `Account ${id} updated`,
+        );
         return account;
       });
   }
@@ -51,7 +56,10 @@ export class AccountService {
     const account = await this.findOne(companyId, id);
     if (account) {
       return this.repository.softRemove(account).then(() => {
-        this.eventsService.server.emit(EVENTS.TRANSACTION, 'remove');
+        this.eventsService.server.emit(
+          `company:${companyId}`,
+          `Account ${id} deleted`,
+        );
         return account;
       });
     }

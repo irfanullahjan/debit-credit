@@ -4,18 +4,18 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
 
-export function Realtime() {
+export function Realtime({ eventName }: { eventName: string }) {
   const { refresh } = useRouter();
 
   useEffect(() => {
     const socket = io("http://localhost:3001");
-    socket.on("transaction", () => {
+    socket.on(eventName, () => {
       refresh();
     });
     return () => {
-      socket.off("transaction");
+      socket.off(eventName);
     };
-  }, [refresh]);
+  }, [eventName, refresh]);
 
   return null;
 }
