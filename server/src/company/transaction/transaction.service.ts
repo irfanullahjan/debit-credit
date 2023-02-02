@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { EventsService } from '../../events/events.service';
+import { Account } from '../account/entities/account.entity';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { Transaction } from './entities/transaction.entity';
@@ -14,7 +15,8 @@ export class TransactionService {
     @Inject(EventsService) private eventsService: EventsService,
   ) {}
 
-  create(companyId: number, createTransactionDto: CreateTransactionDto) {
+  async create(companyId: number, createTransactionDto: CreateTransactionDto) {
+    await this.validateAccountIds(createTransactionDto, companyId);
     return this.repository
       .save(new Transaction(createTransactionDto, companyId))
       .then((transaction) => {
@@ -40,13 +42,20 @@ export class TransactionService {
     });
   }
 
-  update(
+  async update(
     companyId: number,
     id: number,
     updateTransactionDto: UpdateTransactionDto,
   ) {
+    await this.validateAccountIds(updateTransactionDto, companyId);
     return this.repository
-      .update(id, new Transaction(updateTransactionDto, companyId))
+      .update(
+        {
+          id,
+          companyId,
+        },
+        new Transaction(updateTransactionDto, companyId),
+      )
       .then((transaction) => {
         this.eventsService.server.emit(
           `company:${companyId}`,
@@ -64,5 +73,20 @@ export class TransactionService {
       );
       return id;
     });
+  }
+
+  private async validateAccountIds(
+    updateTransactionDto: UpdateTransactionDto,
+    companyId: number,
+  ) {
+    const accountIds = [
+      ...new Set(updateTransactionDto.entries.map((entry) => entry.accountId)),
+    ];
+    const accounts = await this.repository.manager.getRepository(Account).find({
+      where: { id: In(accountIds), companyId },
+    });
+    if (accounts.length !== accountIds.length) {
+      throw new BadRequestException('One or more account ids are invalid');
+    }
   }
 }
