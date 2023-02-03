@@ -21,8 +21,8 @@ export class MembershipController {
   }
 
   @Get()
-  findAll() {
-    return this.membershipService.findAll();
+  findAll(@Param('companyId') companyId: string) {
+    return this.membershipService.findAll(+companyId);
   }
 
   @Get(':id')

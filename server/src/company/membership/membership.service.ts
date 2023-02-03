@@ -15,8 +15,11 @@ export class MembershipService {
     return 'This action adds a new user';
   }
 
-  findAll() {
-    return `This action returns all user`;
+  findAll(companyId: number) {
+    return this.repository.find({
+      where: { companyId },
+      relations: ['user'],
+    });
   }
 
   findAllByUserId(userId: number) {
