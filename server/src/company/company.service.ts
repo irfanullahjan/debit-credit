@@ -27,8 +27,14 @@ export class CompanyService {
     );
   }
 
-  findAll() {
-    return this.repository.find();
+  findAll(userId: number) {
+    return this.repository.find({
+      where: {
+        memberships: {
+          userId,
+        },
+      },
+    });
   }
 
   findOne(id: number) {

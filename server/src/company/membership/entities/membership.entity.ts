@@ -24,4 +24,10 @@ export class Membership extends BaseEntity {
     enum: ['owner', 'manager', 'user'],
   })
   role: MembershipRole;
+
+  constructor(partial: Partial<Membership>, companyId: number) {
+    super();
+    Object.assign(this, partial);
+    this.companyId = companyId;
+  }
 }

@@ -1,4 +1,4 @@
-import { Realtime } from "../../../common/components/Realtime";
+import { Realtime } from "~/common/components/Realtime";
 
 export default function CompanyLayout({
   params: { companyId },

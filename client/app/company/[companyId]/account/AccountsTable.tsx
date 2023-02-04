@@ -3,7 +3,7 @@
 import { sum } from "lodash";
 import { usePathname, useRouter } from "next/navigation";
 import { Table } from "reactstrap";
-import { decimalTwoPlaces } from "../../../../common/utils/numberUtils";
+import { decimalTwoPlaces } from "~/common/utils/numberUtils";
 
 export function AccountsTable({ accounts }: { accounts: any[] }) {
   const router = useRouter();

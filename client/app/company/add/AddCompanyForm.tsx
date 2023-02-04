@@ -3,8 +3,8 @@
 import { Form, FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { Button } from "reactstrap";
-import { FormikInput } from "../../../common/components/FormikInput";
-import { useFetch } from "../../../common/hooks/useFetch";
+import { FormikInput } from "~/common/components/FormikInput";
+import { useFetch } from "~/common/hooks/useFetch";
 
 export function AddCompanyForm() {
   const router = useRouter();

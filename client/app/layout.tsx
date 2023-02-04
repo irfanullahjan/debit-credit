@@ -1,7 +1,7 @@
-import { Alerts } from "../common/components/Alerts";
-import { Main } from "../common/components/Main";
-import { Navbar } from "../common/components/Navbar";
-import { fetchServerSide } from "../common/utils/fetchServerSide";
+import { Alerts } from "~/common/components/Alerts";
+import { Main } from "~/common/components/Main";
+import { Navbar } from "~/common/components/Navbar";
+import { fetchServerSide } from "~/common/utils/fetchServerSide";
 
 // eslint-disable-next-line import/no-unassigned-import
 import "./globals.scss";

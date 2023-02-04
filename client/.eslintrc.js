@@ -14,6 +14,12 @@ module.exports = {
       {
         alphabetize: { order: "asc", caseInsensitive: true },
         warnOnUnassignedImports: true,
+        pathGroups: [
+          {
+            pattern: "~/**",
+            group: "external",
+          },
+        ],
       },
     ],
     "import/no-unassigned-import": "error",

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Table } from "reactstrap";
-import { decimalTwoPlaces } from "../../../../../common/utils/numberUtils";
+import { decimalTwoPlaces } from "~/common/utils/numberUtils";
 
 export function AccountTable({ account }: { account: any }) {
   const router = useRouter();

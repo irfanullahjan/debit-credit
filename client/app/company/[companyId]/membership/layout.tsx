@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Button } from "../../../../common/components/reactstrap";
-import { fetchServerSide } from "../../../../common/utils/fetchServerSide";
+import { Button } from "~/common/components/reactstrap";
+import { fetchServerSide } from "~/common/utils/fetchServerSide";
 import { MembershipsTable } from "./MembershipsTable";
 
 export default async function CompanyLayout({

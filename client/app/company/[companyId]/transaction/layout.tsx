@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Button } from "../../../../common/components/reactstrap";
-import { fetchServerSide } from "../../../../common/utils/fetchServerSide";
+import { Button } from "~/common/components/reactstrap";
+import { fetchServerSide } from "~/common/utils/fetchServerSide";
 import { TransactionsTable } from "./TransactionsTable";
 
 export default async function Layout(props: any) {

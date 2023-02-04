@@ -3,8 +3,8 @@
 import { FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { Button, Spinner } from "reactstrap";
-import { FormikInput } from "../../../common/components/FormikInput";
-import { useFetch } from "../../../common/hooks/useFetch";
+import { FormikInput } from "~/common/components/FormikInput";
+import { useFetch } from "~/common/hooks/useFetch";
 
 export default function LoginPage() {
   const [submit, submitting] = useFetch({

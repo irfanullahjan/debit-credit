@@ -1,4 +1,4 @@
-import { fetchServerSide } from "../../../../../common/utils/fetchServerSide";
+import { fetchServerSide } from "~/common/utils/fetchServerSide";
 import { AccountTable } from "./AccountTable";
 
 export default async function Account({
