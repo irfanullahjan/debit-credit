@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { Company } from './entities/company.entity';
+import { MembershipRole } from './membership/entities/membership.entity';
 
 @Injectable()
 export class CompanyService {
@@ -20,7 +21,7 @@ export class CompanyService {
         memberships: [
           {
             userId: getUserFromRequest().sub,
-            role: 'owner',
+            role: MembershipRole.owner,
           },
         ],
       }),

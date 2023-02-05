@@ -9,11 +9,10 @@ export default async function Account({
   const membership = await fetchServerSide(
     `/company/${companyId}/membership/${membershipId}`
   );
-  console.log(membership);
   return (
     <div className="rounded shadow overflow-hidden">
       <MembershipForm
-        membershipDto={{
+        existingData={{
           membershipId: membership.id,
           email: membership.user.email,
           role: membership.role,

@@ -8,6 +8,6 @@ export class CreateMembershipDto {
 
   @IsNotEmpty()
   @IsString()
-  @IsEnum(['owner', 'manager', 'user'])
+  @IsEnum(MembershipRole)
   role: MembershipRole;
 }

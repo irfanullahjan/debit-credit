@@ -1,39 +1,57 @@
 "use client";
 
 import { Form, FormikProvider, useFormik } from "formik";
+import { useRouter } from "next/navigation";
 import { Button } from "reactstrap";
 import { FormikInput } from "~/common/components/FormikInput";
 import { useFetch } from "~/common/hooks/useFetch";
 
 export function MembershipForm({
-  membershipDto,
+  existingData,
   companyId,
 }: {
-  membershipDto?: {
+  existingData?: {
     membershipId: number;
     email: string;
     role: string;
   };
   companyId: number;
 }) {
-  const [submit, submitting] = useFetch();
+  const router = useRouter();
+  const [submit, submitting] = useFetch({
+    feedback: {
+      basedOn: "outcome",
+      map: {
+        success: {
+          message: "Membership saved",
+          intent: "success",
+        },
+      },
+    },
+  });
   const formik = useFormik({
-    initialValues: membershipDto ?? {
+    initialValues: existingData ?? {
       email: "",
       role: "user",
     },
     onSubmit: async (values) => {
-      const membershipId = membershipDto?.membershipId;
+      const membershipId = existingData?.membershipId;
       const putSegment = membershipId ? `/${membershipId}` : "";
+      const submitValues: any = { role: values.role };
+      if (!membershipId) {
+        submitValues.email = values.email;
+      }
       submit(`/company/${companyId}/membership${putSegment}`, {
-        method: membershipDto ? "PATCH" : "POST",
+        method: existingData ? "PATCH" : "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email: values.email,
-          role: values.role,
-        }),
+        body: JSON.stringify(submitValues),
+      }).then((res) => {
+        if (res.ok) {
+          router.refresh();
+          router.push(`/company/${companyId}/membership`);
+        }
       });
     },
   });
@@ -41,11 +59,15 @@ export function MembershipForm({
   return (
     <FormikProvider value={formik}>
       <Form>
-        <FormikInput name="email" label="Email" />
+        <FormikInput
+          name="email"
+          label="Email"
+          disabled={!!existingData?.membershipId}
+        />
         <FormikInput name="role" label="Role" type="select">
           <option value="owner">Owner</option>
-          <option value="user">User</option>
           <option value="admin">Admin</option>
+          <option value="user">User</option>
         </FormikInput>
         <Button type="submit" disabled={submitting}>
           Submit

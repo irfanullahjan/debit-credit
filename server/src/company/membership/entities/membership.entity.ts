@@ -3,7 +3,11 @@ import { BaseEntity } from '../../../common/entities/base.entity';
 import { User } from '../../../user/entities/user.entity';
 import { Company } from '../../entities/company.entity';
 
-export type MembershipRole = 'owner' | 'manager' | 'user';
+export enum MembershipRole {
+  owner = 'owner',
+  admin = 'admin',
+  user = 'user',
+}
 
 @Entity()
 export class Membership extends BaseEntity {
@@ -21,7 +25,7 @@ export class Membership extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: ['owner', 'manager', 'user'],
+    enum: MembershipRole,
   })
   role: MembershipRole;
 
