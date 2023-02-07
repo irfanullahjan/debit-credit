@@ -14,6 +14,7 @@ import {
   NavLink,
 } from "reactstrap";
 import { useFetch } from "../hooks/useFetch";
+import { isOwner } from "../utils/auth";
 import { NavLinks } from "./NavLinks";
 
 export function NavbarCollapse({ user }: any) {
@@ -35,12 +36,15 @@ export function NavbarCollapse({ user }: any) {
           href: `/company/${companyId}/transaction`,
           label: "Transactions",
         },
-        {
-          href: `/company/${companyId}/membership`,
-          label: "Memberships",
-        },
       ]
     : [];
+
+  if (isOwner(user, companyId)) {
+    links.push({
+      href: `/company/${companyId}/membership`,
+      label: "Memberships",
+    });
+  }
 
   const [submit] = useFetch({
     feedback: {
