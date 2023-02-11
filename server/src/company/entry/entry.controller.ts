@@ -34,6 +34,7 @@ export class EntryController {
   @ApiQuery({ name: 'dateFrom', required: false })
   @ApiQuery({ name: 'dateTo', required: false })
   @ApiQuery({ name: 'description', required: false })
+  @ApiQuery({ name: 'accountId', required: false })
   findPaginated(@Param('companyId') companyId: string, @Query() query: string) {
     return this.entryService.searchPaginated(+companyId, query);
   }

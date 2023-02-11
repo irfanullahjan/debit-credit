@@ -24,18 +24,23 @@ export class EntryService {
     const dateFrom = searchParams.get('dateFrom');
     const dateTo = searchParams.get('dateTo');
     const description = searchParams.get('description');
+    const accountId = +searchParams.get('accountId');
 
     const dbQuery = this.repository
       .createQueryBuilder('entry')
       .leftJoinAndSelect('entry.transaction', 'transaction')
+      .leftJoinAndSelect('entry.account', 'account')
       .where('entry.companyId = :companyId', { companyId });
+    if (accountId) {
+      dbQuery.andWhere('entry.accountId = :accountId', { accountId });
+    }
     if (dateFrom) {
-      dbQuery.andWhere('entry.transaction.date >= :dateFrom', {
+      dbQuery.andWhere('transaction.date >= :dateFrom', {
         dateFrom: new Date(dateFrom),
       });
     }
     if (dateTo) {
-      dbQuery.andWhere('entry.transaction.date <= :dateTo', {
+      dbQuery.andWhere('transaction.date <= :dateTo', {
         dateTo: new Date(dateTo),
       });
     }

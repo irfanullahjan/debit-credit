@@ -6,3 +6,10 @@ export function fetchClientSide(input: RequestInfo | URL, init?: RequestInit) {
   }
   return fetch(input, init);
 }
+
+export function fetchJsonClientSide(
+  input: RequestInfo | URL,
+  init?: RequestInit
+) {
+  return fetchClientSide(input, init).then((response) => response.json());
+}
