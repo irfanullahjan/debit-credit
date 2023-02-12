@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {
+  LessThanOrEqual,
+  MoreThanOrEqual,
+  Repository,
+  ILike,
+  ObjectLiteral,
+} from 'typeorm';
 import { CreateEntryDto } from './dto/create-entry.dto';
 import { UpdateEntryDto } from './dto/update-entry.dto';
 import { Entry } from './entities/entry.entity';
@@ -25,43 +31,27 @@ export class EntryService {
     const dateTo = searchParams.get('dateTo');
     const description = searchParams.get('description');
     const accountId = +searchParams.get('accountId');
-    const amountFrom = +searchParams.get('amountFrom');
-    const amountTo = +searchParams.get('amountTo');
+    const amountFrom = searchParams.get('amountFrom');
+    const amountTo = searchParams.get('amountTo');
 
-    const dbQuery = this.repository
-      .createQueryBuilder('entry')
-      .leftJoinAndSelect('entry.transaction', 'transaction')
-      .leftJoinAndSelect('entry.account', 'account')
-      .where('entry.companyId = :companyId', { companyId });
-    if (accountId) {
-      dbQuery.andWhere('entry.accountId = :accountId', { accountId });
-    }
-    if (dateFrom) {
-      dbQuery.andWhere('transaction.date >= :dateFrom', {
-        dateFrom: new Date(dateFrom),
-      });
-    }
-    if (dateTo) {
-      dbQuery.andWhere('transaction.date <= :dateTo', {
-        dateTo: new Date(dateTo),
-      });
-    }
-    if (description) {
-      dbQuery.andWhere(
-        'LOWER(transaction.description) LIKE LOWER(:description)',
-        {
-          description: `%${description}%`,
-        },
-      );
-    }
-    if (amountFrom) {
-      dbQuery.andWhere('entry.amount >= :amountFrom', { amountFrom });
-    }
-    if (amountTo) {
-      dbQuery.andWhere('entry.amount <= :amountTo', { amountTo });
-    }
-    dbQuery.skip(skip).take(take);
-    const [items, count] = await dbQuery.getManyAndCount();
+    const transactionFilter: ObjectLiteral = {};
+    if (dateFrom) transactionFilter.date = MoreThanOrEqual(new Date(dateFrom));
+    if (dateTo) transactionFilter.date = LessThanOrEqual(new Date(dateTo));
+    if (description) transactionFilter.description = ILike(`%${description}%`);
+
+    const [items, count] = await this.repository.findAndCount({
+      relations: ['account', 'transaction'],
+      where: {
+        companyId,
+        ...(accountId && { accountId }),
+        ...(amountFrom && { amount: MoreThanOrEqual(+amountFrom) }),
+        ...(amountTo && { amount: LessThanOrEqual(+amountTo) }),
+        transaction: transactionFilter,
+      },
+      order: { transaction: { date: 'DESC' } },
+      skip,
+      take,
+    });
 
     return { page: skip / take + 1, size: take, count, items };
   }
