@@ -57,8 +57,8 @@ export function MembershipForm({
   });
 
   return (
-    <FormikProvider value={formik}>
-      <Form>
+    <div>
+      <FormikProvider value={formik}>
         <FormikInput
           name="email"
           label="Email"
@@ -69,10 +69,30 @@ export function MembershipForm({
           <option value="admin">Admin</option>
           <option value="user">User</option>
         </FormikInput>
-        <Button type="submit" disabled={submitting}>
-          Submit
+      </FormikProvider>
+      <Button type="submit" disabled={submitting} onClick={formik.submitForm}>
+        Submit
+      </Button>
+      {existingData && (
+        <Button
+          color="danger"
+          onClick={() => {
+            submit(
+              `/company/${companyId}/membership/${existingData.membershipId}`,
+              {
+                method: "DELETE",
+              }
+            ).then((res) => {
+              if (res.ok) {
+                router.push(`/company/${companyId}/membership`);
+                router.refresh();
+              }
+            });
+          }}
+        >
+          Delete
         </Button>
-      </Form>
-    </FormikProvider>
+      )}
+    </div>
   );
 }

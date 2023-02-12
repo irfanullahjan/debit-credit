@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { getUserFromRequest } from 'src/common/jwt-utils';
 import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateMembershipDto } from './dto/create-membership.dto';
@@ -16,6 +17,15 @@ export class MembershipService {
     const user = await this.repository.manager.getRepository(User).findOne({
       where: { email: createDto.email },
     });
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+    const existingMember = await this.repository.findOne({
+      where: { userId: user.id, companyId },
+    });
+    if (existingMember) {
+      throw new BadRequestException('User is already a member');
+    }
     return this.repository.save(
       new Membership({ userId: user.id, role: createDto.role }, companyId),
     );
@@ -44,28 +54,31 @@ export class MembershipService {
   }
 
   async update(companyId: number, id: number, updateDto: UpdateMembershipDto) {
-    const allMemberships = await this.repository.find({ where: { companyId } });
-    const currentMembership = allMemberships.find((m) => m.id === id);
-
-    const OWNER = MembershipRole.owner;
-
-    if (currentMembership.role === OWNER && updateDto.role !== OWNER) {
-      const totalOwners = allMemberships.filter((m) => m.role === OWNER);
-
-      if (totalOwners.length === 1) {
-        throw new BadRequestException(
-          'Cannot remove the last owner of the company',
-        );
-      }
+    if (updateDto.role !== MembershipRole.owner) {
+      await this.ensureNotLastOwner(companyId, id);
     }
-
     return this.repository.update(
       { id, companyId },
       new Membership({ role: updateDto.role }, companyId),
     );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(companyId: number, id: number) {
+    await this.ensureNotLastOwner(companyId, id);
+    return this.repository.delete({ id, companyId });
+  }
+
+  private async ensureNotLastOwner(companyId: number, id: number) {
+    const allMemberships = await this.repository.find({ where: { companyId } });
+    const currentMembership = allMemberships.find((m) => m.id === id);
+    const OWNER = MembershipRole.owner;
+    if (currentMembership.role === OWNER) {
+      const ownersCount = allMemberships.filter((m) => m.role === OWNER).length;
+      if (ownersCount === 1) {
+        throw new BadRequestException(
+          'Cannot remove the last owner of the company',
+        );
+      }
+    }
   }
 }

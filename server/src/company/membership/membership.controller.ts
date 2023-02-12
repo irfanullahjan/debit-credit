@@ -46,7 +46,7 @@ export class MembershipController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.membershipService.remove(+id);
+  remove(@Param('companyId') companyId: string, @Param('id') id: string) {
+    return this.membershipService.remove(+companyId, +id);
   }
 }
