@@ -18,17 +18,7 @@ export function MembershipForm({
   companyId: number;
 }) {
   const router = useRouter();
-  const [submit, submitting] = useFetch({
-    feedback: {
-      basedOn: "outcome",
-      map: {
-        success: {
-          message: "Membership saved",
-          intent: "success",
-        },
-      },
-    },
-  });
+  const [statefulFetch, loading] = useFetch();
   const formik = useFormik({
     initialValues: existingData ?? {
       email: "",
@@ -41,12 +31,21 @@ export function MembershipForm({
       if (!membershipId) {
         submitValues.email = values.email;
       }
-      submit(`/company/${companyId}/membership${putSegment}`, {
+      statefulFetch(`/company/${companyId}/membership${putSegment}`, {
         method: existingData ? "PATCH" : "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(submitValues),
+        feedback: {
+          basedOn: "outcome",
+          map: {
+            success: {
+              message: "Membership saved",
+              intent: "success",
+            },
+          },
+        },
       }).then((res) => {
         if (res.ok) {
           router.refresh();
@@ -70,17 +69,27 @@ export function MembershipForm({
           <option value="user">User</option>
         </FormikInput>
       </FormikProvider>
-      <Button type="submit" disabled={submitting} onClick={formik.submitForm}>
+      <Button type="submit" disabled={loading} onClick={formik.submitForm}>
         Submit
       </Button>
       {existingData && (
         <Button
           color="danger"
+          disabled={loading}
           onClick={() => {
-            submit(
+            statefulFetch(
               `/company/${companyId}/membership/${existingData.membershipId}`,
               {
                 method: "DELETE",
+                feedback: {
+                  basedOn: "outcome",
+                  map: {
+                    success: {
+                      message: "Membership removed",
+                      intent: "success",
+                    },
+                  },
+                },
               }
             ).then((res) => {
               if (res.ok) {

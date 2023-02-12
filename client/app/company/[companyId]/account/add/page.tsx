@@ -6,17 +6,7 @@ import { FormikInput } from "~/common/components/FormikInput";
 import { useFetch } from "~/common/hooks/useFetch";
 
 export default function AccountAddPage({ params: { companyId } }: any) {
-  const [submit, submitting] = useFetch({
-    feedback: {
-      basedOn: "status",
-      map: {
-        201: {
-          message: "Account created",
-          intent: "success",
-        },
-      },
-    },
-  });
+  const [submit, submitting] = useFetch();
 
   const formik = useFormik({
     initialValues: {
@@ -29,6 +19,15 @@ export default function AccountAddPage({ params: { companyId } }: any) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
+        feedback: {
+          basedOn: "status",
+          map: {
+            201: {
+              message: "Account created",
+              intent: "success",
+            },
+          },
+        },
       });
     },
   });

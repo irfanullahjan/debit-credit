@@ -7,17 +7,7 @@ import { FormikInput } from "~/common/components/FormikInput";
 import { useFetch } from "~/common/hooks/useFetch";
 
 export default function LoginPage() {
-  const [submit, submitting] = useFetch({
-    feedback: {
-      basedOn: "status",
-      map: {
-        200: {
-          message: "Login successful",
-          intent: "success",
-        },
-      },
-    },
-  });
+  const [submit, submitting] = useFetch();
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -31,6 +21,15 @@ export default function LoginPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
+        feedback: {
+          basedOn: "status",
+          map: {
+            200: {
+              message: "Login successful",
+              intent: "success",
+            },
+          },
+        },
       })
         .then((res) => {
           if (res.ok) {

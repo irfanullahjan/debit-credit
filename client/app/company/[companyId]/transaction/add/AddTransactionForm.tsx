@@ -7,17 +7,7 @@ import { FormikInput } from "~/common/components/FormikInput";
 import { useFetch } from "~/common/hooks/useFetch";
 
 export function AddTransactionForm({ accounts, companyId }: any) {
-  const [submit, submitting] = useFetch({
-    feedback: {
-      basedOn: "status",
-      map: {
-        201: {
-          message: "Transaction saved",
-          intent: "success",
-        },
-      },
-    },
-  });
+  const [submit, submitting] = useFetch();
 
   const emptyEntry = {
     accountId: null,
@@ -47,6 +37,15 @@ export function AddTransactionForm({ accounts, companyId }: any) {
               amount: entry.amountDebit || entry.amountCredit! * -1,
             })),
         }),
+        feedback: {
+          basedOn: "status",
+          map: {
+            201: {
+              message: "Transaction saved",
+              intent: "success",
+            },
+          },
+        },
       });
     },
   });

@@ -17,21 +17,19 @@ type FeedbackInput =
       map: Partial<Record<"success" | "rejection", Feedback>>;
     };
 
-export function useFetch({
-  fetcher = fetchClientSide,
-  feedback,
-}: { fetcher?: typeof fetch; feedback?: FeedbackInput } = {}) {
+export function useFetch(fetcher = fetchClientSide) {
   const [loading, setLoading] = useState(false);
   const addAlert = useAlertsStore((state) => state.addAlert);
 
   const statefulFetch = async (
     input: RequestInfo | URL,
-    init?: RequestInit
+    init?: RequestInit & { feedback?: FeedbackInput }
   ) => {
     setLoading(true);
     return fetcher(input, init)
       .then(async (res) => {
         let alert: Feedback | undefined;
+        const feedback = init?.feedback;
         const alerts: Feedback[] = [];
         switch (feedback?.basedOn) {
           case "outcome":
@@ -65,7 +63,6 @@ export function useFetch({
                 });
           }
         }
-        console.log(alerts);
         alerts.forEach((alert) => addAlert(alert));
         setLoading(false);
         return res;

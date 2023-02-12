@@ -8,17 +8,7 @@ import { useFetch } from "~/common/hooks/useFetch";
 
 export function AddCompanyForm() {
   const router = useRouter();
-  const [submit, submitting] = useFetch({
-    feedback: {
-      basedOn: "outcome",
-      map: {
-        success: {
-          intent: "success",
-          message: "Company added successfully",
-        },
-      },
-    },
-  });
+  const [submit, submitting] = useFetch();
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -30,6 +20,15 @@ export function AddCompanyForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
+        feedback: {
+          basedOn: "outcome",
+          map: {
+            success: {
+              intent: "success",
+              message: "Company added successfully",
+            },
+          },
+        },
       })
         .then((res) => {
           if (res.status === 201) return res.json();

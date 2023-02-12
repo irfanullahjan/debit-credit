@@ -50,17 +50,7 @@ export function NavbarCollapse({ user }: any) {
     });
   }
 
-  const [submit] = useFetch({
-    feedback: {
-      basedOn: "outcome",
-      map: {
-        success: {
-          message: "Logout successful",
-          intent: "success",
-        },
-      },
-    },
-  });
+  const [submit] = useFetch();
   return (
     <>
       <NavbarToggler onClick={() => setIsOpen(!isOpen)} />
@@ -77,6 +67,15 @@ export function NavbarCollapse({ user }: any) {
               onClick={() =>
                 submit("/auth/logout", {
                   method: "POST",
+                  feedback: {
+                    basedOn: "outcome",
+                    map: {
+                      success: {
+                        message: "Logout successful",
+                        intent: "success",
+                      },
+                    },
+                  },
                 }).then(() => {
                   router.push("/");
                   router.refresh();
