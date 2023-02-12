@@ -5,7 +5,7 @@ import {
   MoreThanOrEqual,
   Repository,
   ILike,
-  ObjectLiteral,
+  Between,
 } from 'typeorm';
 import { CreateEntryDto } from './dto/create-entry.dto';
 import { UpdateEntryDto } from './dto/update-entry.dto';
@@ -34,19 +34,13 @@ export class EntryService {
     const amountFrom = searchParams.get('amountFrom');
     const amountTo = searchParams.get('amountTo');
 
-    const transactionFilter: ObjectLiteral = {};
-    if (dateFrom) transactionFilter.date = MoreThanOrEqual(new Date(dateFrom));
-    if (dateTo) transactionFilter.date = LessThanOrEqual(new Date(dateTo));
-    if (description) transactionFilter.description = ILike(`%${description}%`);
-
     const [items, count] = await this.repository.findAndCount({
       relations: ['account', 'transaction'],
       where: {
         companyId,
         ...(accountId && { accountId }),
-        ...(amountFrom && { amount: MoreThanOrEqual(+amountFrom) }),
-        ...(amountTo && { amount: LessThanOrEqual(+amountTo) }),
-        transaction: transactionFilter,
+        amount: this.filterNumberRange(amountFrom, amountTo),
+        transaction: this.filterByTransaction(dateFrom, dateTo, description),
       },
       order: { transaction: { date: 'DESC' } },
       skip,
@@ -73,5 +67,38 @@ export class EntryService {
 
   remove(companyId: number, id: number) {
     return `This action removes a #${id} entry`;
+  }
+
+  private filterNumberRange(from: string, to: string) {
+    if (from && to) {
+      return Between(+from, +to);
+    } else if (from) {
+      return MoreThanOrEqual(+from);
+    } else if (to) {
+      return LessThanOrEqual(+to);
+    }
+  }
+
+  private filterDateRange(from: string, to: string) {
+    if (from && to) {
+      return Between(new Date(from), new Date(to));
+    } else if (from) {
+      return MoreThanOrEqual(new Date(from));
+    } else if (to) {
+      return LessThanOrEqual(new Date(to));
+    }
+  }
+
+  private filterByTransaction(
+    dateFrom: string,
+    dateTo: string,
+    description: string,
+  ) {
+    if (dateFrom || dateTo || description) {
+      return {
+        date: this.filterDateRange(dateFrom, dateTo),
+        ...(description && { description: ILike(`%${description}%`) }),
+      };
+    }
   }
 }
