@@ -36,6 +36,10 @@ export function NavbarCollapse({ user }: any) {
           href: `/company/${companyId}/transaction`,
           label: "Transactions",
         },
+        {
+          href: `/company/${companyId}/ledger`,
+          label: "Ledger",
+        },
       ]
     : [];
 

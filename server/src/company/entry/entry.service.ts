@@ -25,6 +25,8 @@ export class EntryService {
     const dateTo = searchParams.get('dateTo');
     const description = searchParams.get('description');
     const accountId = +searchParams.get('accountId');
+    const amountFrom = +searchParams.get('amountFrom');
+    const amountTo = +searchParams.get('amountTo');
 
     const dbQuery = this.repository
       .createQueryBuilder('entry')
@@ -51,6 +53,12 @@ export class EntryService {
           description: `%${description}%`,
         },
       );
+    }
+    if (amountFrom) {
+      dbQuery.andWhere('entry.amount >= :amountFrom', { amountFrom });
+    }
+    if (amountTo) {
+      dbQuery.andWhere('entry.amount <= :amountTo', { amountTo });
     }
     dbQuery.skip(skip).take(take);
     const [items, count] = await dbQuery.getManyAndCount();
