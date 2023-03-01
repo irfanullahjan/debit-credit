@@ -1,6 +1,7 @@
 "use client";
 
 import { Form, FormikProvider, useFormik } from "formik";
+import Link from "next/link";
 import { Col, Row, Table } from "reactstrap";
 import useSWR from "swr";
 import { FormikInput } from "~/common/components/FormikInput";
@@ -33,7 +34,10 @@ export function Ledger({ companyId, accounts }: any) {
                 <FormikInput name="dateTo" label="Date To" type="date" />
               </th>
               <th>
-                <FormikInput name="description" label="Description" />
+                <FormikInput
+                  name="description"
+                  label="Transaction description"
+                />
               </th>
               <th>
                 <FormikInput name="accountId" label="Account" type="select">
@@ -60,8 +64,20 @@ export function Ledger({ companyId, accounts }: any) {
           {ledger?.items.map((entry: any) => (
             <tr key={entry.id}>
               <td>{entry.date}</td>
-              <td>{entry.transaction.description}</td>
-              <td>{entry.account.name}</td>
+              <td>
+                <Link
+                  href={`/company/${companyId}/transaction/${entry.transaction.id}`}
+                >
+                  {entry.transaction.description}
+                </Link>
+              </td>
+              <td>
+                <Link
+                  href={`/company/${companyId}/account/${entry.account.id}`}
+                >
+                  {entry.account.name}
+                </Link>
+              </td>
               <td>{entry.amount}</td>
             </tr>
           ))}

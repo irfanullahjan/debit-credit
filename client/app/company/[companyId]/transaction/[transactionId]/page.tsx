@@ -20,7 +20,7 @@ export default async function Transaction({
           accounts={accounts}
           existingData={transaction}
         />
-        <div className="m-3">
+        <div className="my-3">
           <small className="text-muted">
             Created by {transaction.meta.createdByUser.email} on{" "}
             {new Date(transaction.meta.createdAt).toLocaleString()}

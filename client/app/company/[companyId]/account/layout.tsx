@@ -16,7 +16,14 @@ export default async function Layout(props: any) {
   const accounts = await fetchServerSide(`/company/${companyId}/account`);
   return (
     <div>
-      <h1>Accounts</h1>
+      <div className="d-flex align-items-center">
+        <h1 style={{ marginRight: "1rem" }}>Accounts</h1>
+        <Link href={`/company/${companyId}/account/add`}>
+          <Button color="primary">
+            <i className="bi bi-plus-circle"></i> Add Account
+          </Button>
+        </Link>
+      </div>
       <div
         style={{
           display: "grid",
@@ -26,9 +33,6 @@ export default async function Layout(props: any) {
         <AccountsTable accounts={accounts} />
         {children}
       </div>
-      <Link href={`/company/${companyId}/account/add`}>
-        <Button>Add Account</Button>
-      </Link>
     </div>
   );
 }

@@ -15,7 +15,14 @@ export default async function Layout(props: any) {
   );
   return (
     <div>
-      <h1>Transactions</h1>
+      <div className="d-flex align-items-center">
+        <h1 style={{ marginRight: "1rem" }}>Transactions</h1>
+        <Link href={`/company/${params.companyId}/transaction/add`}>
+          <Button color="primary">
+            <i className="bi bi-plus-circle"></i> Add Transaction
+          </Button>
+        </Link>
+      </div>
       <div
         style={{
           display: "grid",
@@ -25,9 +32,6 @@ export default async function Layout(props: any) {
         <TransactionsTable transactions={transactions} />
         {children}
       </div>
-      <Link href={`/company/${params.companyId}/transaction/add`}>
-        <Button>Add Transaction</Button>
-      </Link>
     </div>
   );
 }

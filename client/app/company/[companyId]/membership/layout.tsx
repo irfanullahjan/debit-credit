@@ -17,7 +17,14 @@ export default async function CompanyLayout({
 
   return (
     <div>
-      <h1>Memberships</h1>
+      <div className="d-flex align-items-center">
+        <h1 style={{ marginRight: "1rem" }}>Memberships</h1>
+        <Link href={`/company/${companyId}/membership/add`}>
+          <Button color="primary">
+            <i className="bi bi-plus-circle"></i> Add Membership
+          </Button>
+        </Link>
+      </div>
       <div
         style={{
           display: "grid",
@@ -27,9 +34,6 @@ export default async function CompanyLayout({
         <MembershipsTable memberships={memberships} />
         {children}
       </div>
-      <Link href={`/company/${companyId}/membership/add`}>
-        <Button>Add Membership</Button>
-      </Link>
     </div>
   );
 }

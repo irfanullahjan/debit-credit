@@ -8,9 +8,9 @@ export function AccountTable({ account }: { account: any }) {
   const router = useRouter();
   return (
     <Table hover>
-      <thead className="bg-secondary text-white">
+      <thead className="bg-secondary text-white text-nowrap">
         <tr>
-          <th>Entry Id</th>
+          <th>Entry ID</th>
           <th>Date</th>
           <th>Description</th>
           <th style={{ textAlign: "right" }}>Debit</th>
@@ -29,7 +29,7 @@ export function AccountTable({ account }: { account: any }) {
             }
           >
             <td>{entry.id}</td>
-            <td>{entry.date}</td>
+            <td className="text-nowrap">{entry.date}</td>
             <td>{entry.transaction.description}</td>
             <td style={{ textAlign: "right" }}>
               {decimalTwoPlaces(entry.amountDebit)}
