@@ -1,3 +1,10 @@
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  CardText,
+  CardTitle,
+} from "~/common/components/reactstrap";
 import { fetchServerSide } from "~/common/utils/fetchServerSide";
 import { MembershipForm } from "../MembershipForm";
 
@@ -10,15 +17,18 @@ export default async function Account({
     `/company/${companyId}/membership/${membershipId}`
   );
   return (
-    <div className="rounded shadow overflow-hidden">
-      <MembershipForm
-        existingData={{
-          membershipId: membership.id,
-          email: membership.user.email,
-          role: membership.role,
-        }}
-        companyId={companyId}
-      />
-    </div>
+    <Card className="my-2" color="light">
+      <CardHeader>Edit membership</CardHeader>
+      <CardBody>
+        <MembershipForm
+          existingData={{
+            membershipId: membership.id,
+            email: membership.user.email,
+            role: membership.role,
+          }}
+          companyId={companyId}
+        />
+      </CardBody>
+    </Card>
   );
 }

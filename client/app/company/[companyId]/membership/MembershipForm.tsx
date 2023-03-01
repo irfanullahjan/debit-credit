@@ -1,6 +1,6 @@
 "use client";
 
-import { Form, FormikProvider, useFormik } from "formik";
+import { FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { Button } from "reactstrap";
 import { FormikInput } from "~/common/components/FormikInput";
@@ -18,7 +18,7 @@ export function MembershipForm({
   companyId: number;
 }) {
   const router = useRouter();
-  const [statefulFetch, loading] = useFetch();
+  const [fetchX, loading] = useFetch();
   const formik = useFormik({
     initialValues: existingData ?? {
       email: "",
@@ -31,7 +31,7 @@ export function MembershipForm({
       if (!membershipId) {
         submitValues.email = values.email;
       }
-      statefulFetch(`/company/${companyId}/membership${putSegment}`, {
+      fetchX(`/company/${companyId}/membership${putSegment}`, {
         method: existingData ? "PATCH" : "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +41,9 @@ export function MembershipForm({
           basedOn: "outcome",
           map: {
             success: {
-              message: "Membership saved",
+              message: membershipId
+                ? "Membership updated"
+                : "Membership created",
               intent: "success",
             },
           },
@@ -69,7 +71,13 @@ export function MembershipForm({
           <option value="user">User</option>
         </FormikInput>
       </FormikProvider>
-      <Button type="submit" disabled={loading} onClick={formik.submitForm}>
+      <Button
+        type="submit"
+        disabled={loading}
+        onClick={formik.submitForm}
+        color="primary"
+        style={{ marginRight: "1rem" }}
+      >
         Submit
       </Button>
       {existingData && (
@@ -77,7 +85,7 @@ export function MembershipForm({
           color="danger"
           disabled={loading}
           onClick={() => {
-            statefulFetch(
+            fetchX(
               `/company/${companyId}/membership/${existingData.membershipId}`,
               {
                 method: "DELETE",

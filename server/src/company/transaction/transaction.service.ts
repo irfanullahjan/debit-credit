@@ -38,7 +38,12 @@ export class TransactionService {
   findOne(companyId: number, id: number) {
     return this.repository.findOne({
       where: { id, companyId },
-      relations: ['entries', 'entries.account', 'meta.createdByUser'],
+      relations: [
+        'entries',
+        'entries.account',
+        'meta.createdByUser',
+        'meta.updatedByUser',
+      ],
     });
   }
 
