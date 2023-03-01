@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { EventsService } from '../../events/events.service';
 import { Account } from '../account/entities/account.entity';
+import { Entry } from '../entry/entities/entry.entity';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { Transaction } from './entities/transaction.entity';
@@ -53,21 +54,24 @@ export class TransactionService {
     updateTransactionDto: UpdateTransactionDto,
   ) {
     await this.validateAccountIds(updateTransactionDto, companyId);
-    return this.repository
-      .update(
-        {
-          id,
-          companyId,
-        },
-        new Transaction(updateTransactionDto, companyId),
-      )
-      .then((transaction) => {
-        this.eventsService.server.emit(
-          `company:${companyId}`,
-          `Transaction ${id} updated`,
-        );
-        return transaction;
-      });
+    const transaction = await this.repository.findOneOrFail({
+      where: {
+        id,
+        companyId,
+      },
+      relations: ['entries'],
+    });
+    Object.assign(transaction, updateTransactionDto);
+    transaction.entries = transaction.entries.map(
+      (entry) => new Entry(entry, companyId),
+    );
+    return this.repository.save(transaction).then((transaction) => {
+      this.eventsService.server.emit(
+        `company:${companyId}`,
+        `Transaction ${id} updated`,
+      );
+      return transaction;
+    });
   }
 
   remove(companyId: number, id: number) {

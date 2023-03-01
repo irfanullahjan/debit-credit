@@ -23,6 +23,7 @@ export class Entry extends BaseEntity {
 
   @ManyToOne(() => Transaction, (transaction) => transaction.entries, {
     nullable: false,
+    orphanedRowAction: 'delete',
   })
   transaction: Transaction;
 
