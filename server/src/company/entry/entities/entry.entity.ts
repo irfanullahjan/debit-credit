@@ -40,7 +40,7 @@ export class Entry extends BaseEntity {
   @AfterLoad()
   afterLoad() {
     if (this.amount >= 0) {
-      this.amountDebit = this.amount;
+      this.amountDebit = +this.amount;
       this.amountCredit = 0;
     } else {
       this.amountDebit = 0;

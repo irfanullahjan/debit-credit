@@ -6,7 +6,7 @@ import { Button, Col, Row, Spinner } from "reactstrap";
 import { FormikInput } from "~/common/components/FormikInput";
 import { useFetch } from "~/common/hooks/useFetch";
 
-export function AddTransactionForm({ accounts, companyId }: any) {
+export function TransactionForm({ accounts, companyId, existingData }: any) {
   const [submit, submitting] = useFetch();
 
   const emptyEntry = {
@@ -21,22 +21,33 @@ export function AddTransactionForm({ accounts, companyId }: any) {
     entries: [emptyEntry, emptyEntry],
   };
   const formik = useFormik({
-    initialValues: emptyTransaction,
+    initialValues: existingData ?? emptyTransaction,
     onSubmit: (values) => {
-      submit(`/company/${companyId}/transaction`, {
-        method: "POST",
+      const transactionId = existingData?.id;
+      const putSegment = transactionId ? `/${transactionId}` : "";
+      const submitValues = {
+        date: values.date,
+        description: values.description,
+        documentRef: values.documentRef,
+        entries: values.entries
+          .filter((e) => e.accountId)
+          .map((e) => {
+            const entry: { [k: string]: any } = {
+              accountId: e.accountId,
+              amount: e.amountDebit || e.amountCredit! * -1,
+            };
+            if (transactionId) {
+              entry.transactionId = transactionId;
+            }
+            return entry;
+          }),
+      };
+      submit(`/company/${companyId}/transaction${putSegment}`, {
+        method: transactionId ? "PATCH" : "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          ...values,
-          entries: values.entries
-            .filter((entry) => entry.accountId)
-            .map((entry) => ({
-              ...entry,
-              amount: entry.amountDebit || entry.amountCredit! * -1,
-            })),
-        }),
+        body: JSON.stringify(submitValues),
         feedback: {
           basedOn: "status",
           map: {
