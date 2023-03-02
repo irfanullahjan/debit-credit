@@ -2,26 +2,13 @@
 
 import { useRouter, useSelectedLayoutSegments } from "next/navigation";
 import { useState } from "react";
-import {
-  Collapse,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Nav,
-  NavbarText,
-  NavbarToggler,
-  NavLink,
-} from "reactstrap";
+import { Collapse, Nav, NavbarText, NavbarToggler, NavLink } from "reactstrap";
 import { useFetch } from "../hooks/useFetch";
 import { isOwner } from "../utils/auth";
 import { NavLinks } from "./NavLinks";
 
 export function NavbarCollapse({ user }: any) {
   const [isOpen, setIsOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
   const router = useRouter();
 
   const companyId = parseInt(useSelectedLayoutSegments()[1]);
@@ -64,23 +51,26 @@ export function NavbarCollapse({ user }: any) {
           <NavbarText>{user.email}</NavbarText>
           <Nav className="me-auto" navbar>
             <NavLink
-              onClick={() =>
-                submit("/auth/logout", {
-                  method: "POST",
-                  feedback: {
-                    basedOn: "outcome",
-                    map: {
-                      success: {
-                        message: "Logout successful",
-                        intent: "success",
+              onClick={() => {
+                if (confirm("Are you sure you want to logout?")) {
+                  submit("/auth/logout", {
+                    method: "POST",
+                    feedback: {
+                      basedOn: "outcome",
+                      map: {
+                        success: {
+                          message: "Logout successful",
+                          intent: "success",
+                        },
                       },
                     },
-                  },
-                }).then(() => {
-                  router.push("/");
-                  router.refresh();
-                })
-              }
+                  }).then(() => {
+                    router.push("/");
+                    router.refresh();
+                  });
+                }
+              }}
+              style={{ cursor: "pointer" }}
             >
               Logout
             </NavLink>
@@ -96,23 +86,6 @@ export function NavbarCollapse({ user }: any) {
           />
         </Nav>
       )}
-      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-        <DropdownToggle caret>Dropdown</DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem onClick={() => router.push("/company/add")}>
-            Create new
-          </DropdownItem>
-          {user?.memberships.map((membership: any, i: number) => (
-            <DropdownItem
-              key={i}
-              active={companyId === membership.company.id}
-              onClick={() => router.push(`/company/${membership.company.id}`)}
-            >
-              {membership.company.name}
-            </DropdownItem>
-          ))}
-        </DropdownMenu>
-      </Dropdown>
     </>
   );
 }

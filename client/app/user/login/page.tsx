@@ -49,8 +49,8 @@ export default function LoginPage() {
       <FormikProvider value={formik}>
         <form onSubmit={formik.handleSubmit}>
           <FormikInput name="email" label="Email" />
-          <FormikInput name="password" label="Password" />
-          <Button type="submit" disabled={submitting}>
+          <FormikInput name="password" label="Password" type="password" />
+          <Button color="primary" type="submit" disabled={submitting}>
             Submit <Spinner size="sm" color="light" hidden={!submitting} />
           </Button>
         </form>

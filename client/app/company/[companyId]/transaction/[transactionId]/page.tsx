@@ -12,7 +12,7 @@ export default async function Transaction({
   );
   const accounts = await fetchServerSide(`/company/${companyId}/account`);
   return (
-    <Card className="my-2" color="light">
+    <Card color="light">
       <CardHeader>Edit transaction</CardHeader>
       <CardBody>
         <TransactionForm

@@ -1,6 +1,6 @@
 "use client";
 
-import { FormikProvider, useFormik } from "formik";
+import { FormikErrors, FormikProvider, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { Button, Spinner } from "reactstrap";
 import { FormikInput } from "~/common/components/FormikInput";
@@ -37,22 +37,22 @@ export default function LoginPage() {
         .then((res) => res.status === 201 && router.push("/user/login"))
         .catch((err) => console.error(err));
     },
-    // validate: (values) => {
-    //   const errors: FormikErrors<typeof values> = {};
-    //   if (!values.name) {
-    //     errors.name = "Required";
-    //   }
-    //   if (!values.email) {
-    //     errors.email = "Required";
-    //   }
-    //   if (!values.password) {
-    //     errors.password = "Required";
-    //   }
-    //   if (values.password !== values.password2) {
-    //     errors.password2 = "Passwords must match";
-    //   }
-    //   return errors;
-    // },
+    validate: (values) => {
+      const errors: FormikErrors<typeof values> = {};
+      if (!values.name) {
+        errors.name = "Required";
+      }
+      if (!values.email) {
+        errors.email = "Required";
+      }
+      if (!values.password) {
+        errors.password = "Required";
+      }
+      if (values.password !== values.password2) {
+        errors.password2 = "Passwords must match";
+      }
+      return errors;
+    },
   });
 
   return (
@@ -62,9 +62,13 @@ export default function LoginPage() {
         <form onSubmit={formik.handleSubmit}>
           <FormikInput name="name" label="Name" />
           <FormikInput name="email" label="Email" />
-          <FormikInput name="password" label="Password" />
-          <FormikInput name="password2" label="Confirm Password" />
-          <Button type="submit" disabled={submitting}>
+          <FormikInput name="password" label="Password" type="password" />
+          <FormikInput
+            name="password2"
+            label="Confirm Password"
+            type="password"
+          />
+          <Button color="primary" type="submit" disabled={submitting}>
             Submit <Spinner size="sm" color="light" hidden={!submitting} />
           </Button>
         </form>

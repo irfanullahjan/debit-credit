@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  CardText,
-  CardTitle,
-} from "~/common/components/reactstrap";
+import { Card, CardBody, CardHeader } from "~/common/components/reactstrap";
 import { fetchServerSide } from "~/common/utils/fetchServerSide";
 import { MembershipForm } from "../MembershipForm";
 
@@ -17,7 +11,7 @@ export default async function Account({
     `/company/${companyId}/membership/${membershipId}`
   );
   return (
-    <Card className="my-2" color="light">
+    <Card color="light">
       <CardHeader>Edit membership</CardHeader>
       <CardBody>
         <MembershipForm

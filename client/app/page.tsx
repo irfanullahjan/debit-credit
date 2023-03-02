@@ -1,12 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  CardText,
-  CardTitle,
-} from "~/common/components/reactstrap";
+import { Button } from "~/common/components/reactstrap";
 import { fetchServerSide } from "~/common/utils/fetchServerSide";
 
 export default async function Home() {
@@ -17,26 +11,26 @@ export default async function Home() {
   const companies = await fetchServerSide("/company");
   return (
     <>
+      <div>
+        <div className="d-flex align-items-center">
+          <h1 style={{ marginRight: "1rem" }}>My Companies</h1>
+          <Link href="/company/add">
+            <Button color="primary">
+              <i className="bi bi-plus-circle"></i> Add Company
+            </Button>
+          </Link>
+        </div>
+        <p className="lead">
+          {companies.length === 0
+            ? "You have zero companies, please create one or request to join an existing company"
+            : "Select a company to view its accounts and transactions"}
+        </p>
+      </div>
       {companies.map((company: any) => (
-        <Link key={company.id} href={`/company/${company.id}`}>
-          <Card
-            className="my-2"
-            color="primary"
-            inverse
-            style={{
-              width: "18rem",
-              cursor: "pointer",
-            }}
-          >
-            <CardHeader>Header</CardHeader>
-            <CardBody>
-              <CardTitle tag="h5">Special Title Treatment</CardTitle>
-              <CardText>
-                With supporting text below as a natural lead-in to additional
-                content.
-              </CardText>
-            </CardBody>
-          </Card>
+        <Link key={company.id} href={`/company/${company.id}/account`}>
+          <Button size="lg" color="primary" className="mr-3">
+            {company.name}
+          </Button>
         </Link>
       ))}
     </>
