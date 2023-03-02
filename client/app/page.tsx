@@ -28,7 +28,7 @@ export default async function Home() {
       </div>
       {companies.map((company: any) => (
         <Link key={company.id} href={`/company/${company.id}/account`}>
-          <Button size="lg" color="primary" className="mr-3">
+          <Button size="lg" color="primary" style={{ marginRight: "1rem" }}>
             {company.name}
           </Button>
         </Link>

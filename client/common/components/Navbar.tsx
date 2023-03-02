@@ -13,7 +13,7 @@ import {
 
 export function Navbar({ user }: any) {
   const companyId = parseInt(useSelectedLayoutSegments()?.[1]);
-  const companyName = user.memberships.find(
+  const companyName = user?.memberships.find(
     (membership: any) => membership.companyId === companyId
   )?.company.name;
   return (
