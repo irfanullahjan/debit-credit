@@ -1,6 +1,7 @@
+import { MetaInfo } from "~/common/components/MetaInfo";
 import { Card, CardBody, CardHeader } from "~/common/components/reactstrap";
 import { fetchServerSide } from "~/common/utils/fetchServerSide";
-import { TransactionForm } from "../add/TransactionForm";
+import { TransactionForm } from "../TransactionForm";
 
 export default async function Transaction({
   params: { companyId, transactionId },
@@ -11,26 +12,22 @@ export default async function Transaction({
     `/company/${companyId}/transaction/${transactionId}`
   );
   const accounts = await fetchServerSide(`/company/${companyId}/account`);
+  const user = await fetchServerSide(`/auth/current-user`);
+  const membership = user.memberships.find(
+    (m: any) => m.company.id === Number(companyId)
+  );
+  const editDisabled = !["admin", "owner"].includes(membership.role);
   return (
     <Card color="light">
       <CardHeader>Edit transaction</CardHeader>
       <CardBody>
         <TransactionForm
+          disabled={editDisabled}
           companyId={companyId}
           accounts={accounts}
           existingData={transaction}
         />
-        <div className="my-3">
-          <small className="text-muted">
-            Created by {transaction.meta.createdByUser.email} on{" "}
-            {new Date(transaction.meta.createdAt).toLocaleString()}
-          </small>
-          <br />
-          <small className="text-muted">
-            Last updated by {transaction.meta.updatedByUser.email} on{" "}
-            {new Date(transaction.meta.updatedAt).toLocaleString()}
-          </small>
-        </div>
+        <MetaInfo meta={transaction.meta} />
       </CardBody>
     </Card>
   );

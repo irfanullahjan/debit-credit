@@ -6,7 +6,7 @@ import { Button, Spinner } from "reactstrap";
 import { FormikInput } from "~/common/components/FormikInput";
 import { useFetch } from "~/common/hooks/useFetch";
 
-export function AccountForm({ companyId, existingData }: any) {
+export function AccountForm({ companyId, existingData, disabled }: any) {
   const [submit, submitting] = useFetch();
 
   const router = useRouter();
@@ -48,16 +48,28 @@ export function AccountForm({ companyId, existingData }: any) {
         }
       });
     },
+    validate: (values) => {
+      const errors: any = {};
+      if (!values.name) {
+        errors.name = "Required";
+      }
+      return errors;
+    },
   });
   return (
     <div>
       <FormikProvider value={formik}>
         <form onSubmit={formik.handleSubmit}>
-          <FormikInput label="Name" name="name" />
-          <br />
-          <Button type="submit" disabled={submitting} color="primary">
-            Submit <Spinner size="sm" color="light" hidden={!submitting} />
-          </Button>
+          <FormikInput label="Name" name="name" disabled={disabled} />
+
+          {!disabled && (
+            <>
+              <br />
+              <Button type="submit" disabled={submitting} color="primary">
+                Submit <Spinner size="sm" color="light" hidden={!submitting} />
+              </Button>
+            </>
+          )}
         </form>
       </FormikProvider>
     </div>

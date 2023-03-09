@@ -2,14 +2,18 @@
 
 import { sum } from "lodash";
 import { usePathname, useRouter } from "next/navigation";
-import { Button, Table } from "reactstrap";
+import { Table } from "reactstrap";
 import { decimalTwoPlaces } from "~/common/utils/numberUtils";
 
-export function AccountsTable({ accounts }: { accounts: any[] }) {
+export function AccountsTable({ accounts, companyId, user }: any) {
   const router = useRouter();
   const pathname = usePathname();
   const getAccountPath = (account: any) =>
     `/company/${account.companyId}/account/${account.id}`;
+  const membership = user.memberships.find(
+    (m: any) => m.company.id === Number(companyId)
+  );
+  const editDisabled = !["admin", "owner"].includes(membership.role);
   return (
     <div>
       <Table hover>
@@ -19,7 +23,6 @@ export function AccountsTable({ accounts }: { accounts: any[] }) {
             <th>Name</th>
             <th style={{ textAlign: "right" }}>Debit</th>
             <th style={{ textAlign: "right" }}>Credit</th>
-            <th />
           </tr>
         </thead>
         <tbody>
@@ -34,22 +37,24 @@ export function AccountsTable({ accounts }: { accounts: any[] }) {
               }}
             >
               <td>{account.id} </td>
-              <td>{account.name}</td>
+              <td>
+                {account.name}{" "}
+                {!editDisabled && (
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      router.push(`${getAccountPath(account)}/edit`);
+                    }}
+                  >
+                    <i className="bi bi-pencil text-primary"></i>
+                  </span>
+                )}
+              </td>
               <td style={{ textAlign: "right" }}>
                 {decimalTwoPlaces(account.balanceDebit)}
               </td>
               <td style={{ textAlign: "right" }}>
                 {decimalTwoPlaces(account.balanceCredit)}
-              </td>
-              <td>
-                <span
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    router.push(`${getAccountPath(account)}/edit`);
-                  }}
-                >
-                  <i className="bi bi-pencil"></i>
-                </span>
               </td>
             </tr>
           ))}
@@ -64,7 +69,6 @@ export function AccountsTable({ accounts }: { accounts: any[] }) {
             <th style={{ textAlign: "right" }}>
               {decimalTwoPlaces(sum(accounts.map((a) => a.balanceCredit)))}
             </th>
-            <th />
           </tr>
         </tfoot>
       </Table>

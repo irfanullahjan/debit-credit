@@ -36,7 +36,12 @@ export class AccountService {
   findOne(companyId: number, id: number) {
     return this.repository.findOneOrFail({
       where: { id, companyId },
-      relations: ['entries', 'entries.transaction'],
+      relations: [
+        'entries',
+        'entries.transaction',
+        'meta.createdByUser',
+        'meta.updatedByUser',
+      ],
     });
   }
 

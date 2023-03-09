@@ -1,6 +1,6 @@
 import { Card, CardBody, CardHeader } from "~/common/components/reactstrap";
 import { fetchServerSide } from "~/common/utils/fetchServerSide";
-import { TransactionForm } from "./TransactionForm";
+import { TransactionForm } from "../TransactionForm";
 
 export default async function AddTransactionPage({ params }: any) {
   const accounts = await fetchServerSide(
