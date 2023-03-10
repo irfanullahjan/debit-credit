@@ -33,8 +33,8 @@ export default function LoginPage() {
       })
         .then((res) => {
           if (res.ok) {
-            router.refresh();
             router.push("/");
+            router.refresh();
           }
         })
         .catch((err) => {
