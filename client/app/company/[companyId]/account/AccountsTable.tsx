@@ -64,10 +64,10 @@ export function AccountsTable({ accounts, companyId, user }: any) {
             <th />
             <th>Total</th>
             <th style={{ textAlign: "right" }}>
-              {decimalTwoPlaces(sum(accounts.map((a) => a.balanceDebit)))}
+              {decimalTwoPlaces(sum(accounts.map((a: any) => a.balanceDebit)))}
             </th>
             <th style={{ textAlign: "right" }}>
-              {decimalTwoPlaces(sum(accounts.map((a) => a.balanceCredit)))}
+              {decimalTwoPlaces(sum(accounts.map((a: any) => a.balanceCredit)))}
             </th>
           </tr>
         </tfoot>

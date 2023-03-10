@@ -25,7 +25,7 @@ export class EntryService {
   async searchPaginated(companyId: number, query: string) {
     const searchParams = new URLSearchParams(query);
     const page = +searchParams.get('page') || 1;
-    const take = +searchParams.get('size') || 10;
+    const take = +searchParams.get('size') || 1000;
     const skip = (page - 1) * take;
     const dateFrom = searchParams.get('dateFrom');
     const dateTo = searchParams.get('dateTo');
