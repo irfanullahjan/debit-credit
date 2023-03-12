@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { getUserFromRequest } from 'src/common/jwt-utils';
 import { Repository } from 'typeorm';
@@ -6,12 +6,15 @@ import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { Company } from './entities/company.entity';
 import { MembershipRole } from './membership/entities/membership.entity';
+import { MembershipService } from './membership/membership.service';
 
 @Injectable()
 export class CompanyService {
   constructor(
     @InjectRepository(Company)
     private readonly repository: Repository<Company>,
+    @Inject(MembershipService)
+    private readonly membershipService: MembershipService,
   ) {}
 
   create(createCompanyDto: CreateCompanyDto) {
@@ -46,7 +49,14 @@ export class CompanyService {
     return `This action updates a #${id} company`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} company`;
+  async remove(companyId: number, userId: number) {
+    const membership = await this.membershipService.findOneByCompanyIdAndUserId(
+      companyId,
+      userId,
+    );
+    if (membership.role === MembershipRole.owner) {
+      return this.repository.softDelete(companyId);
+    }
+    throw new UnauthorizedException();
   }
 }

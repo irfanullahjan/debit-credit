@@ -11,7 +11,7 @@ export class Company extends BaseEntity {
   name: string;
 
   @OneToMany(() => Membership, (membership) => membership.company, {
-    cascade: ['insert'],
+    cascade: ['insert', 'remove'],
   })
   memberships: Membership[];
 

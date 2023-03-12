@@ -71,6 +71,10 @@ export class MembershipService {
     return this.repository.delete({ id, companyId });
   }
 
+  deleteAllByCompanyId(companyId: number) {
+    return this.repository.delete({ companyId });
+  }
+
   private async ensureNotLastOwner(companyId: number, id: number) {
     const allMemberships = await this.repository.find({ where: { companyId } });
     const currentMembership = allMemberships.find((m) => m.id === id);

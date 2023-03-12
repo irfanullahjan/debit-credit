@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Button } from "~/common/components/reactstrap";
+import { Button, Table } from "~/common/components/reactstrap";
 import { fetchServerSide } from "~/common/utils/fetchServerSide";
+import { CompaniesTable } from "./CompaniesTable";
 
 export default async function Home() {
   const user = await fetchServerSide("/auth/current-user");
@@ -26,13 +27,7 @@ export default async function Home() {
             : "Select a company to view its accounts and transactions"}
         </p>
       </div>
-      {companies.map((company: any) => (
-        <Link key={company.id} href={`/company/${company.id}/account`}>
-          <Button size="lg" color="primary" style={{ marginRight: "1rem" }}>
-            {company.name}
-          </Button>
-        </Link>
-      ))}
+      <CompaniesTable companies={companies} user={user} />
     </>
   );
 }

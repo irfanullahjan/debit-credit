@@ -48,7 +48,7 @@ export class CompanyController {
 
   @Delete(':companyId')
   @UseGuards(CompanyGuard)
-  remove(@Param('companyId') id: string) {
-    return this.companyService.remove(+id);
+  remove(@Param('companyId') companyId: string, @Req() req: any) {
+    return this.companyService.remove(+companyId, req.user.userId);
   }
 }

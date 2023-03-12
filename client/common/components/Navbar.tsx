@@ -15,7 +15,7 @@ export function Navbar({ user }: any) {
   const companyId = parseInt(useSelectedLayoutSegments()?.[1]);
   const companyName = user?.memberships.find(
     (membership: any) => membership.companyId === companyId
-  )?.company.name;
+  )?.company?.name;
   return (
     <div className="bg-dark">
       <Container>
