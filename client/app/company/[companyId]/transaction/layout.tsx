@@ -29,7 +29,14 @@ export default async function Layout(props: any) {
           gridTemplateColumns: "repeat(auto-fit, minmax(0, 1fr))",
         }}
       >
-        <TransactionsTable transactions={transactions} />
+        {transactions?.length === 0 ? (
+          <p>
+            No transactions found, please start by creating a transaction
+            transactions
+          </p>
+        ) : (
+          <TransactionsTable transactions={transactions} />
+        )}
         {children}
       </div>
     </div>

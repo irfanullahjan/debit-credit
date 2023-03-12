@@ -35,7 +35,7 @@ export function AddCompanyForm() {
           throw new Error("Failed to add company");
         })
         .then((company) => {
-          router.push(`/company/${company.id}`);
+          router.push(`/company/${company.id}/account`);
         });
     },
   });

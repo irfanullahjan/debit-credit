@@ -13,7 +13,7 @@ export default async function EditAccount({
   );
   const user = await fetchServerSide(`/auth/current-user`);
   const membership = user.memberships.find(
-    (m: any) => m.company.id === Number(companyId)
+    (m: any) => m.companyId === Number(companyId)
   );
   const disabled = !["admin", "owner"].includes(membership.role);
   return (

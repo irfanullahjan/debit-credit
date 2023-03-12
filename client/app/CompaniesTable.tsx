@@ -44,6 +44,15 @@ export function CompaniesTable({ companies, user }: any) {
                     ) {
                       submit(`/company/${company.id}`, {
                         method: "DELETE",
+                        feedback: {
+                          basedOn: "outcome",
+                          map: {
+                            success: {
+                              message: "Company deleted",
+                              intent: "success",
+                            },
+                          },
+                        },
                       }).then(() => {
                         router.refresh();
                       });

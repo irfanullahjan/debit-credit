@@ -11,7 +11,7 @@ export function AccountsTable({ accounts, companyId, user }: any) {
   const getAccountPath = (account: any) =>
     `/company/${account.companyId}/account/${account.id}`;
   const membership = user.memberships.find(
-    (m: any) => m.company.id === Number(companyId)
+    (m: any) => m.companyId === Number(companyId)
   );
   const editDisabled = !["admin", "owner"].includes(membership.role);
   return (

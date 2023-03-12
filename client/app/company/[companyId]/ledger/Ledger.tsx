@@ -83,7 +83,9 @@ export function Ledger({ companyId, accounts }: any) {
           ))}
           {ledger?.items.length === 0 && (
             <tr>
-              <td colSpan={5}>No entries found</td>
+              <td colSpan={5}>
+                No entries found, please start by creating a transaction.
+              </td>
             </tr>
           )}
         </tbody>

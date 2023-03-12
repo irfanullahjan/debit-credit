@@ -14,7 +14,7 @@ export default async function Transaction({
   const accounts = await fetchServerSide(`/company/${companyId}/account`);
   const user = await fetchServerSide(`/auth/current-user`);
   const membership = user.memberships.find(
-    (m: any) => m.company.id === Number(companyId)
+    (m: any) => m.companyId === Number(companyId)
   );
   const editDisabled = !["admin", "owner"].includes(membership.role);
   return (

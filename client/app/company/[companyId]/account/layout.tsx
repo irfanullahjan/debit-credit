@@ -15,7 +15,7 @@ export default async function Layout(props: any) {
   }
   const accounts = await fetchServerSide(`/company/${companyId}/account`);
   const membership = user.memberships.find(
-    (m: any) => m.company.id === Number(companyId)
+    (m: any) => m.companyId === Number(companyId)
   );
   const editDisabled = !["admin", "owner"].includes(membership.role);
   return (
@@ -36,7 +36,18 @@ export default async function Layout(props: any) {
           gridTemplateColumns: "repeat(auto-fit, minmax(0, 1fr))",
         }}
       >
-        <AccountsTable accounts={accounts} companyId={companyId} user={user} />
+        {accounts?.length === 0 ? (
+          <p>
+            No accounts in this company, please create one to start recording
+            transactions
+          </p>
+        ) : (
+          <AccountsTable
+            accounts={accounts}
+            companyId={companyId}
+            user={user}
+          />
+        )}
         {children}
       </div>
     </div>
