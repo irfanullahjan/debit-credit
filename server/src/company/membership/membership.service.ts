@@ -52,6 +52,10 @@ export class MembershipService {
     });
   }
 
+  findOneByCompanyIdAndUserId(companyId: number, userId: number) {
+    return this.repository.findOne({ where: { companyId, userId } });
+  }
+
   async update(companyId: number, id: number, updateDto: UpdateMembershipDto) {
     if (updateDto.role !== MembershipRole.owner) {
       await this.ensureNotLastOwner(companyId, id);
